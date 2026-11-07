@@ -1,0 +1,470 @@
+{
+ "parametros": {
+  "x_escalon_tapon": 88.0,
+  "x_inicio_rampa": 58.0,
+  "longitud_rampa": 30.0,
+  "radio_inscrito_cavidad": 10.09,
+  "paso_laminado": 0.4
+ },
+ "malla_antes": {
+  "vertices": 238179,
+  "faces": 476384,
+  "watertight": false,
+  "winding_consistent": true,
+  "euler": -12,
+  "open_edges": 0,
+  "nonmanifold_edges": 1,
+  "degenerate_faces": 41,
+  "components": 2,
+  "volume_cm3": 191.951,
+  "bounds": [
+   [
+    -85.176,
+    79.504,
+    0.0
+   ],
+   [
+    110.0,
+    175.105,
+    79.0
+   ]
+  ]
+ },
+ "malla_despues": {
+  "vertices": 271212,
+  "faces": 542450,
+  "watertight": false,
+  "winding_consistent": true,
+  "euler": -12,
+  "open_edges": 0,
+  "nonmanifold_edges": 1,
+  "degenerate_faces": 41,
+  "components": 2,
+  "volume_cm3": 205.173,
+  "bounds": [
+   [
+    -85.176,
+    79.504,
+    0.0
+   ],
+   [
+    110.0,
+    175.105,
+    79.0
+   ]
+  ]
+ },
+ "volumen_anadido_mm3": 13221.4,
+ "volumen_eliminado_mm3": 0.0,
+ "restos_de_hueco_descartados": 55,
+ "interferencia_volumen_mm3": {
+  "ranura_tuerca": 0.0,
+  "taladro_rosca": 0.0,
+  "acceso_tornillo_placa": 0.0
+ },
+ "bbox_igual": true,
+ "zona_afectada_x": [
+  57.68,
+  96.37
+ ],
+ "contorno_exterior_igual_en_todas": true,
+ "gradiente_Z_debil_max_mm3_por_mm": {
+  "antes": 3376.0,
+  "despues": 669.0
+ },
+ "salto_escalon": {
+  "antes": {
+   "area": [
+    599.5,
+    1380.8
+   ],
+   "Z_debil": [
+    4430.0,
+    6049.0
+   ]
+  },
+  "despues": {
+   "area": [
+    1392.6,
+    1388.7
+   ],
+   "Z_debil": [
+    6092.0,
+    6057.0
+   ]
+  }
+ },
+ "secciones": [
+  {
+   "x": 40.0,
+   "area_antes": 540.8,
+   "area_despues": 540.8,
+   "Z_debil_antes": 3148.0,
+   "Z_debil_despues": 3148.0,
+   "Z_fuerte_antes": 4492.0,
+   "Z_fuerte_despues": 4492.0,
+   "contorno_exterior_igual": true
+  },
+  {
+   "x": 42.0,
+   "area_antes": 514.6,
+   "area_despues": 514.6,
+   "Z_debil_antes": 3113.0,
+   "Z_debil_despues": 3113.0,
+   "Z_fuerte_antes": 4276.0,
+   "Z_fuerte_despues": 4276.0,
+   "contorno_exterior_igual": true
+  },
+  {
+   "x": 44.0,
+   "area_antes": 499.5,
+   "area_despues": 499.5,
+   "Z_debil_antes": 3038.0,
+   "Z_debil_despues": 3038.0,
+   "Z_fuerte_antes": 4215.0,
+   "Z_fuerte_despues": 4215.0,
+   "contorno_exterior_igual": true
+  },
+  {
+   "x": 46.0,
+   "area_antes": 500.4,
+   "area_despues": 500.4,
+   "Z_debil_antes": 3081.0,
+   "Z_debil_despues": 3081.0,
+   "Z_fuerte_antes": 4211.0,
+   "Z_fuerte_despues": 4211.0,
+   "contorno_exterior_igual": true
+  },
+  {
+   "x": 48.0,
+   "area_antes": 498.4,
+   "area_despues": 498.4,
+   "Z_debil_antes": 3073.0,
+   "Z_debil_despues": 3073.0,
+   "Z_fuerte_antes": 4178.0,
+   "Z_fuerte_despues": 4178.0,
+   "contorno_exterior_igual": true
+  },
+  {
+   "x": 50.0,
+   "area_antes": 501.0,
+   "area_despues": 501.0,
+   "Z_debil_antes": 3094.0,
+   "Z_debil_despues": 3094.0,
+   "Z_fuerte_antes": 4219.0,
+   "Z_fuerte_despues": 4219.0,
+   "contorno_exterior_igual": true
+  },
+  {
+   "x": 52.0,
+   "area_antes": 500.5,
+   "area_despues": 500.5,
+   "Z_debil_antes": 3105.0,
+   "Z_debil_despues": 3105.0,
+   "Z_fuerte_antes": 4238.0,
+   "Z_fuerte_despues": 4238.0,
+   "contorno_exterior_igual": true
+  },
+  {
+   "x": 54.0,
+   "area_antes": 500.7,
+   "area_despues": 500.7,
+   "Z_debil_antes": 3106.0,
+   "Z_debil_despues": 3106.0,
+   "Z_fuerte_antes": 4319.0,
+   "Z_fuerte_despues": 4319.0,
+   "contorno_exterior_igual": true
+  },
+  {
+   "x": 56.0,
+   "area_antes": 509.1,
+   "area_despues": 509.1,
+   "Z_debil_antes": 3216.0,
+   "Z_debil_despues": 3216.0,
+   "Z_fuerte_antes": 4472.0,
+   "Z_fuerte_despues": 4472.0,
+   "contorno_exterior_igual": true
+  },
+  {
+   "x": 58.0,
+   "area_antes": 521.9,
+   "area_despues": 526.6,
+   "Z_debil_antes": 3342.0,
+   "Z_debil_despues": 3363.0,
+   "Z_fuerte_antes": 4621.0,
+   "Z_fuerte_despues": 4645.0,
+   "contorno_exterior_igual": true
+  },
+  {
+   "x": 60.0,
+   "area_antes": 532.8,
+   "area_despues": 600.7,
+   "Z_debil_antes": 3420.0,
+   "Z_debil_despues": 3685.0,
+   "Z_fuerte_antes": 4839.0,
+   "Z_fuerte_despues": 5274.0,
+   "contorno_exterior_igual": true
+  },
+  {
+   "x": 62.0,
+   "area_antes": 552.2,
+   "area_despues": 683.9,
+   "Z_debil_antes": 3605.0,
+   "Z_debil_despues": 4091.0,
+   "Z_fuerte_antes": 5155.0,
+   "Z_fuerte_despues": 6005.0,
+   "contorno_exterior_igual": true
+  },
+  {
+   "x": 64.0,
+   "area_antes": 553.6,
+   "area_despues": 750.3,
+   "Z_debil_antes": 3635.0,
+   "Z_debil_despues": 4321.0,
+   "Z_fuerte_antes": 5309.0,
+   "Z_fuerte_despues": 6578.0,
+   "contorno_exterior_igual": true
+  },
+  {
+   "x": 66.0,
+   "area_antes": 559.4,
+   "area_despues": 821.0,
+   "Z_debil_antes": 3770.0,
+   "Z_debil_despues": 4640.0,
+   "Z_fuerte_antes": 5468.0,
+   "Z_fuerte_despues": 7144.0,
+   "contorno_exterior_igual": true
+  },
+  {
+   "x": 68.0,
+   "area_antes": 567.9,
+   "area_despues": 889.9,
+   "Z_debil_antes": 3865.0,
+   "Z_debil_despues": 4876.0,
+   "Z_fuerte_antes": 5583.0,
+   "Z_fuerte_despues": 7592.0,
+   "contorno_exterior_igual": true
+  },
+  {
+   "x": 70.0,
+   "area_antes": 568.5,
+   "area_despues": 948.2,
+   "Z_debil_antes": 3920.0,
+   "Z_debil_despues": 5053.0,
+   "Z_fuerte_antes": 5593.0,
+   "Z_fuerte_despues": 7895.0,
+   "contorno_exterior_igual": true
+  },
+  {
+   "x": 72.0,
+   "area_antes": 566.0,
+   "area_despues": 1001.7,
+   "Z_debil_antes": 3941.0,
+   "Z_debil_despues": 5169.0,
+   "Z_fuerte_antes": 5552.0,
+   "Z_fuerte_despues": 8134.0,
+   "contorno_exterior_igual": true
+  },
+  {
+   "x": 74.0,
+   "area_antes": 566.2,
+   "area_despues": 1056.1,
+   "Z_debil_antes": 3969.0,
+   "Z_debil_despues": 5279.0,
+   "Z_fuerte_antes": 5548.0,
+   "Z_fuerte_despues": 8380.0,
+   "contorno_exterior_igual": true
+  },
+  {
+   "x": 76.0,
+   "area_antes": 577.1,
+   "area_despues": 1119.4,
+   "Z_debil_antes": 4080.0,
+   "Z_debil_despues": 5466.0,
+   "Z_fuerte_antes": 5701.0,
+   "Z_fuerte_despues": 8756.0,
+   "contorno_exterior_igual": true
+  },
+  {
+   "x": 78.0,
+   "area_antes": 575.6,
+   "area_despues": 1168.1,
+   "Z_debil_antes": 4111.0,
+   "Z_debil_despues": 5558.0,
+   "Z_fuerte_antes": 5737.0,
+   "Z_fuerte_despues": 9018.0,
+   "contorno_exterior_igual": true
+  },
+  {
+   "x": 80.0,
+   "area_antes": 579.0,
+   "area_despues": 1219.4,
+   "Z_debil_antes": 4163.0,
+   "Z_debil_despues": 5673.0,
+   "Z_fuerte_antes": 5858.0,
+   "Z_fuerte_despues": 9326.0,
+   "contorno_exterior_igual": true
+  },
+  {
+   "x": 82.0,
+   "area_antes": 579.4,
+   "area_despues": 1265.2,
+   "Z_debil_antes": 4158.0,
+   "Z_debil_despues": 5703.0,
+   "Z_fuerte_antes": 5913.0,
+   "Z_fuerte_despues": 9555.0,
+   "contorno_exterior_igual": true
+  },
+  {
+   "x": 84.0,
+   "area_antes": 583.5,
+   "area_despues": 1312.0,
+   "Z_debil_antes": 4236.0,
+   "Z_debil_despues": 5830.0,
+   "Z_fuerte_antes": 5998.0,
+   "Z_fuerte_despues": 9812.0,
+   "contorno_exterior_igual": true
+  },
+  {
+   "x": 86.0,
+   "area_antes": 594.5,
+   "area_despues": 1363.1,
+   "Z_debil_antes": 4381.0,
+   "Z_debil_despues": 6017.0,
+   "Z_fuerte_antes": 6164.0,
+   "Z_fuerte_despues": 10132.0,
+   "contorno_exterior_igual": true
+  },
+  {
+   "x": 87.5,
+   "area_antes": 599.5,
+   "area_despues": 1392.6,
+   "Z_debil_antes": 4430.0,
+   "Z_debil_despues": 6092.0,
+   "Z_fuerte_antes": 6212.0,
+   "Z_fuerte_despues": 10252.0,
+   "contorno_exterior_igual": true
+  },
+  {
+   "x": 88.0,
+   "area_antes": 1388.3,
+   "area_despues": 1396.9,
+   "Z_debil_antes": 6118.0,
+   "Z_debil_despues": 6128.0,
+   "Z_fuerte_antes": 10164.0,
+   "Z_fuerte_despues": 10350.0,
+   "contorno_exterior_igual": true
+  },
+  {
+   "x": 88.5,
+   "area_antes": 1380.8,
+   "area_despues": 1388.7,
+   "Z_debil_antes": 6049.0,
+   "Z_debil_despues": 6057.0,
+   "Z_fuerte_antes": 10086.0,
+   "Z_fuerte_despues": 10261.0,
+   "contorno_exterior_igual": true
+  },
+  {
+   "x": 90.0,
+   "area_antes": 1394.8,
+   "area_despues": 1401.0,
+   "Z_debil_antes": 6129.0,
+   "Z_debil_despues": 6136.0,
+   "Z_fuerte_antes": 10230.0,
+   "Z_fuerte_despues": 10368.0,
+   "contorno_exterior_igual": true
+  },
+  {
+   "x": 92.0,
+   "area_antes": 1420.2,
+   "area_despues": 1424.3,
+   "Z_debil_antes": 6262.0,
+   "Z_debil_despues": 6266.0,
+   "Z_fuerte_antes": 10521.0,
+   "Z_fuerte_despues": 10612.0,
+   "contorno_exterior_igual": true
+  },
+  {
+   "x": 94.0,
+   "area_antes": 1391.7,
+   "area_despues": 1393.7,
+   "Z_debil_antes": 6366.0,
+   "Z_debil_despues": 6367.0,
+   "Z_fuerte_antes": 10687.0,
+   "Z_fuerte_despues": 10733.0,
+   "contorno_exterior_igual": true
+  },
+  {
+   "x": 96.0,
+   "area_antes": 1430.8,
+   "area_despues": 1431.0,
+   "Z_debil_antes": 6552.0,
+   "Z_debil_despues": 6552.0,
+   "Z_fuerte_antes": 11072.0,
+   "Z_fuerte_despues": 11076.0,
+   "contorno_exterior_igual": true
+  },
+  {
+   "x": 98.0,
+   "area_antes": 1446.1,
+   "area_despues": 1446.1,
+   "Z_debil_antes": 6666.0,
+   "Z_debil_despues": 6666.0,
+   "Z_fuerte_antes": 11380.0,
+   "Z_fuerte_despues": 11380.0,
+   "contorno_exterior_igual": true
+  },
+  {
+   "x": 100.0,
+   "area_antes": 1437.2,
+   "area_despues": 1437.2,
+   "Z_debil_antes": 6698.0,
+   "Z_debil_despues": 6698.0,
+   "Z_fuerte_antes": 11103.0,
+   "Z_fuerte_despues": 11103.0,
+   "contorno_exterior_igual": true
+  },
+  {
+   "x": 102.0,
+   "area_antes": 1443.2,
+   "area_despues": 1443.2,
+   "Z_debil_antes": 6759.0,
+   "Z_debil_despues": 6759.0,
+   "Z_fuerte_antes": 11107.0,
+   "Z_fuerte_despues": 11107.0,
+   "contorno_exterior_igual": true
+  },
+  {
+   "x": 104.0,
+   "area_antes": 1281.5,
+   "area_despues": 1281.5,
+   "Z_debil_antes": 5421.0,
+   "Z_debil_despues": 5421.0,
+   "Z_fuerte_antes": 11001.0,
+   "Z_fuerte_despues": 11001.0,
+   "contorno_exterior_igual": true
+  },
+  {
+   "x": 106.0,
+   "area_antes": 1281.5,
+   "area_despues": 1281.5,
+   "Z_debil_antes": 5423.0,
+   "Z_debil_despues": 5423.0,
+   "Z_fuerte_antes": 11001.0,
+   "Z_fuerte_despues": 11001.0,
+   "contorno_exterior_igual": true
+  },
+  {
+   "x": 108.0,
+   "area_antes": 1281.4,
+   "area_despues": 1281.4,
+   "Z_debil_antes": 5422.0,
+   "Z_debil_despues": 5422.0,
+   "Z_fuerte_antes": 11001.0,
+   "Z_fuerte_despues": 11001.0,
+   "contorno_exterior_igual": true
+  }
+ ],
+ "aviso": "Comparación geométrica de secciones del STL; no incluye cargas ni ensayo físico. Sin validación de resistencia real."
+}
