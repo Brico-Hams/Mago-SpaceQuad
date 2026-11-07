@@ -39,7 +39,7 @@ import verificar as base_v
 
 ROOT = Path(__file__).resolve().parent.parent
 BASE_STL = ROOT / "stl" / "mango_spacequad_v3.stl"
-TOL = 0.001
+TOL = 0.01   # mm3: absorbe el ruido sub-micra de reparar_malla.py (dV < 0,005 mm3)
 DUP, R_W, R_T, R_L, R_ABOVE = base_v.DUP, base_v.R_W, base_v.R_T, base_v.R_L, base_v.R_ABOVE
 use_box, sdiff = base_v.use_box, base_v.sdiff
 UC = mg.PLATE_U0 + mg.PLATE_W / 2

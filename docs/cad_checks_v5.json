@@ -1,26 +1,26 @@
 {
-  "passed": false,
+  "passed": true,
   "checks": [
     {
       "name": "axis_s_candidate",
       "passed": true,
       "tongue_in_slot_fraction": 0.0,
-      "collision_mm3": 47936.165890564655,
+      "collision_mm3": 47936.1640762926,
       "feasible": false
     },
     {
       "name": "axis_u_candidate",
       "passed": true,
       "tongue_in_slot_fraction": 0.0,
-      "collision_mm3": 47179.07055074018,
+      "collision_mm3": 47179.06876782332,
       "feasible": false
     },
     {
       "name": "axis_n_candidate",
-      "passed": false,
-      "tongue_in_slot_fraction": 0.9166672171351223,
+      "passed": true,
+      "tongue_in_slot_fraction": 1.0,
       "collision_mm3": 0.0,
-      "feasible": false
+      "feasible": true
     },
     {
       "name": "rotation_equals_s_mirror",
@@ -34,13 +34,13 @@
     {
       "name": "rt950pro:one_solid",
       "passed": true,
-      "volume_mm3": 191951.48955308308
+      "volume_mm3": 191951.48555721066
     },
     {
       "name": "rt950pro:only_window_moved",
       "passed": true,
-      "outside_mm3": 0.00447371158786552,
-      "changed_mm3": 1056.0026297936165,
+      "outside_mm3": 0.008754964886882358,
+      "changed_mm3": 1056.0071769690444,
       "expected_mm3": 1056.0
     },
     {
@@ -88,12 +88,12 @@
     {
       "name": "rt950pro:duplexor_corridor_minus_v",
       "passed": true,
-      "added_collision_mm3": 0.0
+      "added_collision_mm3": 1.5259303989267892e-06
     },
     {
       "name": "rt950pro:duplexor_corridor_plus_v",
       "passed": true,
-      "added_collision_mm3": 0.0
+      "added_collision_mm3": 1.5259303989267892e-06
     },
     {
       "name": "uvk5v3:manifold",
@@ -103,13 +103,13 @@
     {
       "name": "uvk5v3:one_solid",
       "passed": true,
-      "volume_mm3": 191951.48955308308
+      "volume_mm3": 191951.48555721066
     },
     {
       "name": "uvk5v3:only_window_moved",
       "passed": true,
-      "outside_mm3": 0.00447371158786552,
-      "changed_mm3": 1056.0026297936165,
+      "outside_mm3": 0.008754964886882358,
+      "changed_mm3": 1056.0071769690444,
       "expected_mm3": 1056.0
     },
     {
@@ -157,12 +157,12 @@
     {
       "name": "uvk5v3:duplexor_corridor_minus_v",
       "passed": true,
-      "added_collision_mm3": 0.0
+      "added_collision_mm3": 1.5259303989267892e-06
     },
     {
       "name": "uvk5v3:duplexor_corridor_plus_v",
       "passed": true,
-      "added_collision_mm3": 0.0
+      "added_collision_mm3": 1.5259303989267892e-06
     }
   ],
   "limitations": [
