@@ -21,6 +21,7 @@ from matplotlib.patches import PathPatch, Rectangle
 from matplotlib.path import Path as MplPath
 from shapely.geometry import Polygon as ShPoly
 
+from i18n_figuras import LANGS, num, set_lang, t
 from orientacion_impresion import orientaciones
 
 # Cotas de src/mango_v3.py (mm)
@@ -103,13 +104,13 @@ def etiqueta(ax, xy, texto, **kw):
 
 def ejes_uso(ax, v, origen_px):
     """Leyenda de ejes del STL proyectados en la vista."""
-    for nombre, vec, col in (("X (a la empunadura)", (1, 0, 0), ROJO), ("Y (boom)", (0, 1, 0), VERDE),
-                             ("Z (a la torre)", (0, 0, 1), AZUL)):
+    for nombre, vec, col in ((t("ax_x"), (1, 0, 0), ROJO), (t("ax_y"), (0, 1, 0), VERDE),
+                             (t("ax_z"), (0, 0, 1), AZUL)):
         vec = np.asarray(vec, float)
         dx, dy = (vec @ v.right) * 60, -(vec @ v.up) * 60
         if abs(dx) + abs(dy) < 3:
             ax.plot(*origen_px, "o", color=col, ms=9)
-            ax.text(origen_px[0] + 12, origen_px[1] + 12, nombre + " (hacia el observador)", color=col, fontsize=9)
+            ax.text(origen_px[0] + 12, origen_px[1] + 12, f"{nombre} ({t('ax_obs')})", color=col, fontsize=9)
             continue
         ax.annotate("", xy=(origen_px[0] + dx, origen_px[1] + dy), xytext=origen_px,
                     arrowprops=dict(arrowstyle="->", color=col, lw=2))
@@ -122,17 +123,17 @@ def fig_vistas(malla, mallas_pv, out, bb):
     kw = dict(color=GRIS, specular=0.2)
     # 1) planta lateral (mirando -Z): plano V-H con la placa a 20 grados
     v = Vista([(mallas_pv, kw)], (0, 0, 1), (-1, 0, 0), 145, c)
-    fig, ax = v.figura("Fig. 1a · Vista lateral (desde +Z), empunadura abajo · cotas en mm")
+    fig, ax = v.figura(t("f1a"))
     cota(ax, v, (bb[0][0], bb[1][1] + 5, bb[1][2]), (bb[1][0], bb[1][1] + 5, bb[1][2]),
-         f"{ex[0]:.1f} (altura total X)", off=(80, 0))
+         t("f1a_h", v=num(ex[0])), off=(80, 0))
     cota(ax, v, (bb[0][0], bb[0][1], bb[1][2]), (bb[0][0], bb[1][1], bb[1][2]),
-         f"{ex[1]:.1f} (largo Y)", off=(0, -45))
+         t("f1a_l", v=num(ex[1])), off=(0, -45))
     # angulo de la placa
     p0 = np.array([-(PLATE_H0), PLATE_V0, 79.0])
     a = np.deg2rad(ANGLE)
     p1 = p0 + PLATE_L * np.array([-np.sin(a), np.cos(a), 0])
     ax.plot(*zip(v.px(p0), v.px(p1)), color=NARANJA, lw=3)
-    etiqueta(ax, (v.px(p1)[0] + 15, v.px(p1)[1] - 30), f"placa {PLATE_L:.0f} × {PLATE_W:.0f} × {PLATE_T:.0f} a {ANGLE:.0f}°",
+    etiqueta(ax, (v.px(p1)[0] + 15, v.px(p1)[1] - 30), t("f1a_plate", l=f"{PLATE_L:.0f}", w=f"{PLATE_W:.0f}", t=f"{PLATE_T:.0f}", a=f"{ANGLE:.0f}"),
              color=NARANJA)
     ejes_uso(ax, v, (110, 900))
     fig.savefig(out / "fig01a_vista_lateral.png")
@@ -140,24 +141,24 @@ def fig_vistas(malla, mallas_pv, out, bb):
 
     # 2) vista de extremo (desde +Y): tunel del boom
     v = Vista([(mallas_pv, kw)], (0, 1, 0), (-1, 0, 0), 145, c)
-    fig, ax = v.figura("Fig. 1b · Vista de extremo (desde +Y): túnel del boom")
+    fig, ax = v.figura(t("f1b"))
     t0 = (TUNEL_X - TUNEL / 2, bb[1][1], TUNEL_Z - TUNEL / 2)
     t1 = (TUNEL_X - TUNEL / 2, bb[1][1], TUNEL_Z + TUNEL / 2)
-    cota(ax, v, t0, t1, f"{TUNEL} (túnel)", off=(-70, 0))
-    cota(ax, v, (bb[0][0], bb[1][1], bb[0][2]), (bb[1][0], bb[1][1], bb[0][2]), f"{ex[0]:.1f}", off=(-110, 0))
-    cota(ax, v, (bb[0][0], bb[1][1], bb[0][2]), (bb[0][0], bb[1][1], bb[1][2]), f"{ex[2]:.1f} (ancho Z)", off=(0, -40))
+    cota(ax, v, t0, t1, t("tunnel", v=num(TUNEL)), off=(-70, 0))
+    cota(ax, v, (bb[0][0], bb[1][1], bb[0][2]), (bb[1][0], bb[1][1], bb[0][2]), num(ex[0]), off=(-110, 0))
+    cota(ax, v, (bb[0][0], bb[1][1], bb[0][2]), (bb[0][0], bb[1][1], bb[1][2]), t("f1b_w", v=num(ex[2])), off=(0, -40))
     ejes_uso(ax, v, (110, 900))
     fig.savefig(out / "fig01b_vista_extremo.png")
     plt.close(fig)
 
     # 3) planta de la placa (desde -X)
     v = Vista([(mallas_pv, kw)], (-1, 0, 0), (0, 1, 0), 70, (-70, 140, 52))
-    fig, ax = v.figura("Fig. 1c · Placa del clip vista desde arriba (desde −X)")
+    fig, ax = v.figura(t("f1c"))
     zc = PLATE_U0
     cota(ax, v, (-80, PLATE_V0, zc), (-80, PLATE_V0, zc + PLATE_W), f"{PLATE_W:.0f}", off=(0, -60))
     cota(ax, v, (-80, PLATE_V0, 5), (-80, PLATE_V0 + PLATE_L * np.cos(np.deg2rad(ANGLE)), 5),
-         f"{PLATE_L * np.cos(np.deg2rad(ANGLE)):.1f} (proyección de {PLATE_L:.0f})", off=(-40, 0))
-    etiqueta(ax, (30, 960), f"hueco libre entre cartelas {PLATE_W - 2 * WALL:.0f} · cartelas de {WALL:.0f}", color=AZUL)
+         t("f1c_proj", v=num(PLATE_L * np.cos(np.deg2rad(ANGLE))), l=f"{PLATE_L:.0f}"), off=(-40, 0))
+    etiqueta(ax, (30, 960), t("f1c_gap", g=f"{PLATE_W - 2 * WALL:.0f}", w=f"{WALL:.0f}"), color=AZUL)
     ejes_uso(ax, v, (1250, 900))
     fig.savefig(out / "fig01c_planta_placa.png")
     plt.close(fig)
@@ -196,7 +197,7 @@ def fig_explosionado(mallas_pv, out, bb):
               (lengua, dict(color="#2980b9", opacity=0.85))]
     c = np.array([15, 120, 40.0])
     v = Vista(escena, (-0.55, -0.62, 0.55), (-1, 0, 0), 175, c, size=(1500, 1100))
-    fig, ax = v.figura("Fig. 2 · Explosionado de montaje (isométrica, esquema a escala nominal)")
+    fig, ax = v.figura(t("f2"))
     # flechas de montaje
     def flecha(p0, p1, n, col=AZUL, d=(20, -20)):
         a, b = v.px(p0), v.px(p1)
@@ -206,10 +207,8 @@ def fig_explosionado(mallas_pv, out, bb):
     flecha((BUTT_X + 31, T_YC, T_ZC), (BUTT_X + 12, T_YC, T_ZC), 2, ROJO, (60, 10))
     flecha((TUNEL_X, boom.center[1] + 60, TUNEL_Z), (TUNEL_X, 110, TUNEL_Z), 3, VERDE)
     flecha(tuple(centro_lengua + desp_clip), tuple(centro_lengua), 4, NARANJA)
-    etiqueta(ax, (30, 1010), "①  tuerca 1/4\"-20 por la ranura del culo   ②  placa rápida de trípode (tornillo 1/4\"-20)\n"
-                              "③  boom de 15 mm por el túnel de 15,5 mm   ④  lengua del clip bajo la placa (entra por el extremo bajo, v5)",
-             va="top")
-    ejes_uso(ax, v, (1350, 150))
+    etiqueta(ax, (30, 1010), t("f2_l1") + "\n" + t("f2_l2"), va="top")
+    ejes_uso(ax, v, (1230, 150))
     fig.savefig(out / "fig02_explosionado.png")
     plt.close(fig)
 
@@ -242,12 +241,12 @@ def fig_cortes(malla, out):
     ax.set_ylim(-20, 20)
     ax.invert_yaxis()
     ax.set_aspect("equal")
-    ax.set_title("Fig. 3a · Corte A-A (y = 100): túnel 15,5 y boom 15,0 (trazo verde)", fontsize=12, weight="bold")
+    ax.set_title(t("f3a", t=num(TUNEL), b=num(BOOM)), fontsize=12, weight="bold")
     ax.annotate("", xy=(TUNEL_Z - TUNEL / 2, -12), xytext=(TUNEL_Z + TUNEL / 2, -12),
                 arrowprops=dict(arrowstyle="<->", color=ROJO))
-    ax.text(TUNEL_Z, -13.5, f"{TUNEL} (holgura nominal {(TUNEL - BOOM) / 2:.2f} por lado)", color=ROJO, ha="center")
+    ax.text(TUNEL_Z, -13.5, t("f3a_gap", t=num(TUNEL), g=num((TUNEL - BOOM) / 2, 2)), color=ROJO, ha="center")
     ax.set_xlabel("Z (mm)")
-    ax.set_ylabel("X (mm) · hacia abajo = empunadura")
+    ax.set_ylabel(t("f3a_ylab"))
     # B: corte longitudinal por el eje de la tuerca (plano z = T_ZC): x horizontal, y vertical
     ax = axs[1]
     rellenar(ax, bucles(malla, [0, 0, 12.0], [0, 0, 1]), [0, 1], fc="#dfe6ee", ec="#34495e", lw=1.2)
@@ -255,16 +254,16 @@ def fig_cortes(malla, out):
     ax.set_xlim(70, 118)
     ax.set_ylim(T_YC - 20, T_YC + 20)
     ax.set_aspect("equal")
-    ax.set_title("Fig. 3b · Corte B-B (z = 12): ranura de la tuerca 1/4\"-20", fontsize=12, weight="bold")
+    ax.set_title(t("f3b"), fontsize=12, weight="bold")
     ax.annotate("", xy=(BUTT_X - SKIN - NUT_SLOT, T_YC + 9), xytext=(BUTT_X - SKIN, T_YC + 9),
                 arrowprops=dict(arrowstyle="<->", color=ROJO))
-    ax.text(BUTT_X - SKIN - NUT_SLOT / 2, T_YC + 10, f"ranura {NUT_SLOT}", color=ROJO, ha="center")
+    ax.text(BUTT_X - SKIN - NUT_SLOT / 2, T_YC + 10, t("slot", v=num(NUT_SLOT)), color=ROJO, ha="center")
     ax.annotate("", xy=(BUTT_X - SKIN, T_YC - 9), xytext=(BUTT_X, T_YC - 9), arrowprops=dict(arrowstyle="<->", color=ROJO))
-    ax.text(BUTT_X - SKIN / 2, T_YC - 11, f"piel {SKIN}", color=ROJO, ha="center")
-    ax.text(BUTT_X - SKIN - NUT_SLOT / 2, T_YC - NUT_AF / 2 - 2.5, f"AF {NUT_AF} (tuerca nominal {NUT_NOM_AF})",
+    ax.text(BUTT_X - SKIN / 2, T_YC - 11, t("skin", v=num(SKIN)), color=ROJO, ha="center")
+    ax.text(BUTT_X - SKIN - NUT_SLOT / 2, T_YC - NUT_AF / 2 - 2.5, t("af", v=num(NUT_AF), n=num(NUT_NOM_AF)),
             color=NARANJA, ha="center")
-    ax.text(80, T_YC + 15, f"taladro Ø{NUT_HOLE}", color=ROJO)
-    ax.set_xlabel("X (mm) · culo a la derecha (X = 110)")
+    ax.text(80, T_YC + 15, t("hole", v=num(NUT_HOLE)), color=ROJO)
+    ax.set_xlabel(t("f3b_xlab"))
     ax.set_ylabel("Y (mm)")
     fig.tight_layout()
     fig.savefig(out / "fig03_cortes.png")
@@ -272,9 +271,9 @@ def fig_cortes(malla, out):
 
 
 def fig_orientacion(malla, mallas_pv, out, filas):
-    cands = [("A · cama = cara Y− (túnel vertical)\nrecomendada para empezar", (0, -1, 0), (-1, 0, 0), "Y−"),
-             ("B · cama = culo X+ (alternativa)\ncarga de la tuerca perpendicular a las capas", (1, 0, 0), (0, 1, 0), "X+"),
-             ("C · cama = cara Z+ (alternativa)", (0, 0, 1), (-1, 0, 0), "Z+")]
+    cands = [(t("oA"), (0, -1, 0), (-1, 0, 0), "Y−"),
+             (t("oB"), (1, 0, 0), (0, 1, 0), "X+"),
+             (t("oC"), (0, 0, 1), (-1, 0, 0), "Z+")]
     fig, axs = plt.subplots(1, 3, figsize=(17, 7), dpi=100)
     for ax, (tit, cama_dir, up_hint, clave) in zip(axs, cands):
         d = -np.asarray(cama_dir, float)
@@ -286,12 +285,10 @@ def fig_orientacion(malla, mallas_pv, out, filas):
         ax.axis("off")
         base = v.px(malla.bounds.mean(0) + np.asarray(cama_dir) * (malla.extents @ np.abs(cama_dir)) / 2)[1]
         ax.axhline(base, color="k", lw=4)
-        ax.text(450, base + 25, "cama", ha="center", va="top", fontsize=11)
+        ax.text(450, base + 25, t("bed"), ha="center", va="top", fontsize=11)
         f = next(x for x in filas if x["cama"] == clave.replace("−", "-"))
-        ax.set_title(tit + f"\naltura {f['altura_mm']} mm · contacto {f['contacto_mm2']} mm² · voladizo >45° {f['voladizo_mm2']} mm²",
-                     fontsize=11)
-    fig.suptitle("Fig. 4 · Orientaciones de impresión candidatas (métricas calculadas sobre el STL; ensayo físico pendiente)",
-                 fontsize=13, weight="bold")
+        ax.set_title(tit + "\n" + t("o_met", h=f["altura_mm"], c=f["contacto_mm2"], o=f["voladizo_mm2"]), fontsize=11)
+    fig.suptitle(t("f4"), fontsize=13, weight="bold")
     fig.tight_layout()
     fig.savefig(out / "fig04_orientacion_impresion.png")
     plt.close(fig)
@@ -299,17 +296,17 @@ def fig_orientacion(malla, mallas_pv, out, filas):
 
 def fig_clip(mallas_pv, out, bb):
     v = Vista([(mallas_pv, dict(color=GRIS, specular=0.2))], (0, 0, 1), (-1, 0, 0), 60, (-58, 147, 50), size=(1400, 1000))
-    fig, ax = v.figura("Fig. 5 · Inserción del clip (vista lateral, entrada por el extremo bajo −V en v5)")
+    fig, ax = v.figura(t("f5"))
     ang = np.deg2rad(ANGLE)
     s = np.array([-np.sin(ang), np.cos(ang), 0])
     n = np.array([-np.cos(ang), -np.sin(ang), 0])
     o = np.array([-PLATE_H0, PLATE_V0, 79.0])
     cota(ax, v, o, o + s * PLATE_L, f"{PLATE_L:.0f}", off=(0, -70))
-    etiqueta(ax, (40, 940), f"placa {PLATE_T:.0f} mm; hueco libre bajo placa 7 mm; lengua del clip hasta {CLIP_T:.0f} mm", color=AZUL)
+    etiqueta(ax, (40, 940), t("f5_gap", t=f"{PLATE_T:.0f}", c=f"{CLIP_T:.0f}"), color=AZUL)
     a = v.px(o + s * 0 - n * 3 - s * 30)
     b = v.px(o + s * USABLE - n * 3)
     ax.annotate("", xy=b, xytext=a, arrowprops=dict(arrowstyle="-|>", color=NARANJA, lw=3))
-    etiqueta(ax, (a[0] - 10, a[1] + 40), f"recorrido útil {USABLE:.0f} paralelo a la placa", color=NARANJA)
+    etiqueta(ax, (a[0] - 10, a[1] + 40), t("f5_run", u=f"{USABLE:.0f}"), color=NARANJA)
     fig.savefig(out / "fig05_insercion_clip.png")
     plt.close(fig)
 
@@ -317,20 +314,24 @@ def fig_clip(mallas_pv, out, bb):
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("stl", type=Path, help="STL del mango (p. ej. stl/v5/mango_spacequad_v5_uvk5v3.stl)")
-    ap.add_argument("salida", type=Path, help="directorio de PNG")
+    ap.add_argument("salida", type=Path, help="directorio base de PNG; se crea una subcarpeta por idioma")
+    ap.add_argument("--langs", default=",".join(LANGS), help="idiomas separados por coma")
     a = ap.parse_args()
-    a.salida.mkdir(parents=True, exist_ok=True)
     malla = trimesh.load(a.stl)
     mpv = pv.read(str(a.stl))
     bb = malla.bounds
     filas = orientaciones(malla)
-    (a.salida / "orientaciones.json").write_text(json.dumps(filas, indent=1), encoding="utf-8")
-    fig_vistas(malla, mpv, a.salida, bb)
-    fig_explosionado(mpv, a.salida, bb)
-    fig_cortes(malla, a.salida)
-    fig_orientacion(malla, mpv, a.salida, filas)
-    fig_clip(mpv, a.salida, bb)
-    print("OK", sorted(p.name for p in a.salida.iterdir()))
+    for lang in a.langs.split(","):
+        set_lang(lang)
+        out = a.salida / lang
+        out.mkdir(parents=True, exist_ok=True)
+        (out / "orientaciones.json").write_text(json.dumps(filas, indent=1), encoding="utf-8")
+        fig_vistas(malla, mpv, out, bb)
+        fig_explosionado(mpv, out, bb)
+        fig_cortes(malla, out)
+        fig_orientacion(malla, mpv, out, filas)
+        fig_clip(mpv, out, bb)
+        print("OK", lang, len(list(out.glob("*.png"))))
 
 
 if __name__ == "__main__":

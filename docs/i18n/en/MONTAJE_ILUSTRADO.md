@@ -2,29 +2,85 @@
 
 [Español](../es/README.md) · **English** · [Deutsch](../de/README.md) · [Français](../fr/README.md) · [Italiano](../it/README.md)
 
-> Based on the geometry of `feat/v5-radio-180` (2497ad7). If geometry changes, regenerate with `src/render_guia.py`. Clip dimensions are estimated, not measured.
+> Based on the final geometry on main (v5, v5+reinforcement and Anytone). If geometry changes, regenerate with `src/render_guia.py`. Clip dimensions are estimated, not measured.
+
+## Variants (final geometry)
+
+| Variant | STL file | Envelope (mm) | Volume (mm³) |
+|---|---|---|---|
+| v5 (UV-K5 V3 / RT-950 Pro, identical) | `stl/v5/*uvk5v3.stl, *rt950pro.stl` | 195.2 × 95.6 × 79.0 | 191951 |
+| v5 + reinforced base (UV-K5 V3 / RT-950 Pro) | `stl/refuerzo/*_v5_*_refuerzo.stl` | 195.2 × 95.6 × 79.0 | 205173 |
+| Adjustable generic Anytone (base already reinforced; optional shims) | `stl/mango_spacequad_anytone_generico.stl + stl/anytone_calzos/*.stl` | 195.2 × 93.7 × 79.0 | 213099 |
 
 ## Graphics
 
-![Side view with dimensions (X points to the grip)](../../img/guia/fig01a_vista_lateral.png)
+### v5 (UV-K5 V3 / RT-950 Pro, identical)
+
+![Side view with dimensions (X points to the grip)](../../img/guia/v5/en/fig01a_vista_lateral.png)
 *Side view with dimensions (X points to the grip)*
 
-![End view (butt face)](../../img/guia/fig01b_vista_extremo.png)
+![End view (butt face)](../../img/guia/v5/en/fig01b_vista_extremo.png)
 *End view (butt face)*
 
-![Clip plate plan: 55 × 48 × 4 mm at 20°](../../img/guia/fig01c_planta_placa.png)
+![Clip plate plan: 55 × 48 × 4 mm at 20°](../../img/guia/v5/en/fig01c_planta_placa.png)
 *Clip plate plan: 55 × 48 × 4 mm at 20°*
 
-![Exploded view and numbered steps ①–④ (nut enters from Z−)](../../img/guia/fig02_explosionado.png)
+![Exploded view and numbered steps ①–④ (nut enters from Z−)](../../img/guia/v5/en/fig02_explosionado.png)
 *Exploded view and numbered steps ①–④ (nut enters from Z−)*
 
-![Sections A-A (tunnel) and B-B (nut slot)](../../img/guia/fig03_cortes.png)
+![Sections A-A (tunnel) and B-B (nut slot)](../../img/guia/v5/en/fig03_cortes.png)
 *Sections A-A (tunnel) and B-B (nut slot)*
 
-![Print orientations compared](../../img/guia/fig04_orientacion_impresion.png)
+![Print orientations compared](../../img/guia/v5/en/fig04_orientacion_impresion.png)
 *Print orientations compared*
 
-![Clip insertion (v3 enters from +V; v5 from −V)](../../img/guia/fig05_insercion_clip.png)
+![Clip insertion (v3 enters from +V; v5 from −V)](../../img/guia/v5/en/fig05_insercion_clip.png)
+*Clip insertion (v3 enters from +V; v5 from −V)*
+
+### v5 + reinforced base (UV-K5 V3 / RT-950 Pro)
+
+![Side view with dimensions (X points to the grip)](../../img/guia/v5_refuerzo/en/fig01a_vista_lateral.png)
+*Side view with dimensions (X points to the grip)*
+
+![End view (butt face)](../../img/guia/v5_refuerzo/en/fig01b_vista_extremo.png)
+*End view (butt face)*
+
+![Clip plate plan: 55 × 48 × 4 mm at 20°](../../img/guia/v5_refuerzo/en/fig01c_planta_placa.png)
+*Clip plate plan: 55 × 48 × 4 mm at 20°*
+
+![Exploded view and numbered steps ①–④ (nut enters from Z−)](../../img/guia/v5_refuerzo/en/fig02_explosionado.png)
+*Exploded view and numbered steps ①–④ (nut enters from Z−)*
+
+![Sections A-A (tunnel) and B-B (nut slot)](../../img/guia/v5_refuerzo/en/fig03_cortes.png)
+*Sections A-A (tunnel) and B-B (nut slot)*
+
+![Print orientations compared](../../img/guia/v5_refuerzo/en/fig04_orientacion_impresion.png)
+*Print orientations compared*
+
+![Clip insertion (v3 enters from +V; v5 from −V)](../../img/guia/v5_refuerzo/en/fig05_insercion_clip.png)
+*Clip insertion (v3 enters from +V; v5 from −V)*
+
+### Adjustable generic Anytone (base already reinforced; optional shims)
+
+![Side view with dimensions (X points to the grip)](../../img/guia/anytone/en/fig01a_vista_lateral.png)
+*Side view with dimensions (X points to the grip)*
+
+![End view (butt face)](../../img/guia/anytone/en/fig01b_vista_extremo.png)
+*End view (butt face)*
+
+![Clip plate plan: 55 × 48 × 4 mm at 20°](../../img/guia/anytone/en/fig01c_planta_placa.png)
+*Clip plate plan: 55 × 48 × 4 mm at 20°*
+
+![Exploded view and numbered steps ①–④ (nut enters from Z−)](../../img/guia/anytone/en/fig02_explosionado.png)
+*Exploded view and numbered steps ①–④ (nut enters from Z−)*
+
+![Sections A-A (tunnel) and B-B (nut slot)](../../img/guia/anytone/en/fig03_cortes.png)
+*Sections A-A (tunnel) and B-B (nut slot)*
+
+![Print orientations compared](../../img/guia/anytone/en/fig04_orientacion_impresion.png)
+*Print orientations compared*
+
+![Clip insertion (v3 enters from +V; v5 from −V)](../../img/guia/anytone/en/fig05_insercion_clip.png)
 *Clip insertion (v3 enters from +V; v5 from −V)*
 
 ## Bill of materials (BOM)

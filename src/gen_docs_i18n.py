@@ -36,7 +36,7 @@ L["es"] = dict(
     title="Mango SpaceQuad v5 — Guía de montaje ilustrada",
     idx_title="Guías SpaceQuad (multiidioma)", idx_intro="Documentación coherente en 5 idiomas. Todos los perfiles de impresión y pruebas de carga son **valores iniciales PENDIENTES DE PRUEBA FÍSICA**.",
     d_mont="Montaje ilustrado, BOM, holguras y pruebas de carga", d_imp="Material, orientación y perfiles iniciales de impresión", d_cal="Calibración Anycubic Kobra S1 y Bambu Lab",
-    pend="⚠ PENDIENTE DE PRUEBA FÍSICA", geo="Basado en la geometría de `feat/v5-radio-180` (2497ad7). Si cambia la geometría, regenerar con `src/render_guia.py`. Las dimensiones del clip son estimadas, no medidas.",
+    pend="⚠ PENDIENTE DE PRUEBA FÍSICA", geo="Basado en la geometría final de main (v5, v5+refuerzo y Anytone). Si cambia la geometría, regenerar con `src/render_guia.py`. Las dimensiones del clip son estimadas, no medidas.",
     figs=["Vista lateral con cotas (X apunta al agarre)", "Vista de extremo (culata)", "Planta de la placa del clip: %s mm a %s" % (N["placa"], N["ang"]),
           "Explosionado y pasos numerados ①–④ (la tuerca entra desde Z−)", "Cortes A-A (túnel) y B-B (alojamiento de tuerca)", "Orientaciones de impresión comparadas", "Inserción del clip (v3 entra por +V; v5 por −V)"],
     h_fig="Gráficos", h_bom="Lista de materiales (BOM)", bom_h=["Nº", "Cant.", "Elemento", "Medida / especificación", "Nota"],
@@ -89,7 +89,7 @@ L["en"] = dict(
     title="SpaceQuad v5 handle — Illustrated assembly guide",
     idx_title="SpaceQuad guides (multilingual)", idx_intro="Consistent documentation in 5 languages. All print profiles and load tests are **initial values PENDING PHYSICAL TESTING**.",
     d_mont="Illustrated assembly, BOM, clearances and load tests", d_imp="Material, orientation and initial print profiles", d_cal="Anycubic Kobra S1 and Bambu Lab calibration",
-    pend="⚠ PENDING PHYSICAL TEST", geo="Based on the geometry of `feat/v5-radio-180` (2497ad7). If geometry changes, regenerate with `src/render_guia.py`. Clip dimensions are estimated, not measured.",
+    pend="⚠ PENDING PHYSICAL TEST", geo="Based on the final geometry on main (v5, v5+reinforcement and Anytone). If geometry changes, regenerate with `src/render_guia.py`. Clip dimensions are estimated, not measured.",
     figs=["Side view with dimensions (X points to the grip)", "End view (butt face)", "Clip plate plan: %s mm at %s" % (N["placa"], N["ang"]),
           "Exploded view and numbered steps ①–④ (nut enters from Z−)", "Sections A-A (tunnel) and B-B (nut slot)", "Print orientations compared", "Clip insertion (v3 enters from +V; v5 from −V)"],
     h_fig="Graphics", h_bom="Bill of materials (BOM)", bom_h=["No.", "Qty", "Item", "Size / specification", "Note"],
@@ -142,7 +142,7 @@ L["de"] = dict(
     title="SpaceQuad-Griff v5 — Bebilderte Montageanleitung",
     idx_title="SpaceQuad-Anleitungen (mehrsprachig)", idx_intro="Konsistente Dokumentation in 5 Sprachen. Alle Druckprofile und Belastungstests sind **Startwerte, DIE NOCH PHYSISCH ZU PRÜFEN SIND**.",
     d_mont="Bebilderte Montage, Stückliste, Spiel und Belastungstests", d_imp="Material, Ausrichtung und anfängliche Druckprofile", d_cal="Kalibrierung Anycubic Kobra S1 und Bambu Lab",
-    pend="⚠ PHYSISCHE PRÜFUNG AUSSTEHEND", geo="Basiert auf der Geometrie von `feat/v5-radio-180` (2497ad7). Bei Geometrieänderung mit `src/render_guia.py` neu erzeugen. Die Clip-Maße sind geschätzt, nicht gemessen.",
+    pend="⚠ PHYSISCHE PRÜFUNG AUSSTEHEND", geo="Basiert auf der endgültigen Geometrie in main (v5, v5+Verstärkung und Anytone). Bei Geometrieänderung mit `src/render_guia.py` neu erzeugen. Die Clip-Maße sind geschätzt, nicht gemessen.",
     figs=["Seitenansicht mit Maßen (X zeigt zum Griff)", "Stirnansicht (Griffende)", "Draufsicht der Clip-Platte: %s mm bei %s" % (N["placa"], N["ang"]),
           "Explosionsansicht und nummerierte Schritte ①–④ (Mutter von Z− einsetzen)", "Schnitte A-A (Tunnel) und B-B (Mutterntasche)", "Druckausrichtungen im Vergleich", "Clip-Einschub (v3 von +V; v5 von −V)"],
     h_fig="Grafiken", h_bom="Stückliste (BOM)", bom_h=["Nr.", "Menge", "Teil", "Maß / Spezifikation", "Hinweis"],
@@ -195,7 +195,7 @@ L["fr"] = dict(
     title="Poignée SpaceQuad v5 — Guide de montage illustré",
     idx_title="Guides SpaceQuad (multilingue)", idx_intro="Documentation cohérente en 5 langues. Tous les profils d'impression et essais de charge sont des **valeurs initiales EN ATTENTE D'ESSAI PHYSIQUE**.",
     d_mont="Montage illustré, nomenclature, jeux et essais de charge", d_imp="Matériau, orientation et profils d'impression initiaux", d_cal="Calibration Anycubic Kobra S1 et Bambu Lab",
-    pend="⚠ ESSAI PHYSIQUE EN ATTENTE", geo="Basé sur la géométrie de `feat/v5-radio-180` (2497ad7). Si la géométrie change, régénérer avec `src/render_guia.py`. Les dimensions du clip sont estimées, non mesurées.",
+    pend="⚠ ESSAI PHYSIQUE EN ATTENTE", geo="Basé sur la géométrie finale de main (v5, v5+renfort et Anytone). Si la géométrie change, régénérer avec `src/render_guia.py`. Les dimensions du clip sont estimées, non mesurées.",
     figs=["Vue latérale cotée (X pointe vers la prise)", "Vue de bout (culasse)", "Plan de la plaque du clip : %s mm à %s" % (N["placa"], N["ang"]),
           "Vue éclatée et étapes numérotées ①–④ (l'écrou entre par Z−)", "Coupes A-A (tunnel) et B-B (logement d'écrou)", "Orientations d'impression comparées", "Insertion du clip (v3 par +V ; v5 par −V)"],
     h_fig="Graphiques", h_bom="Nomenclature (BOM)", bom_h=["N°", "Qté", "Élément", "Dimension / spécification", "Remarque"],
@@ -248,7 +248,7 @@ L["it"] = dict(
     title="Impugnatura SpaceQuad v5 — Guida di montaggio illustrata",
     idx_title="Guide SpaceQuad (multilingue)", idx_intro="Documentazione coerente in 5 lingue. Tutti i profili di stampa e le prove di carico sono **valori iniziali IN ATTESA DI PROVA FISICA**.",
     d_mont="Montaggio illustrato, distinta, giochi e prove di carico", d_imp="Materiale, orientamento e profili di stampa iniziali", d_cal="Calibrazione Anycubic Kobra S1 e Bambu Lab",
-    pend="⚠ PROVA FISICA IN SOSPESO", geo="Basato sulla geometria di `feat/v5-radio-180` (2497ad7). Se la geometria cambia, rigenerare con `src/render_guia.py`. Le dimensioni della clip sono stimate, non misurate.",
+    pend="⚠ PROVA FISICA IN SOSPESO", geo="Basato sulla geometria finale di main (v5, v5+rinforzo e Anytone). Se la geometria cambia, rigenerare con `src/render_guia.py`. Le dimensioni della clip sono stimate, non misurate.",
     figs=["Vista laterale quotata (X punta verso l'impugnatura)", "Vista di testa (culatta)", "Pianta della piastra della clip: %s mm a %s" % (N["placa"], N["ang"]),
           "Vista esplosa e passi numerati ①–④ (il dado entra da Z−)", "Sezioni A-A (tunnel) e B-B (sede del dado)", "Orientamenti di stampa a confronto", "Inserimento della clip (v3 da +V; v5 da −V)"],
     h_fig="Grafici", h_bom="Distinta base (BOM)", bom_h=["N.", "Q.tà", "Elemento", "Misura / specifica", "Nota"],
@@ -308,10 +308,36 @@ def nav(lang):
     return " · ".join("**%s**" % NAMES[l] if l == lang else "[%s](../%s/README.md)" % (NAMES[l], l) for l in LANGS)
 
 
+# (carpeta de figuras, STL, envolvente mm, volumen mm3); medidos de los STL verificados
+VARIANTES = [
+    ("v5", "stl/v5/*uvk5v3.stl, *rt950pro.stl", "195.2 × 95.6 × 79.0", "191951"),
+    ("v5_refuerzo", "stl/refuerzo/*_v5_*_refuerzo.stl", "195.2 × 95.6 × 79.0", "205173"),
+    ("anytone", "stl/mango_spacequad_anytone_generico.stl + stl/anytone_calzos/*.stl", "195.2 × 93.7 × 79.0", "213099"),
+]
+VNAME = {
+    "es": ("v5 (UV-K5 V3 / RT-950 Pro, idénticos)", "v5 + base reforzada (UV-K5 V3 / RT-950 Pro)", "Anytone genérico ajustable (base ya reforzada; calzos opcionales)"),
+    "en": ("v5 (UV-K5 V3 / RT-950 Pro, identical)", "v5 + reinforced base (UV-K5 V3 / RT-950 Pro)", "Adjustable generic Anytone (base already reinforced; optional shims)"),
+    "de": ("v5 (UV-K5 V3 / RT-950 Pro, identisch)", "v5 + verstärkte Basis (UV-K5 V3 / RT-950 Pro)", "Anytone generisch einstellbar (Basis bereits verstärkt; optionale Keile)"),
+    "fr": ("v5 (UV-K5 V3 / RT-950 Pro, identiques)", "v5 + base renforcée (UV-K5 V3 / RT-950 Pro)", "Anytone générique réglable (base déjà renforcée ; cales optionnelles)"),
+    "it": ("v5 (UV-K5 V3 / RT-950 Pro, identici)", "v5 + base rinforzata (UV-K5 V3 / RT-950 Pro)", "Anytone generico regolabile (base già rinforzata; spessori opzionali)"),
+}
+VHEAD = {
+    "es": ("Variantes (geometría final)", ["Variante", "Archivo STL", "Envolvente (mm)", "Volumen (mm³)"]),
+    "en": ("Variants (final geometry)", ["Variant", "STL file", "Envelope (mm)", "Volume (mm³)"]),
+    "de": ("Varianten (endgültige Geometrie)", ["Variante", "STL-Datei", "Hüllmaß (mm)", "Volumen (mm³)"]),
+    "fr": ("Variantes (géométrie finale)", ["Variante", "Fichier STL", "Encombrement (mm)", "Volume (mm³)"]),
+    "it": ("Varianti (geometria finale)", ["Variante", "File STL", "Ingombro (mm)", "Volume (mm³)"]),
+}
+
+
 def doc_mont(lang, t):
-    o = ["# " + t["title"], "", nav(lang), "", "> " + t["geo"], "", "## " + t["h_fig"], ""]
-    for f, c in zip(FIGS, t["figs"]):
-        o += ["![%s](%s%s.png)" % (c, IMG, f), "*%s*" % c, ""]
+    o = ["# " + t["title"], "", nav(lang), "", "> " + t["geo"], "", "## " + VHEAD[lang][0], "",
+         table(VHEAD[lang][1], [[VNAME[lang][i], "`%s`" % v[1], v[2], v[3]] for i, v in enumerate(VARIANTES)]), ""]
+    o += ["## " + t["h_fig"], ""]
+    for i, v in enumerate(VARIANTES):
+        o += ["### " + VNAME[lang][i], ""]
+        for f, c in zip(FIGS, t["figs"]):
+            o += ["![%s](../../img/guia/%s/%s/%s.png)" % (c, v[0], lang, f), "*%s*" % c, ""]
     o += ["## " + t["h_bom"], "", table(t["bom_h"], [list(r) for r in t["bom"]]), "", t["nobear"], "",
           "## " + t["h_ord"], ""] + ["%d. %s" % (i + 1, s) for i, s in enumerate(t["steps"])]
     o += ["", "## " + t["h_hol"], "", "> " + t["pend"], ""] + ["%d. %s" % (i + 1, s) for i, s in enumerate(t["hol"])]
@@ -328,7 +354,7 @@ def doc_imp(lang, t):
     o = ["# " + t["h_mat"] + " — SpaceQuad v5", "", nav(lang), "", "> " + t["pend"], "", "## " + t["h_mat"], "",
          table(t["mat_h"], [list(r) for r in t["mat"]]), "",
          table(t["ori_h"], [[m[0], m[1] + " mm", m[2] + " mm²", m[3] + " mm²", c] for m, c in zip(metr, t["ori_c"])]), "",
-         "![%s](%sfig04_orientacion_impresion.png)" % (t["figs"][5], IMG), "",
+         "![%s](../../img/guia/v5/%s/fig04_orientacion_impresion.png)" % (t["figs"][5], lang), "",
          "## " + t["h_prof"], "", table(t["prof_h"], [list(r) for r in t["prof"]]), "", t["prof_note"], "",
          "- " + SRC["b_petg"], ""]
     return "\n".join(o)

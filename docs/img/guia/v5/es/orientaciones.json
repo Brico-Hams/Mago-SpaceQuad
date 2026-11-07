@@ -1,0 +1,44 @@
+[
+ {
+  "arriba": "X+",
+  "cama": "X-",
+  "altura_mm": 195.2,
+  "contacto_mm2": 0,
+  "voladizo_mm2": 11812
+ },
+ {
+  "arriba": "X-",
+  "cama": "X+",
+  "altura_mm": 195.2,
+  "contacto_mm2": 1284,
+  "voladizo_mm2": 10144
+ },
+ {
+  "arriba": "Y+",
+  "cama": "Y-",
+  "altura_mm": 95.6,
+  "contacto_mm2": 355,
+  "voladizo_mm2": 7688
+ },
+ {
+  "arriba": "Y-",
+  "cama": "Y+",
+  "altura_mm": 95.6,
+  "contacto_mm2": 0,
+  "voladizo_mm2": 7778
+ },
+ {
+  "arriba": "Z+",
+  "cama": "Z-",
+  "altura_mm": 79.0,
+  "contacto_mm2": 34,
+  "voladizo_mm2": 12654
+ },
+ {
+  "arriba": "Z-",
+  "cama": "Z+",
+  "altura_mm": 79.0,
+  "contacto_mm2": 711,
+  "voladizo_mm2": 11941
+ }
+]

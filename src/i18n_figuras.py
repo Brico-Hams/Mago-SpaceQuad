@@ -1,0 +1,134 @@
+"""Etiquetas de las figuras de la guia en es/en/de/fr/it (usado por render_guia.py)."""
+
+LANGS = ("es", "en", "de", "fr", "it")
+
+_T = {
+    "es": {
+        "ax_x": "X (a la empunadura)", "ax_y": "Y (boom)", "ax_z": "Z (a la torre)", "ax_obs": "hacia el observador",
+        "f1a": "Fig. 1a · Vista lateral (desde +Z), empunadura abajo · cotas en mm",
+        "f1a_h": "{v} (altura total X)", "f1a_l": "{v} (largo Y)", "f1a_plate": "placa {l} × {w} × {t} a {a}°",
+        "f1b": "Fig. 1b · Vista de extremo (desde +Y): túnel del boom", "tunnel": "{v} (túnel)", "f1b_w": "{v} (ancho Z)",
+        "f1c": "Fig. 1c · Placa del clip vista desde arriba (desde −X)", "f1c_proj": "{v} (proyección de {l})",
+        "f1c_gap": "hueco libre entre cartelas {g} · cartelas de {w}",
+        "f2": "Fig. 2 · Explosionado de montaje (isométrica, esquema a escala nominal)",
+        "f2_l1": "①  tuerca 1/4\"-20 por la ranura del culo   ②  placa rápida de trípode (tornillo 1/4\"-20)",
+        "f2_l2": "③  boom de 15 mm por el túnel de 15,5 mm   ④  lengua del clip bajo la placa (entra por el extremo bajo, v5)",
+        "f3a": "Fig. 3a · Corte A-A (y = 100): túnel {t} y boom {b} (trazo verde)", "f3a_gap": "{t} (holgura nominal {g} por lado)",
+        "f3a_ylab": "X (mm) · hacia abajo = empunadura", "f3b": "Fig. 3b · Corte B-B (z = 12): ranura de la tuerca 1/4\"-20",
+        "slot": "ranura {v}", "skin": "piel {v}", "af": "AF {v} (tuerca nominal {n})", "hole": "taladro Ø{v}",
+        "f3b_xlab": "X (mm) · culo a la derecha (X = 110)",
+        "oA": "A · cama = cara Y− (túnel vertical)\nrecomendada para empezar",
+        "oB": "B · cama = culo X+ (alternativa)\ncarga de la tuerca perpendicular a las capas", "oC": "C · cama = cara Z+ (alternativa)",
+        "o_met": "altura {h} mm · contacto {c} mm² · voladizo >45° {o} mm²", "bed": "cama",
+        "f4": "Fig. 4 · Orientaciones de impresión candidatas (métricas calculadas sobre el STL; ensayo físico pendiente)",
+        "f5": "Fig. 5 · Inserción del clip (vista lateral, entrada por el extremo bajo −V en v5)",
+        "f5_gap": "placa {t} mm; hueco libre bajo placa 7 mm; lengua del clip hasta {c} mm",
+        "f5_run": "recorrido útil {u} paralelo a la placa",
+    },
+    "en": {
+        "ax_x": "X (toward grip)", "ax_y": "Y (boom)", "ax_z": "Z (toward tower)", "ax_obs": "toward viewer",
+        "f1a": "Fig. 1a · Side view (from +Z), grip down · dimensions in mm",
+        "f1a_h": "{v} (total height X)", "f1a_l": "{v} (length Y)", "f1a_plate": "plate {l} × {w} × {t} at {a}°",
+        "f1b": "Fig. 1b · End view (from +Y): boom tunnel", "tunnel": "{v} (tunnel)", "f1b_w": "{v} (width Z)",
+        "f1c": "Fig. 1c · Clip plate seen from above (from −X)", "f1c_proj": "{v} (projection of {l})",
+        "f1c_gap": "free gap between gussets {g} · gussets {w} thick",
+        "f2": "Fig. 2 · Exploded assembly (isometric, nominal-scale schematic)",
+        "f2_l1": "①  1/4\"-20 nut into the butt slot   ②  tripod quick-release plate (1/4\"-20 screw)",
+        "f2_l2": "③  15 mm boom through the 15.5 mm tunnel   ④  clip tongue under the plate (enters from the low end, v5)",
+        "f3a": "Fig. 3a · Section A-A (y = 100): tunnel {t} and boom {b} (green dashed)", "f3a_gap": "{t} (nominal clearance {g} per side)",
+        "f3a_ylab": "X (mm) · down = grip", "f3b": "Fig. 3b · Section B-B (z = 12): 1/4\"-20 nut slot",
+        "slot": "slot {v}", "skin": "skin {v}", "af": "AF {v} (nominal nut {n})", "hole": "bore Ø{v}",
+        "f3b_xlab": "X (mm) · butt on the right (X = 110)",
+        "oA": "A · bed = Y− face (vertical tunnel)\nrecommended to start with",
+        "oB": "B · bed = X+ butt (alternative)\nnut load perpendicular to the layers", "oC": "C · bed = Z+ face (alternative)",
+        "o_met": "height {h} mm · contact {c} mm² · overhang >45° {o} mm²", "bed": "bed",
+        "f4": "Fig. 4 · Candidate print orientations (metrics computed on the STL; physical test pending)",
+        "f5": "Fig. 5 · Clip insertion (side view, entering from the low end −V in v5)",
+        "f5_gap": "plate {t} mm; free gap under plate 7 mm; clip tongue up to {c} mm",
+        "f5_run": "usable travel {u} parallel to the plate",
+    },
+    "de": {
+        "ax_x": "X (zum Griff)", "ax_y": "Y (Ausleger)", "ax_z": "Z (zum Turm)", "ax_obs": "zum Betrachter",
+        "f1a": "Abb. 1a · Seitenansicht (von +Z), Griff unten · Maße in mm",
+        "f1a_h": "{v} (Gesamthöhe X)", "f1a_l": "{v} (Länge Y)", "f1a_plate": "Platte {l} × {w} × {t} unter {a}°",
+        "f1b": "Abb. 1b · Stirnansicht (von +Y): Auslegertunnel", "tunnel": "{v} (Tunnel)", "f1b_w": "{v} (Breite Z)",
+        "f1c": "Abb. 1c · Clip-Platte von oben (von −X)", "f1c_proj": "{v} (Projektion von {l})",
+        "f1c_gap": "freier Abstand zwischen den Rippen {g} · Rippen {w} dick",
+        "f2": "Abb. 2 · Montage-Explosionszeichnung (isometrisch, Schema im Nennmaßstab)",
+        "f2_l1": "①  1/4\"-20-Mutter in den Schlitz am Ende   ②  Stativ-Schnellwechselplatte (1/4\"-20-Schraube)",
+        "f2_l2": "③  15-mm-Ausleger durch den 15,5-mm-Tunnel   ④  Clip-Zunge unter der Platte (Einschub am unteren Ende, v5)",
+        "f3a": "Abb. 3a · Schnitt A-A (y = 100): Tunnel {t} und Ausleger {b} (grün gestrichelt)", "f3a_gap": "{t} (Nennspiel {g} je Seite)",
+        "f3a_ylab": "X (mm) · unten = Griff", "f3b": "Abb. 3b · Schnitt B-B (z = 12): Schlitz der 1/4\"-20-Mutter",
+        "slot": "Schlitz {v}", "skin": "Haut {v}", "af": "SW {v} (Nenn-Mutter {n})", "hole": "Bohrung Ø{v}",
+        "f3b_xlab": "X (mm) · Ende rechts (X = 110)",
+        "oA": "A · Druckbett = Fläche Y− (Tunnel senkrecht)\nzum Einstieg empfohlen",
+        "oB": "B · Druckbett = Ende X+ (Alternative)\nMutterlast senkrecht zu den Schichten", "oC": "C · Druckbett = Fläche Z+ (Alternative)",
+        "o_met": "Höhe {h} mm · Kontakt {c} mm² · Überhang >45° {o} mm²", "bed": "Druckbett",
+        "f4": "Abb. 4 · Mögliche Druckausrichtungen (am STL berechnete Werte; Praxistest offen)",
+        "f5": "Abb. 5 · Einschieben des Clips (Seitenansicht, Einschub am unteren Ende −V bei v5)",
+        "f5_gap": "Platte {t} mm; freier Raum unter der Platte 7 mm; Clip-Zunge bis {c} mm",
+        "f5_run": "nutzbarer Weg {u} parallel zur Platte",
+    },
+    "fr": {
+        "ax_x": "X (vers la poignée)", "ax_y": "Y (flèche)", "ax_z": "Z (vers la tour)", "ax_obs": "vers l'observateur",
+        "f1a": "Fig. 1a · Vue latérale (depuis +Z), poignée en bas · cotes en mm",
+        "f1a_h": "{v} (hauteur totale X)", "f1a_l": "{v} (longueur Y)", "f1a_plate": "plaque {l} × {w} × {t} à {a}°",
+        "f1b": "Fig. 1b · Vue de bout (depuis +Y) : tunnel de la flèche", "tunnel": "{v} (tunnel)", "f1b_w": "{v} (largeur Z)",
+        "f1c": "Fig. 1c · Plaque du clip vue de dessus (depuis −X)", "f1c_proj": "{v} (projection de {l})",
+        "f1c_gap": "espace libre entre goussets {g} · goussets de {w}",
+        "f2": "Fig. 2 · Éclaté de montage (isométrique, schéma à l'échelle nominale)",
+        "f2_l1": "①  écrou 1/4\"-20 dans la fente du talon   ②  plaque rapide de trépied (vis 1/4\"-20)",
+        "f2_l2": "③  flèche de 15 mm dans le tunnel de 15,5 mm   ④  languette du clip sous la plaque (entrée par l'extrémité basse, v5)",
+        "f3a": "Fig. 3a · Coupe A-A (y = 100) : tunnel {t} et flèche {b} (tirets verts)", "f3a_gap": "{t} (jeu nominal {g} par côté)",
+        "f3a_ylab": "X (mm) · bas = poignée", "f3b": "Fig. 3b · Coupe B-B (z = 12) : fente de l'écrou 1/4\"-20",
+        "slot": "fente {v}", "skin": "peau {v}", "af": "SW {v} (écrou nominal {n})", "hole": "perçage Ø{v}",
+        "f3b_xlab": "X (mm) · talon à droite (X = 110)",
+        "oA": "A · plateau = face Y− (tunnel vertical)\nrecommandée pour commencer",
+        "oB": "B · plateau = talon X+ (alternative)\ncharge de l'écrou perpendiculaire aux couches", "oC": "C · plateau = face Z+ (alternative)",
+        "o_met": "hauteur {h} mm · contact {c} mm² · porte-à-faux >45° {o} mm²", "bed": "plateau",
+        "f4": "Fig. 4 · Orientations d'impression possibles (mesures calculées sur le STL ; essai physique à faire)",
+        "f5": "Fig. 5 · Insertion du clip (vue latérale, entrée par l'extrémité basse −V en v5)",
+        "f5_gap": "plaque {t} mm ; espace libre sous la plaque 7 mm ; languette du clip jusqu'à {c} mm",
+        "f5_run": "course utile {u} parallèle à la plaque",
+    },
+    "it": {
+        "ax_x": "X (verso l'impugnatura)", "ax_y": "Y (braccio)", "ax_z": "Z (verso la torre)", "ax_obs": "verso l'osservatore",
+        "f1a": "Fig. 1a · Vista laterale (da +Z), impugnatura in basso · quote in mm",
+        "f1a_h": "{v} (altezza totale X)", "f1a_l": "{v} (lunghezza Y)", "f1a_plate": "piastra {l} × {w} × {t} a {a}°",
+        "f1b": "Fig. 1b · Vista di testa (da +Y): tunnel del braccio", "tunnel": "{v} (tunnel)", "f1b_w": "{v} (larghezza Z)",
+        "f1c": "Fig. 1c · Piastra della clip vista dall'alto (da −X)", "f1c_proj": "{v} (proiezione di {l})",
+        "f1c_gap": "spazio libero tra le nervature {g} · nervature da {w}",
+        "f2": "Fig. 2 · Esploso di montaggio (isometrico, schema in scala nominale)",
+        "f2_l1": "①  dado 1/4\"-20 nella fessura del fondo   ②  piastra rapida da treppiede (vite 1/4\"-20)",
+        "f2_l2": "③  braccio da 15 mm nel tunnel da 15,5 mm   ④  linguetta della clip sotto la piastra (entra dall'estremità bassa, v5)",
+        "f3a": "Fig. 3a · Sezione A-A (y = 100): tunnel {t} e braccio {b} (tratteggio verde)", "f3a_gap": "{t} (gioco nominale {g} per lato)",
+        "f3a_ylab": "X (mm) · in basso = impugnatura", "f3b": "Fig. 3b · Sezione B-B (z = 12): sede del dado 1/4\"-20",
+        "slot": "sede {v}", "skin": "pelle {v}", "af": "AF {v} (dado nominale {n})", "hole": "foro Ø{v}",
+        "f3b_xlab": "X (mm) · fondo a destra (X = 110)",
+        "oA": "A · piano = faccia Y− (tunnel verticale)\nconsigliata per iniziare",
+        "oB": "B · piano = fondo X+ (alternativa)\ncarico del dado perpendicolare agli strati", "oC": "C · piano = faccia Z+ (alternativa)",
+        "o_met": "altezza {h} mm · contatto {c} mm² · sporgenza >45° {o} mm²", "bed": "piano",
+        "f4": "Fig. 4 · Orientamenti di stampa candidati (valori calcolati sullo STL; prova fisica da fare)",
+        "f5": "Fig. 5 · Inserimento della clip (vista laterale, ingresso dall'estremità bassa −V in v5)",
+        "f5_gap": "piastra {t} mm; spazio libero sotto la piastra 7 mm; linguetta della clip fino a {c} mm",
+        "f5_run": "corsa utile {u} parallela alla piastra",
+    },
+}
+
+_lang = "es"
+
+
+def set_lang(lang):
+    global _lang
+    if lang not in _T:
+        raise ValueError(lang)
+    _lang = lang
+
+
+def num(x, dec=1):
+    s = f"{x:.{dec}f}"
+    return s if _lang == "en" else s.replace(".", ",")
+
+
+def t(key, **kw):
+    return _T[_lang][key].format(**kw)

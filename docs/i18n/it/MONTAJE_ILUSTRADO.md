@@ -2,29 +2,85 @@
 
 [Español](../es/README.md) · [English](../en/README.md) · [Deutsch](../de/README.md) · [Français](../fr/README.md) · **Italiano**
 
-> Basato sulla geometria di `feat/v5-radio-180` (2497ad7). Se la geometria cambia, rigenerare con `src/render_guia.py`. Le dimensioni della clip sono stimate, non misurate.
+> Basato sulla geometria finale di main (v5, v5+rinforzo e Anytone). Se la geometria cambia, rigenerare con `src/render_guia.py`. Le dimensioni della clip sono stimate, non misurate.
+
+## Varianti (geometria finale)
+
+| Variante | File STL | Ingombro (mm) | Volume (mm³) |
+|---|---|---|---|
+| v5 (UV-K5 V3 / RT-950 Pro, identici) | `stl/v5/*uvk5v3.stl, *rt950pro.stl` | 195.2 × 95.6 × 79.0 | 191951 |
+| v5 + base rinforzata (UV-K5 V3 / RT-950 Pro) | `stl/refuerzo/*_v5_*_refuerzo.stl` | 195.2 × 95.6 × 79.0 | 205173 |
+| Anytone generico regolabile (base già rinforzata; spessori opzionali) | `stl/mango_spacequad_anytone_generico.stl + stl/anytone_calzos/*.stl` | 195.2 × 93.7 × 79.0 | 213099 |
 
 ## Grafici
 
-![Vista laterale quotata (X punta verso l'impugnatura)](../../img/guia/fig01a_vista_lateral.png)
+### v5 (UV-K5 V3 / RT-950 Pro, identici)
+
+![Vista laterale quotata (X punta verso l'impugnatura)](../../img/guia/v5/it/fig01a_vista_lateral.png)
 *Vista laterale quotata (X punta verso l'impugnatura)*
 
-![Vista di testa (culatta)](../../img/guia/fig01b_vista_extremo.png)
+![Vista di testa (culatta)](../../img/guia/v5/it/fig01b_vista_extremo.png)
 *Vista di testa (culatta)*
 
-![Pianta della piastra della clip: 55 × 48 × 4 mm a 20°](../../img/guia/fig01c_planta_placa.png)
+![Pianta della piastra della clip: 55 × 48 × 4 mm a 20°](../../img/guia/v5/it/fig01c_planta_placa.png)
 *Pianta della piastra della clip: 55 × 48 × 4 mm a 20°*
 
-![Vista esplosa e passi numerati ①–④ (il dado entra da Z−)](../../img/guia/fig02_explosionado.png)
+![Vista esplosa e passi numerati ①–④ (il dado entra da Z−)](../../img/guia/v5/it/fig02_explosionado.png)
 *Vista esplosa e passi numerati ①–④ (il dado entra da Z−)*
 
-![Sezioni A-A (tunnel) e B-B (sede del dado)](../../img/guia/fig03_cortes.png)
+![Sezioni A-A (tunnel) e B-B (sede del dado)](../../img/guia/v5/it/fig03_cortes.png)
 *Sezioni A-A (tunnel) e B-B (sede del dado)*
 
-![Orientamenti di stampa a confronto](../../img/guia/fig04_orientacion_impresion.png)
+![Orientamenti di stampa a confronto](../../img/guia/v5/it/fig04_orientacion_impresion.png)
 *Orientamenti di stampa a confronto*
 
-![Inserimento della clip (v3 da +V; v5 da −V)](../../img/guia/fig05_insercion_clip.png)
+![Inserimento della clip (v3 da +V; v5 da −V)](../../img/guia/v5/it/fig05_insercion_clip.png)
+*Inserimento della clip (v3 da +V; v5 da −V)*
+
+### v5 + base rinforzata (UV-K5 V3 / RT-950 Pro)
+
+![Vista laterale quotata (X punta verso l'impugnatura)](../../img/guia/v5_refuerzo/it/fig01a_vista_lateral.png)
+*Vista laterale quotata (X punta verso l'impugnatura)*
+
+![Vista di testa (culatta)](../../img/guia/v5_refuerzo/it/fig01b_vista_extremo.png)
+*Vista di testa (culatta)*
+
+![Pianta della piastra della clip: 55 × 48 × 4 mm a 20°](../../img/guia/v5_refuerzo/it/fig01c_planta_placa.png)
+*Pianta della piastra della clip: 55 × 48 × 4 mm a 20°*
+
+![Vista esplosa e passi numerati ①–④ (il dado entra da Z−)](../../img/guia/v5_refuerzo/it/fig02_explosionado.png)
+*Vista esplosa e passi numerati ①–④ (il dado entra da Z−)*
+
+![Sezioni A-A (tunnel) e B-B (sede del dado)](../../img/guia/v5_refuerzo/it/fig03_cortes.png)
+*Sezioni A-A (tunnel) e B-B (sede del dado)*
+
+![Orientamenti di stampa a confronto](../../img/guia/v5_refuerzo/it/fig04_orientacion_impresion.png)
+*Orientamenti di stampa a confronto*
+
+![Inserimento della clip (v3 da +V; v5 da −V)](../../img/guia/v5_refuerzo/it/fig05_insercion_clip.png)
+*Inserimento della clip (v3 da +V; v5 da −V)*
+
+### Anytone generico regolabile (base già rinforzata; spessori opzionali)
+
+![Vista laterale quotata (X punta verso l'impugnatura)](../../img/guia/anytone/it/fig01a_vista_lateral.png)
+*Vista laterale quotata (X punta verso l'impugnatura)*
+
+![Vista di testa (culatta)](../../img/guia/anytone/it/fig01b_vista_extremo.png)
+*Vista di testa (culatta)*
+
+![Pianta della piastra della clip: 55 × 48 × 4 mm a 20°](../../img/guia/anytone/it/fig01c_planta_placa.png)
+*Pianta della piastra della clip: 55 × 48 × 4 mm a 20°*
+
+![Vista esplosa e passi numerati ①–④ (il dado entra da Z−)](../../img/guia/anytone/it/fig02_explosionado.png)
+*Vista esplosa e passi numerati ①–④ (il dado entra da Z−)*
+
+![Sezioni A-A (tunnel) e B-B (sede del dado)](../../img/guia/anytone/it/fig03_cortes.png)
+*Sezioni A-A (tunnel) e B-B (sede del dado)*
+
+![Orientamenti di stampa a confronto](../../img/guia/anytone/it/fig04_orientacion_impresion.png)
+*Orientamenti di stampa a confronto*
+
+![Inserimento della clip (v3 da +V; v5 da −V)](../../img/guia/anytone/it/fig05_insercion_clip.png)
 *Inserimento della clip (v3 da +V; v5 da −V)*
 
 ## Distinta base (BOM)

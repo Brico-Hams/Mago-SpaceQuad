@@ -18,7 +18,7 @@
 | X+ | 195.2 mm | 1284 mm² | 10144 mm² | Eje de tuerca vertical: tracción perpendicular a capas (débil) |
 | Z+ | 79.0 mm | 711 mm² | 11941 mm² | Alternativa |
 
-![Orientaciones de impresión comparadas](../../img/guia/fig04_orientacion_impresion.png)
+![Orientaciones de impresión comparadas](../../img/guia/v5/es/fig04_orientacion_impresion.png)
 
 ## Perfiles iniciales
 

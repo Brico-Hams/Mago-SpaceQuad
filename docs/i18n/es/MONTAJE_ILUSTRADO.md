@@ -2,29 +2,85 @@
 
 **Español** · [English](../en/README.md) · [Deutsch](../de/README.md) · [Français](../fr/README.md) · [Italiano](../it/README.md)
 
-> Basado en la geometría de `feat/v5-radio-180` (2497ad7). Si cambia la geometría, regenerar con `src/render_guia.py`. Las dimensiones del clip son estimadas, no medidas.
+> Basado en la geometría final de main (v5, v5+refuerzo y Anytone). Si cambia la geometría, regenerar con `src/render_guia.py`. Las dimensiones del clip son estimadas, no medidas.
+
+## Variantes (geometría final)
+
+| Variante | Archivo STL | Envolvente (mm) | Volumen (mm³) |
+|---|---|---|---|
+| v5 (UV-K5 V3 / RT-950 Pro, idénticos) | `stl/v5/*uvk5v3.stl, *rt950pro.stl` | 195.2 × 95.6 × 79.0 | 191951 |
+| v5 + base reforzada (UV-K5 V3 / RT-950 Pro) | `stl/refuerzo/*_v5_*_refuerzo.stl` | 195.2 × 95.6 × 79.0 | 205173 |
+| Anytone genérico ajustable (base ya reforzada; calzos opcionales) | `stl/mango_spacequad_anytone_generico.stl + stl/anytone_calzos/*.stl` | 195.2 × 93.7 × 79.0 | 213099 |
 
 ## Gráficos
 
-![Vista lateral con cotas (X apunta al agarre)](../../img/guia/fig01a_vista_lateral.png)
+### v5 (UV-K5 V3 / RT-950 Pro, idénticos)
+
+![Vista lateral con cotas (X apunta al agarre)](../../img/guia/v5/es/fig01a_vista_lateral.png)
 *Vista lateral con cotas (X apunta al agarre)*
 
-![Vista de extremo (culata)](../../img/guia/fig01b_vista_extremo.png)
+![Vista de extremo (culata)](../../img/guia/v5/es/fig01b_vista_extremo.png)
 *Vista de extremo (culata)*
 
-![Planta de la placa del clip: 55 × 48 × 4 mm a 20°](../../img/guia/fig01c_planta_placa.png)
+![Planta de la placa del clip: 55 × 48 × 4 mm a 20°](../../img/guia/v5/es/fig01c_planta_placa.png)
 *Planta de la placa del clip: 55 × 48 × 4 mm a 20°*
 
-![Explosionado y pasos numerados ①–④ (la tuerca entra desde Z−)](../../img/guia/fig02_explosionado.png)
+![Explosionado y pasos numerados ①–④ (la tuerca entra desde Z−)](../../img/guia/v5/es/fig02_explosionado.png)
 *Explosionado y pasos numerados ①–④ (la tuerca entra desde Z−)*
 
-![Cortes A-A (túnel) y B-B (alojamiento de tuerca)](../../img/guia/fig03_cortes.png)
+![Cortes A-A (túnel) y B-B (alojamiento de tuerca)](../../img/guia/v5/es/fig03_cortes.png)
 *Cortes A-A (túnel) y B-B (alojamiento de tuerca)*
 
-![Orientaciones de impresión comparadas](../../img/guia/fig04_orientacion_impresion.png)
+![Orientaciones de impresión comparadas](../../img/guia/v5/es/fig04_orientacion_impresion.png)
 *Orientaciones de impresión comparadas*
 
-![Inserción del clip (v3 entra por +V; v5 por −V)](../../img/guia/fig05_insercion_clip.png)
+![Inserción del clip (v3 entra por +V; v5 por −V)](../../img/guia/v5/es/fig05_insercion_clip.png)
+*Inserción del clip (v3 entra por +V; v5 por −V)*
+
+### v5 + base reforzada (UV-K5 V3 / RT-950 Pro)
+
+![Vista lateral con cotas (X apunta al agarre)](../../img/guia/v5_refuerzo/es/fig01a_vista_lateral.png)
+*Vista lateral con cotas (X apunta al agarre)*
+
+![Vista de extremo (culata)](../../img/guia/v5_refuerzo/es/fig01b_vista_extremo.png)
+*Vista de extremo (culata)*
+
+![Planta de la placa del clip: 55 × 48 × 4 mm a 20°](../../img/guia/v5_refuerzo/es/fig01c_planta_placa.png)
+*Planta de la placa del clip: 55 × 48 × 4 mm a 20°*
+
+![Explosionado y pasos numerados ①–④ (la tuerca entra desde Z−)](../../img/guia/v5_refuerzo/es/fig02_explosionado.png)
+*Explosionado y pasos numerados ①–④ (la tuerca entra desde Z−)*
+
+![Cortes A-A (túnel) y B-B (alojamiento de tuerca)](../../img/guia/v5_refuerzo/es/fig03_cortes.png)
+*Cortes A-A (túnel) y B-B (alojamiento de tuerca)*
+
+![Orientaciones de impresión comparadas](../../img/guia/v5_refuerzo/es/fig04_orientacion_impresion.png)
+*Orientaciones de impresión comparadas*
+
+![Inserción del clip (v3 entra por +V; v5 por −V)](../../img/guia/v5_refuerzo/es/fig05_insercion_clip.png)
+*Inserción del clip (v3 entra por +V; v5 por −V)*
+
+### Anytone genérico ajustable (base ya reforzada; calzos opcionales)
+
+![Vista lateral con cotas (X apunta al agarre)](../../img/guia/anytone/es/fig01a_vista_lateral.png)
+*Vista lateral con cotas (X apunta al agarre)*
+
+![Vista de extremo (culata)](../../img/guia/anytone/es/fig01b_vista_extremo.png)
+*Vista de extremo (culata)*
+
+![Planta de la placa del clip: 55 × 48 × 4 mm a 20°](../../img/guia/anytone/es/fig01c_planta_placa.png)
+*Planta de la placa del clip: 55 × 48 × 4 mm a 20°*
+
+![Explosionado y pasos numerados ①–④ (la tuerca entra desde Z−)](../../img/guia/anytone/es/fig02_explosionado.png)
+*Explosionado y pasos numerados ①–④ (la tuerca entra desde Z−)*
+
+![Cortes A-A (túnel) y B-B (alojamiento de tuerca)](../../img/guia/anytone/es/fig03_cortes.png)
+*Cortes A-A (túnel) y B-B (alojamiento de tuerca)*
+
+![Orientaciones de impresión comparadas](../../img/guia/anytone/es/fig04_orientacion_impresion.png)
+*Orientaciones de impresión comparadas*
+
+![Inserción del clip (v3 entra por +V; v5 por −V)](../../img/guia/anytone/es/fig05_insercion_clip.png)
 *Inserción del clip (v3 entra por +V; v5 por −V)*
 
 ## Lista de materiales (BOM)

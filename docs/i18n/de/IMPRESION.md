@@ -18,7 +18,7 @@
 | X+ | 195.2 mm | 1284 mm² | 10144 mm² | Vertikale Mutterachse: Zug quer zu den Schichten (schwach) |
 | Z+ | 79.0 mm | 711 mm² | 11941 mm² | Alternative |
 
-![Druckausrichtungen im Vergleich](../../img/guia/fig04_orientacion_impresion.png)
+![Druckausrichtungen im Vergleich](../../img/guia/v5/de/fig04_orientacion_impresion.png)
 
 ## Anfängliche Profile
 

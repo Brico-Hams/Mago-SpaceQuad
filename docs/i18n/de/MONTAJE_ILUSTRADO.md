@@ -2,29 +2,85 @@
 
 [Español](../es/README.md) · [English](../en/README.md) · **Deutsch** · [Français](../fr/README.md) · [Italiano](../it/README.md)
 
-> Basiert auf der Geometrie von `feat/v5-radio-180` (2497ad7). Bei Geometrieänderung mit `src/render_guia.py` neu erzeugen. Die Clip-Maße sind geschätzt, nicht gemessen.
+> Basiert auf der endgültigen Geometrie in main (v5, v5+Verstärkung und Anytone). Bei Geometrieänderung mit `src/render_guia.py` neu erzeugen. Die Clip-Maße sind geschätzt, nicht gemessen.
+
+## Varianten (endgültige Geometrie)
+
+| Variante | STL-Datei | Hüllmaß (mm) | Volumen (mm³) |
+|---|---|---|---|
+| v5 (UV-K5 V3 / RT-950 Pro, identisch) | `stl/v5/*uvk5v3.stl, *rt950pro.stl` | 195.2 × 95.6 × 79.0 | 191951 |
+| v5 + verstärkte Basis (UV-K5 V3 / RT-950 Pro) | `stl/refuerzo/*_v5_*_refuerzo.stl` | 195.2 × 95.6 × 79.0 | 205173 |
+| Anytone generisch einstellbar (Basis bereits verstärkt; optionale Keile) | `stl/mango_spacequad_anytone_generico.stl + stl/anytone_calzos/*.stl` | 195.2 × 93.7 × 79.0 | 213099 |
 
 ## Grafiken
 
-![Seitenansicht mit Maßen (X zeigt zum Griff)](../../img/guia/fig01a_vista_lateral.png)
+### v5 (UV-K5 V3 / RT-950 Pro, identisch)
+
+![Seitenansicht mit Maßen (X zeigt zum Griff)](../../img/guia/v5/de/fig01a_vista_lateral.png)
 *Seitenansicht mit Maßen (X zeigt zum Griff)*
 
-![Stirnansicht (Griffende)](../../img/guia/fig01b_vista_extremo.png)
+![Stirnansicht (Griffende)](../../img/guia/v5/de/fig01b_vista_extremo.png)
 *Stirnansicht (Griffende)*
 
-![Draufsicht der Clip-Platte: 55 × 48 × 4 mm bei 20°](../../img/guia/fig01c_planta_placa.png)
+![Draufsicht der Clip-Platte: 55 × 48 × 4 mm bei 20°](../../img/guia/v5/de/fig01c_planta_placa.png)
 *Draufsicht der Clip-Platte: 55 × 48 × 4 mm bei 20°*
 
-![Explosionsansicht und nummerierte Schritte ①–④ (Mutter von Z− einsetzen)](../../img/guia/fig02_explosionado.png)
+![Explosionsansicht und nummerierte Schritte ①–④ (Mutter von Z− einsetzen)](../../img/guia/v5/de/fig02_explosionado.png)
 *Explosionsansicht und nummerierte Schritte ①–④ (Mutter von Z− einsetzen)*
 
-![Schnitte A-A (Tunnel) und B-B (Mutterntasche)](../../img/guia/fig03_cortes.png)
+![Schnitte A-A (Tunnel) und B-B (Mutterntasche)](../../img/guia/v5/de/fig03_cortes.png)
 *Schnitte A-A (Tunnel) und B-B (Mutterntasche)*
 
-![Druckausrichtungen im Vergleich](../../img/guia/fig04_orientacion_impresion.png)
+![Druckausrichtungen im Vergleich](../../img/guia/v5/de/fig04_orientacion_impresion.png)
 *Druckausrichtungen im Vergleich*
 
-![Clip-Einschub (v3 von +V; v5 von −V)](../../img/guia/fig05_insercion_clip.png)
+![Clip-Einschub (v3 von +V; v5 von −V)](../../img/guia/v5/de/fig05_insercion_clip.png)
+*Clip-Einschub (v3 von +V; v5 von −V)*
+
+### v5 + verstärkte Basis (UV-K5 V3 / RT-950 Pro)
+
+![Seitenansicht mit Maßen (X zeigt zum Griff)](../../img/guia/v5_refuerzo/de/fig01a_vista_lateral.png)
+*Seitenansicht mit Maßen (X zeigt zum Griff)*
+
+![Stirnansicht (Griffende)](../../img/guia/v5_refuerzo/de/fig01b_vista_extremo.png)
+*Stirnansicht (Griffende)*
+
+![Draufsicht der Clip-Platte: 55 × 48 × 4 mm bei 20°](../../img/guia/v5_refuerzo/de/fig01c_planta_placa.png)
+*Draufsicht der Clip-Platte: 55 × 48 × 4 mm bei 20°*
+
+![Explosionsansicht und nummerierte Schritte ①–④ (Mutter von Z− einsetzen)](../../img/guia/v5_refuerzo/de/fig02_explosionado.png)
+*Explosionsansicht und nummerierte Schritte ①–④ (Mutter von Z− einsetzen)*
+
+![Schnitte A-A (Tunnel) und B-B (Mutterntasche)](../../img/guia/v5_refuerzo/de/fig03_cortes.png)
+*Schnitte A-A (Tunnel) und B-B (Mutterntasche)*
+
+![Druckausrichtungen im Vergleich](../../img/guia/v5_refuerzo/de/fig04_orientacion_impresion.png)
+*Druckausrichtungen im Vergleich*
+
+![Clip-Einschub (v3 von +V; v5 von −V)](../../img/guia/v5_refuerzo/de/fig05_insercion_clip.png)
+*Clip-Einschub (v3 von +V; v5 von −V)*
+
+### Anytone generisch einstellbar (Basis bereits verstärkt; optionale Keile)
+
+![Seitenansicht mit Maßen (X zeigt zum Griff)](../../img/guia/anytone/de/fig01a_vista_lateral.png)
+*Seitenansicht mit Maßen (X zeigt zum Griff)*
+
+![Stirnansicht (Griffende)](../../img/guia/anytone/de/fig01b_vista_extremo.png)
+*Stirnansicht (Griffende)*
+
+![Draufsicht der Clip-Platte: 55 × 48 × 4 mm bei 20°](../../img/guia/anytone/de/fig01c_planta_placa.png)
+*Draufsicht der Clip-Platte: 55 × 48 × 4 mm bei 20°*
+
+![Explosionsansicht und nummerierte Schritte ①–④ (Mutter von Z− einsetzen)](../../img/guia/anytone/de/fig02_explosionado.png)
+*Explosionsansicht und nummerierte Schritte ①–④ (Mutter von Z− einsetzen)*
+
+![Schnitte A-A (Tunnel) und B-B (Mutterntasche)](../../img/guia/anytone/de/fig03_cortes.png)
+*Schnitte A-A (Tunnel) und B-B (Mutterntasche)*
+
+![Druckausrichtungen im Vergleich](../../img/guia/anytone/de/fig04_orientacion_impresion.png)
+*Druckausrichtungen im Vergleich*
+
+![Clip-Einschub (v3 von +V; v5 von −V)](../../img/guia/anytone/de/fig05_insercion_clip.png)
 *Clip-Einschub (v3 von +V; v5 von −V)*
 
 ## Stückliste (BOM)

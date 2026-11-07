@@ -18,7 +18,7 @@
 | X+ | 195.2 mm | 1284 mm² | 10144 mm² | Asse del dado verticale: trazione perpendicolare agli strati (debole) |
 | Z+ | 79.0 mm | 711 mm² | 11941 mm² | Alternativa |
 
-![Orientamenti di stampa a confronto](../../img/guia/fig04_orientacion_impresion.png)
+![Orientamenti di stampa a confronto](../../img/guia/v5/it/fig04_orientacion_impresion.png)
 
 ## Profili iniziali
 

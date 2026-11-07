@@ -2,29 +2,85 @@
 
 [Español](../es/README.md) · [English](../en/README.md) · [Deutsch](../de/README.md) · **Français** · [Italiano](../it/README.md)
 
-> Basé sur la géométrie de `feat/v5-radio-180` (2497ad7). Si la géométrie change, régénérer avec `src/render_guia.py`. Les dimensions du clip sont estimées, non mesurées.
+> Basé sur la géométrie finale de main (v5, v5+renfort et Anytone). Si la géométrie change, régénérer avec `src/render_guia.py`. Les dimensions du clip sont estimées, non mesurées.
+
+## Variantes (géométrie finale)
+
+| Variante | Fichier STL | Encombrement (mm) | Volume (mm³) |
+|---|---|---|---|
+| v5 (UV-K5 V3 / RT-950 Pro, identiques) | `stl/v5/*uvk5v3.stl, *rt950pro.stl` | 195.2 × 95.6 × 79.0 | 191951 |
+| v5 + base renforcée (UV-K5 V3 / RT-950 Pro) | `stl/refuerzo/*_v5_*_refuerzo.stl` | 195.2 × 95.6 × 79.0 | 205173 |
+| Anytone générique réglable (base déjà renforcée ; cales optionnelles) | `stl/mango_spacequad_anytone_generico.stl + stl/anytone_calzos/*.stl` | 195.2 × 93.7 × 79.0 | 213099 |
 
 ## Graphiques
 
-![Vue latérale cotée (X pointe vers la prise)](../../img/guia/fig01a_vista_lateral.png)
+### v5 (UV-K5 V3 / RT-950 Pro, identiques)
+
+![Vue latérale cotée (X pointe vers la prise)](../../img/guia/v5/fr/fig01a_vista_lateral.png)
 *Vue latérale cotée (X pointe vers la prise)*
 
-![Vue de bout (culasse)](../../img/guia/fig01b_vista_extremo.png)
+![Vue de bout (culasse)](../../img/guia/v5/fr/fig01b_vista_extremo.png)
 *Vue de bout (culasse)*
 
-![Plan de la plaque du clip : 55 × 48 × 4 mm à 20°](../../img/guia/fig01c_planta_placa.png)
+![Plan de la plaque du clip : 55 × 48 × 4 mm à 20°](../../img/guia/v5/fr/fig01c_planta_placa.png)
 *Plan de la plaque du clip : 55 × 48 × 4 mm à 20°*
 
-![Vue éclatée et étapes numérotées ①–④ (l'écrou entre par Z−)](../../img/guia/fig02_explosionado.png)
+![Vue éclatée et étapes numérotées ①–④ (l'écrou entre par Z−)](../../img/guia/v5/fr/fig02_explosionado.png)
 *Vue éclatée et étapes numérotées ①–④ (l'écrou entre par Z−)*
 
-![Coupes A-A (tunnel) et B-B (logement d'écrou)](../../img/guia/fig03_cortes.png)
+![Coupes A-A (tunnel) et B-B (logement d'écrou)](../../img/guia/v5/fr/fig03_cortes.png)
 *Coupes A-A (tunnel) et B-B (logement d'écrou)*
 
-![Orientations d'impression comparées](../../img/guia/fig04_orientacion_impresion.png)
+![Orientations d'impression comparées](../../img/guia/v5/fr/fig04_orientacion_impresion.png)
 *Orientations d'impression comparées*
 
-![Insertion du clip (v3 par +V ; v5 par −V)](../../img/guia/fig05_insercion_clip.png)
+![Insertion du clip (v3 par +V ; v5 par −V)](../../img/guia/v5/fr/fig05_insercion_clip.png)
+*Insertion du clip (v3 par +V ; v5 par −V)*
+
+### v5 + base renforcée (UV-K5 V3 / RT-950 Pro)
+
+![Vue latérale cotée (X pointe vers la prise)](../../img/guia/v5_refuerzo/fr/fig01a_vista_lateral.png)
+*Vue latérale cotée (X pointe vers la prise)*
+
+![Vue de bout (culasse)](../../img/guia/v5_refuerzo/fr/fig01b_vista_extremo.png)
+*Vue de bout (culasse)*
+
+![Plan de la plaque du clip : 55 × 48 × 4 mm à 20°](../../img/guia/v5_refuerzo/fr/fig01c_planta_placa.png)
+*Plan de la plaque du clip : 55 × 48 × 4 mm à 20°*
+
+![Vue éclatée et étapes numérotées ①–④ (l'écrou entre par Z−)](../../img/guia/v5_refuerzo/fr/fig02_explosionado.png)
+*Vue éclatée et étapes numérotées ①–④ (l'écrou entre par Z−)*
+
+![Coupes A-A (tunnel) et B-B (logement d'écrou)](../../img/guia/v5_refuerzo/fr/fig03_cortes.png)
+*Coupes A-A (tunnel) et B-B (logement d'écrou)*
+
+![Orientations d'impression comparées](../../img/guia/v5_refuerzo/fr/fig04_orientacion_impresion.png)
+*Orientations d'impression comparées*
+
+![Insertion du clip (v3 par +V ; v5 par −V)](../../img/guia/v5_refuerzo/fr/fig05_insercion_clip.png)
+*Insertion du clip (v3 par +V ; v5 par −V)*
+
+### Anytone générique réglable (base déjà renforcée ; cales optionnelles)
+
+![Vue latérale cotée (X pointe vers la prise)](../../img/guia/anytone/fr/fig01a_vista_lateral.png)
+*Vue latérale cotée (X pointe vers la prise)*
+
+![Vue de bout (culasse)](../../img/guia/anytone/fr/fig01b_vista_extremo.png)
+*Vue de bout (culasse)*
+
+![Plan de la plaque du clip : 55 × 48 × 4 mm à 20°](../../img/guia/anytone/fr/fig01c_planta_placa.png)
+*Plan de la plaque du clip : 55 × 48 × 4 mm à 20°*
+
+![Vue éclatée et étapes numérotées ①–④ (l'écrou entre par Z−)](../../img/guia/anytone/fr/fig02_explosionado.png)
+*Vue éclatée et étapes numérotées ①–④ (l'écrou entre par Z−)*
+
+![Coupes A-A (tunnel) et B-B (logement d'écrou)](../../img/guia/anytone/fr/fig03_cortes.png)
+*Coupes A-A (tunnel) et B-B (logement d'écrou)*
+
+![Orientations d'impression comparées](../../img/guia/anytone/fr/fig04_orientacion_impresion.png)
+*Orientations d'impression comparées*
+
+![Insertion du clip (v3 par +V ; v5 par −V)](../../img/guia/anytone/fr/fig05_insercion_clip.png)
 *Insertion du clip (v3 par +V ; v5 par −V)*
 
 ## Nomenclature (BOM)

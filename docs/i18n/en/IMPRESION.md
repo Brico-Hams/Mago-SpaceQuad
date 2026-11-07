@@ -18,7 +18,7 @@
 | X+ | 195.2 mm | 1284 mm² | 10144 mm² | Vertical nut axis: tension perpendicular to layers (weak) |
 | Z+ | 79.0 mm | 711 mm² | 11941 mm² | Alternative |
 
-![Print orientations compared](../../img/guia/fig04_orientacion_impresion.png)
+![Print orientations compared](../../img/guia/v5/en/fig04_orientacion_impresion.png)
 
 ## Initial profiles
 

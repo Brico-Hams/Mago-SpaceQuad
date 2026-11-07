@@ -18,7 +18,7 @@
 | X+ | 195.2 mm | 1284 mm² | 10144 mm² | Axe d'écrou vertical : traction perpendiculaire aux couches (faible) |
 | Z+ | 79.0 mm | 711 mm² | 11941 mm² | Alternative |
 
-![Orientations d'impression comparées](../../img/guia/fig04_orientacion_impresion.png)
+![Orientations d'impression comparées](../../img/guia/v5/fr/fig04_orientacion_impresion.png)
 
 ## Profils initiaux
 
