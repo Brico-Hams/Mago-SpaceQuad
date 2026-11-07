@@ -1,0 +1,739 @@
+{
+  "passed": true,
+  "width_range_mm": [
+    21.6,
+    46.4
+  ],
+  "max_tongue_thickness_mm": 6.0,
+  "min_insertion_mm": 40.0,
+  "checks": [
+    {
+      "name": "manifold",
+      "passed": true,
+      "canonical_watertight": true,
+      "raw_trimesh_watertight": false,
+      "baseline_raw_trimesh_watertight": false,
+      "status": "NoError"
+    },
+    {
+      "name": "one_solid",
+      "passed": true,
+      "solids": 1,
+      "volume_mm3": 213099.30307989373
+    },
+    {
+      "name": "grip_cavity_reduced_not_opened",
+      "passed": true,
+      "cavity_before_mm3": [
+        -32020.9
+      ],
+      "cavity_after_mm3": [
+        -10642.6
+      ]
+    },
+    {
+      "name": "changes_localized",
+      "passed": true,
+      "outside_mm3": 1.3198973078544984e-06,
+      "changed_mm3": 40372.48293413921,
+      "baseline": "HEAD stl/mango_spacequad_v3.stl"
+    },
+    {
+      "name": "tripod_nut_and_face_exact",
+      "passed": true,
+      "symmetric_difference_mm3": 1.0761092106292836e-06
+    },
+    {
+      "name": "boom_exact",
+      "passed": true,
+      "intersection_mm3": -1.2705494208814505e-21
+    },
+    {
+      "name": "reinforcement_adds_only",
+      "passed": true,
+      "removed_in_zone_mm3": 5.197802221173603e-06,
+      "added_mm3": 21378.776072823217
+    },
+    {
+      "name": "reinforcement_inside_original_void",
+      "passed": true,
+      "outside_void_mm3": 0.4300209409334964,
+      "note": "el casco convexo rellena un bolsillo contiguo de ~0,4 mm3; se tolera < 1 mm3"
+    },
+    {
+      "name": "section_stiffer_near_base",
+      "passed": true,
+      "sections": {
+        "x=80": {
+          "before": {
+            "area_mm2": 578.9664106543607,
+            "i_boom_axis_mm4": 204575.64588374647,
+            "i_cross_axis_mm4": 7578850.937361004
+          },
+          "after": {
+            "area_mm2": 1329.1587646849048,
+            "i_boom_axis_mm4": 412194.6095521631,
+            "i_cross_axis_mm4": 17265307.235456467
+          },
+          "area_ratio": 2.295744174835048,
+          "inertia_ratio_boom": 2.0148762467375985,
+          "inertia_ratio_cross": 2.2780903567247544
+        },
+        "x=70": {
+          "before": {
+            "area_mm2": 568.4646144307419,
+            "i_boom_axis_mm4": 197094.8821241934,
+            "i_cross_axis_mm4": 7206853.800624389
+          },
+          "after": {
+            "area_mm2": 1263.1895673479569,
+            "i_boom_axis_mm4": 387743.199396654,
+            "i_cross_axis_mm4": 15947386.825058328
+          },
+          "area_ratio": 2.2221076480070967,
+          "inertia_ratio_boom": 1.9672920738364443,
+          "inertia_ratio_cross": 2.2128084273995783
+        },
+        "x=52": {
+          "before": {
+            "area_mm2": 500.45863690916326,
+            "i_boom_axis_mm4": 165639.31908358374,
+            "i_cross_axis_mm4": 6193051.600573539
+          },
+          "after": {
+            "area_mm2": 643.7721182553046,
+            "i_boom_axis_mm4": 202397.41917351392,
+            "i_cross_axis_mm4": 7979411.7581420215
+          },
+          "area_ratio": 1.2863642882281872,
+          "inertia_ratio_boom": 1.2219165128986165,
+          "inertia_ratio_cross": 1.2884458701107944
+        }
+      }
+    },
+    {
+      "name": "holder_rotated_180",
+      "passed": true,
+      "old_entry_v": 175.1052457977236,
+      "new_entry_v": 118.8947542022764,
+      "pivot_v": 147.0,
+      "radio_centroid_v_new": 164.86195247866095,
+      "radio_centroid_v_old": 129.13804880034252
+    },
+    {
+      "name": "plate_above_duplexor",
+      "passed": true,
+      "underside_min_h": 65.0
+    },
+    {
+      "name": "gusset_1_anchored",
+      "passed": true,
+      "missing_foot_mm3": 0.0,
+      "embed_mm": 4.640000000000001
+    },
+    {
+      "name": "gusset_2_anchored",
+      "passed": true,
+      "missing_foot_mm3": 0.0,
+      "embed_mm": 4.640000000000001
+    },
+    {
+      "name": "slot_0_10_open",
+      "passed": true,
+      "solid_in_slot_mm3": 0.0
+    },
+    {
+      "name": "slot_0_30_open",
+      "passed": true,
+      "solid_in_slot_mm3": 0.0
+    },
+    {
+      "name": "slot_1_10_open",
+      "passed": true,
+      "solid_in_slot_mm3": 0.0
+    },
+    {
+      "name": "slot_1_30_open",
+      "passed": true,
+      "solid_in_slot_mm3": 0.0
+    },
+    {
+      "name": "shim_d02_mesh",
+      "passed": true,
+      "file": "calzos_d02_lengua_37.6-42.0.stl",
+      "watertight": true,
+      "bodies": 2,
+      "extents_mm": [
+        9.6,
+        40.0,
+        10.4
+      ]
+    },
+    {
+      "name": "shim_d02_assembly_no_collision",
+      "passed": true,
+      "collision_mm3": 0.0,
+      "shim_volume_mm3": 1225.915800182449
+    },
+    {
+      "name": "shim_d04_mesh",
+      "passed": true,
+      "file": "calzos_d04_lengua_33.6-38.0.stl",
+      "watertight": true,
+      "bodies": 2,
+      "extents_mm": [
+        13.6,
+        40.0,
+        10.4
+      ]
+    },
+    {
+      "name": "shim_d04_assembly_no_collision",
+      "passed": true,
+      "collision_mm3": 0.0,
+      "shim_volume_mm3": 2268.015726373209
+    },
+    {
+      "name": "shim_d06_mesh",
+      "passed": true,
+      "file": "calzos_d06_lengua_29.6-34.0.stl",
+      "watertight": true,
+      "bodies": 2,
+      "extents_mm": [
+        17.6,
+        40.0,
+        10.4
+      ]
+    },
+    {
+      "name": "shim_d06_assembly_no_collision",
+      "passed": true,
+      "collision_mm3": 0.0,
+      "shim_volume_mm3": 3356.0156334393623
+    },
+    {
+      "name": "shim_d08_mesh",
+      "passed": true,
+      "file": "calzos_d08_lengua_25.6-30.0.stl",
+      "watertight": true,
+      "bodies": 2,
+      "extents_mm": [
+        21.6,
+        40.0,
+        10.4
+      ]
+    },
+    {
+      "name": "shim_d08_assembly_no_collision",
+      "passed": true,
+      "collision_mm3": 0.0,
+      "shim_volume_mm3": 4444.015583753187
+    },
+    {
+      "name": "shim_d10_mesh",
+      "passed": true,
+      "file": "calzos_d10_lengua_21.6-26.0.stl",
+      "watertight": true,
+      "bodies": 2,
+      "extents_mm": [
+        25.6,
+        40.0,
+        10.4
+      ]
+    },
+    {
+      "name": "shim_d10_assembly_no_collision",
+      "passed": true,
+      "collision_mm3": 0.0,
+      "shim_volume_mm3": 5532.0155340670135
+    },
+    {
+      "name": "shim_d02_tabs_only_in_slots",
+      "passed": true,
+      "tab_volume_mm3": 148.95976528873194,
+      "outside_slots_mm3": 0.0
+    },
+    {
+      "name": "shim_d04_tabs_only_in_slots",
+      "passed": true,
+      "tab_volume_mm3": 148.95976528873194,
+      "outside_slots_mm3": 0.0
+    },
+    {
+      "name": "shim_d06_tabs_only_in_slots",
+      "passed": true,
+      "tab_volume_mm3": 148.95976528873194,
+      "outside_slots_mm3": 0.0
+    },
+    {
+      "name": "shim_d08_tabs_only_in_slots",
+      "passed": true,
+      "tab_volume_mm3": 148.95976528873194,
+      "outside_slots_mm3": 0.0
+    },
+    {
+      "name": "shim_d10_tabs_only_in_slots",
+      "passed": true,
+      "tab_volume_mm3": 148.95976528873194,
+      "outside_slots_mm3": 0.0
+    },
+    {
+      "name": "sweep_set00_w42.0_off0.05",
+      "passed": true,
+      "tongue_w_mm": 42.0,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set00_w42.0_off0.5",
+      "passed": true,
+      "tongue_w_mm": 42.0,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set00_w42.0_off0.95",
+      "passed": true,
+      "tongue_w_mm": 42.0,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set00_w44.2_off0.05",
+      "passed": true,
+      "tongue_w_mm": 44.2,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set00_w44.2_off0.5",
+      "passed": true,
+      "tongue_w_mm": 44.2,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set00_w44.2_off0.95",
+      "passed": true,
+      "tongue_w_mm": 44.2,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set00_w46.4_off0.05",
+      "passed": true,
+      "tongue_w_mm": 46.4,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set00_w46.4_off0.5",
+      "passed": true,
+      "tongue_w_mm": 46.4,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set00_w46.4_off0.95",
+      "passed": true,
+      "tongue_w_mm": 46.4,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "overwide_set00_collides",
+      "passed": true,
+      "width_mm": 47.2,
+      "collision_mm3": 41.081115761670986
+    },
+    {
+      "name": "sweep_set02_w37.6_off0.05",
+      "passed": true,
+      "tongue_w_mm": 37.6,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set02_w37.6_off0.5",
+      "passed": true,
+      "tongue_w_mm": 37.6,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set02_w37.6_off0.95",
+      "passed": true,
+      "tongue_w_mm": 37.6,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set02_w39.8_off0.05",
+      "passed": true,
+      "tongue_w_mm": 39.8,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set02_w39.8_off0.5",
+      "passed": true,
+      "tongue_w_mm": 39.8,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set02_w39.8_off0.95",
+      "passed": true,
+      "tongue_w_mm": 39.8,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set02_w42.0_off0.05",
+      "passed": true,
+      "tongue_w_mm": 42.0,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set02_w42.0_off0.5",
+      "passed": true,
+      "tongue_w_mm": 42.0,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set02_w42.0_off0.95",
+      "passed": true,
+      "tongue_w_mm": 42.0,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "overwide_set02_collides",
+      "passed": true,
+      "width_mm": 42.8,
+      "collision_mm3": 46.25972413519275
+    },
+    {
+      "name": "sweep_set04_w33.6_off0.05",
+      "passed": true,
+      "tongue_w_mm": 33.6,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set04_w33.6_off0.5",
+      "passed": true,
+      "tongue_w_mm": 33.6,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set04_w33.6_off0.95",
+      "passed": true,
+      "tongue_w_mm": 33.6,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set04_w35.8_off0.05",
+      "passed": true,
+      "tongue_w_mm": 35.8,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set04_w35.8_off0.5",
+      "passed": true,
+      "tongue_w_mm": 35.8,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set04_w35.8_off0.95",
+      "passed": true,
+      "tongue_w_mm": 35.8,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set04_w38.0_off0.05",
+      "passed": true,
+      "tongue_w_mm": 38.0,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set04_w38.0_off0.5",
+      "passed": true,
+      "tongue_w_mm": 38.0,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set04_w38.0_off0.95",
+      "passed": true,
+      "tongue_w_mm": 38.0,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "overwide_set04_collides",
+      "passed": true,
+      "width_mm": 38.8,
+      "collision_mm3": 44.46015985470018
+    },
+    {
+      "name": "sweep_set06_w29.6_off0.05",
+      "passed": true,
+      "tongue_w_mm": 29.6,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set06_w29.6_off0.5",
+      "passed": true,
+      "tongue_w_mm": 29.6,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set06_w29.6_off0.95",
+      "passed": true,
+      "tongue_w_mm": 29.6,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set06_w31.8_off0.05",
+      "passed": true,
+      "tongue_w_mm": 31.8,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set06_w31.8_off0.5",
+      "passed": true,
+      "tongue_w_mm": 31.8,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set06_w31.8_off0.95",
+      "passed": true,
+      "tongue_w_mm": 31.8,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set06_w34.0_off0.05",
+      "passed": true,
+      "tongue_w_mm": 34.0,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set06_w34.0_off0.5",
+      "passed": true,
+      "tongue_w_mm": 34.0,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set06_w34.0_off0.95",
+      "passed": true,
+      "tongue_w_mm": 34.0,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "overwide_set06_collides",
+      "passed": true,
+      "width_mm": 34.8,
+      "collision_mm3": 44.46015985470062
+    },
+    {
+      "name": "sweep_set08_w25.6_off0.05",
+      "passed": true,
+      "tongue_w_mm": 25.6,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set08_w25.6_off0.5",
+      "passed": true,
+      "tongue_w_mm": 25.6,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set08_w25.6_off0.95",
+      "passed": true,
+      "tongue_w_mm": 25.6,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set08_w27.8_off0.05",
+      "passed": true,
+      "tongue_w_mm": 27.8,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set08_w27.8_off0.5",
+      "passed": true,
+      "tongue_w_mm": 27.8,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set08_w27.8_off0.95",
+      "passed": true,
+      "tongue_w_mm": 27.8,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set08_w30.0_off0.05",
+      "passed": true,
+      "tongue_w_mm": 30.0,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set08_w30.0_off0.5",
+      "passed": true,
+      "tongue_w_mm": 30.0,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set08_w30.0_off0.95",
+      "passed": true,
+      "tongue_w_mm": 30.0,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "overwide_set08_collides",
+      "passed": true,
+      "width_mm": 30.8,
+      "collision_mm3": 44.46015985469958
+    },
+    {
+      "name": "sweep_set10_w21.6_off0.05",
+      "passed": true,
+      "tongue_w_mm": 21.6,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set10_w21.6_off0.5",
+      "passed": true,
+      "tongue_w_mm": 21.6,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set10_w21.6_off0.95",
+      "passed": true,
+      "tongue_w_mm": 21.6,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set10_w23.8_off0.05",
+      "passed": true,
+      "tongue_w_mm": 23.8,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set10_w23.8_off0.5",
+      "passed": true,
+      "tongue_w_mm": 23.8,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set10_w23.8_off0.95",
+      "passed": true,
+      "tongue_w_mm": 23.8,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set10_w26.0_off0.05",
+      "passed": true,
+      "tongue_w_mm": 26.0,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set10_w26.0_off0.5",
+      "passed": true,
+      "tongue_w_mm": 26.0,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "sweep_set10_w26.0_off0.95",
+      "passed": true,
+      "tongue_w_mm": 26.0,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "overwide_set10_collides",
+      "passed": true,
+      "width_mm": 26.8,
+      "collision_mm3": 44.46015985470006
+    },
+    {
+      "name": "ranges_contiguous",
+      "passed": true,
+      "width_range_mm": [
+        21.6,
+        46.4
+      ],
+      "per_set": {
+        "d0": [
+          42.0,
+          46.4
+        ],
+        "d2": [
+          37.6,
+          42.0
+        ],
+        "d4": [
+          33.6,
+          38.0
+        ],
+        "d6": [
+          29.6,
+          34.0
+        ],
+        "d8": [
+          25.6,
+          30.0
+        ],
+        "d10": [
+          21.6,
+          26.0
+        ]
+      }
+    },
+    {
+      "name": "seven_mm_gap",
+      "passed": true,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "open_underside",
+      "passed": true
+    },
+    {
+      "name": "duplexor_no_new_collision",
+      "passed": true,
+      "new_collision_mm3": 0.0,
+      "inherited_v1_collision_mm3": 462.2387792257125
+    },
+    {
+      "name": "duplexor_corridor_minus_v",
+      "passed": true,
+      "added_collision_mm3": 0.0
+    },
+    {
+      "name": "radio_clear_of_minus_v_corridor",
+      "passed": true
+    },
+    {
+      "name": "duplexor_corridor_plus_v",
+      "passed": true,
+      "added_collision_mm3": 0.0
+    },
+    {
+      "name": "radio_clear_of_plus_v_corridor",
+      "passed": true
+    },
+    {
+      "name": "radio_50_clear",
+      "passed": true,
+      "mango_collision_mm3": 0.0,
+      "duplexor_collision_mm3": 0.0
+    },
+    {
+      "name": "radio_62_clear",
+      "passed": true,
+      "mango_collision_mm3": 0.0,
+      "duplexor_collision_mm3": 0.0
+    },
+    {
+      "name": "radio_70_clear",
+      "passed": true,
+      "mango_collision_mm3": 0.0,
+      "duplexor_collision_mm3": 0.0
+    },
+    {
+      "name": "continuous_full_assembly_sweep",
+      "passed": true,
+      "mango_collision_mm3": 0.0,
+      "duplexor_collision_mm3": 0.0
+    }
+  ],
+  "limitations": [
+    "Clips y radio estimados; ningun clip Anytone medido ni probado impreso.",
+    "La caja nominal del duplexor intersecta la funda v1 (heredado); solo se exige no empeorar.",
+    "Retencion de calzos por ranura/lengueta: sin prueba de impresion ni de desgaste.",
+    "Relleno y nervios de la base: mejora geometrica de seccion, no certificacion de resistencia.",
+    "El giro de 180 grados es un espejo en V respecto a la torre; falta confirmarlo con la sesion de giro."
+  ]
+}
