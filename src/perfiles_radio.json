@@ -1,0 +1,53 @@
+{
+  "uvk5v3": {
+    "modelo": "Quansheng UV-K5 V3",
+    "stl": "mango_spacequad_v5_uvk5v3.stl",
+    "estado": "provisional: geometria validada con envolvente generica; clip sin medir",
+    "clip": {
+      "ancho_mm": null, "grueso_max_mm": null, "entrada_util_mm": null,
+      "separacion_tornillos_mm": null, "saliente_retencion_mm": null,
+      "fuente": "ninguna verificable: sin ficha oficial con cotas del clip accesible desde este entorno"
+    },
+    "radio": {"ancho_mm": null, "grueso_mm": null, "largo_mm": null, "pos_clip_desde_extremo_A_mm": null},
+    "medidas_necesarias": [
+      "Ancho de la lengua del clip (calibre, en el punto mas ancho)",
+      "Grueso maximo de la lengua incluido el saliente de retencion",
+      "Longitud de lengua que puede entrar bajo la placa",
+      "Separacion entre la lengua y el dorso de la radio (puente del clip)",
+      "Posicion y tamano (ancho x largo x alto) del saliente de retencion, medida desde el borde libre de la lengua",
+      "Ancho x grueso x largo de la radio con bateria y clip montados",
+      "Distancia del clip al extremo de la antena (define cuanto sobresale la radio del borde bajo de la placa)"
+    ]
+  },
+  "rt950pro": {
+    "modelo": "Radtel RT-950 Pro",
+    "stl": "mango_spacequad_v5_rt950pro.stl",
+    "estado": "provisional: geometria validada con envolvente generica; clip sin medir",
+    "clip": {
+      "ancho_mm": null, "grueso_max_mm": null, "entrada_util_mm": null,
+      "separacion_tornillos_mm": null, "saliente_retencion_mm": null,
+      "fuente": "radtels.com (ficha del RT-950 Pro, 2026-11) solo indica '1x Belt clip', sin cotas"
+    },
+    "radio": {"ancho_mm": null, "grueso_mm": null, "largo_mm": null, "pos_clip_desde_extremo_A_mm": null},
+    "medidas_necesarias": [
+      "Ancho de la lengua del clip (calibre, en el punto mas ancho)",
+      "Grueso maximo de la lengua incluido el saliente de retencion",
+      "Longitud de lengua que puede entrar bajo la placa",
+      "Separacion entre la lengua y el dorso de la radio (puente del clip)",
+      "Posicion y tamano (ancho x largo x alto) del saliente de retencion, medida desde el borde libre de la lengua",
+      "Ancho x grueso x largo de la radio con bateria y clip montados",
+      "Distancia del clip al extremo de la antena (define cuanto sobresale la radio del borde bajo de la placa)"
+    ]
+  },
+  "anytone": {
+    "modelo": "Anytone (modelo exacto pendiente)",
+    "stl": null,
+    "estado": "bloqueado: falta el modelo exacto; no se genera STL ni se declara compatibilidad",
+    "clip": null,
+    "radio": null,
+    "medidas_necesarias": [
+      "Modelo exacto (por ejemplo AT-D878UV II Plus, AT-D168UV, AT-778UV: los clips difieren)",
+      "Las mismas siete medidas indicadas para UV-K5 V3 y RT-950 Pro"
+    ]
+  }
+}

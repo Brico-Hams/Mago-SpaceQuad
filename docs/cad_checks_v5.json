@@ -1,0 +1,175 @@
+{
+  "passed": false,
+  "checks": [
+    {
+      "name": "axis_s_candidate",
+      "passed": true,
+      "tongue_in_slot_fraction": 0.0,
+      "collision_mm3": 47936.165890564655,
+      "feasible": false
+    },
+    {
+      "name": "axis_u_candidate",
+      "passed": true,
+      "tongue_in_slot_fraction": 0.0,
+      "collision_mm3": 47179.07055074018,
+      "feasible": false
+    },
+    {
+      "name": "axis_n_candidate",
+      "passed": false,
+      "tongue_in_slot_fraction": 0.9166672171351223,
+      "collision_mm3": 0.0,
+      "feasible": false
+    },
+    {
+      "name": "rotation_equals_s_mirror",
+      "passed": true
+    },
+    {
+      "name": "rt950pro:manifold",
+      "passed": true,
+      "status": "NoError"
+    },
+    {
+      "name": "rt950pro:one_solid",
+      "passed": true,
+      "volume_mm3": 191951.48955308308
+    },
+    {
+      "name": "rt950pro:only_window_moved",
+      "passed": true,
+      "outside_mm3": 0.00447371158786552,
+      "changed_mm3": 1056.0026297936165,
+      "expected_mm3": 1056.0
+    },
+    {
+      "name": "rt950pro:mirrored_window_open",
+      "passed": true
+    },
+    {
+      "name": "rt950pro:clip_sweeps_25_45_clear",
+      "passed": true,
+      "worst_collision_mm3": 0.0,
+      "entry": "-s (extremo -V)"
+    },
+    {
+      "name": "rt950pro:seven_mm_gap",
+      "passed": true
+    },
+    {
+      "name": "rt950pro:print_clearance",
+      "passed": true,
+      "side_gap_total_mm": 2.0,
+      "thickness_gap_mm": 1.0
+    },
+    {
+      "name": "rt950pro:radio_50_clear",
+      "passed": true,
+      "mango_collision_mm3": 0.0,
+      "duplexor_collision_mm3": 0.0
+    },
+    {
+      "name": "rt950pro:radio_62_clear",
+      "passed": true,
+      "mango_collision_mm3": 0.0,
+      "duplexor_collision_mm3": 0.0
+    },
+    {
+      "name": "rt950pro:radio_70_clear",
+      "passed": true,
+      "mango_collision_mm3": 0.0,
+      "duplexor_collision_mm3": 0.0
+    },
+    {
+      "name": "rt950pro:assembly_connected",
+      "passed": true
+    },
+    {
+      "name": "rt950pro:duplexor_corridor_minus_v",
+      "passed": true,
+      "added_collision_mm3": 0.0
+    },
+    {
+      "name": "rt950pro:duplexor_corridor_plus_v",
+      "passed": true,
+      "added_collision_mm3": 0.0
+    },
+    {
+      "name": "uvk5v3:manifold",
+      "passed": true,
+      "status": "NoError"
+    },
+    {
+      "name": "uvk5v3:one_solid",
+      "passed": true,
+      "volume_mm3": 191951.48955308308
+    },
+    {
+      "name": "uvk5v3:only_window_moved",
+      "passed": true,
+      "outside_mm3": 0.00447371158786552,
+      "changed_mm3": 1056.0026297936165,
+      "expected_mm3": 1056.0
+    },
+    {
+      "name": "uvk5v3:mirrored_window_open",
+      "passed": true
+    },
+    {
+      "name": "uvk5v3:clip_sweeps_25_45_clear",
+      "passed": true,
+      "worst_collision_mm3": 0.0,
+      "entry": "-s (extremo -V)"
+    },
+    {
+      "name": "uvk5v3:seven_mm_gap",
+      "passed": true
+    },
+    {
+      "name": "uvk5v3:print_clearance",
+      "passed": true,
+      "side_gap_total_mm": 2.0,
+      "thickness_gap_mm": 1.0
+    },
+    {
+      "name": "uvk5v3:radio_50_clear",
+      "passed": true,
+      "mango_collision_mm3": 0.0,
+      "duplexor_collision_mm3": 0.0
+    },
+    {
+      "name": "uvk5v3:radio_62_clear",
+      "passed": true,
+      "mango_collision_mm3": 0.0,
+      "duplexor_collision_mm3": 0.0
+    },
+    {
+      "name": "uvk5v3:radio_70_clear",
+      "passed": true,
+      "mango_collision_mm3": 0.0,
+      "duplexor_collision_mm3": 0.0
+    },
+    {
+      "name": "uvk5v3:assembly_connected",
+      "passed": true
+    },
+    {
+      "name": "uvk5v3:duplexor_corridor_minus_v",
+      "passed": true,
+      "added_collision_mm3": 0.0
+    },
+    {
+      "name": "uvk5v3:duplexor_corridor_plus_v",
+      "passed": true,
+      "added_collision_mm3": 0.0
+    }
+  ],
+  "limitations": [
+    "Clip y radio son envolventes genericas estimadas; ninguna medida de clip UV-K5 V3 / RT-950 Pro verificada.",
+    "Anytone: sin modelo exacto, sin STL.",
+    "La caja nominal del duplexor ya roza la funda v1 (heredado).",
+    "El conjunto radio+clip se prueba solo contra el STL del mango, no contra la antena completa.",
+    "No es certificacion de ajuste ni de resistencia."
+  ]
+}
