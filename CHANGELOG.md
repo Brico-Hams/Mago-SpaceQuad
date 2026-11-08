@@ -2,6 +2,9 @@
 
 **Ayuda:** [guía del proyecto](docs/AYUDA.md) · [README](README.md) · [montaje](docs/MONTAJE.md) · [materiales](docs/MATERIALES.md).
 
+## v6.2 — posición D: inclinación −V y radio en el lado −U (solo CAD)
+- El usuario eligió la posición D entre 4 renders: `TILT_HACIA = "-V"` por defecto (confirmado sobre la pieza real; se elimina el alias `empunadura`) y nuevo `LADO_U = "-U"` / `--lado-u` (`+U` = disposición anterior). Placa y hueco se espejan en U respecto al eje del boom (U = 15,55), y una viga empotrada 4 mm en la torre sujeta las cartelas. `verificar_v6.py` añade `radio_side_minus_u`, `radio_vs_boom_0mm3`, `bracket_anchored_in_tower` y `bracket_clear_tunnel_duplexer`; `render_v6.py` añade una vista desde atrás del operador. Sin cambios en la base de trípode, perfiles ni dimensiones del clip/radio. Pendiente: ejecutar verificación, medir clips e imprimir.
+
 ## v6.1 — corrección del sentido de la inclinación (solo CAD)
 - La inclinación de la v6.0 estaba al revés: el defecto `empunadura` se resolvía a −V. Tras comprobarlo el usuario sobre una pieza impresa, el extremo superior de la radio (el del clip) debe inclinarse hacia **+V**. Ahora `TILT_HACIA = "+V"` por defecto y `empunadura` equivale a `+V`. `verificar_v6.py` espera el signo de `TILT_HACIA`; no cambia ninguna dimensión, placa, cartela, ranura ni base de trípode.
 

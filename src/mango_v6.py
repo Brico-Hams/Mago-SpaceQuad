@@ -3,14 +3,15 @@
 Mango SpaceQuad v6 (Bricohams): v5 corregida. Solo CAD: ni ajuste ni resistencia estan probados fisicamente.
 
     python mango_v6.py ../stl/mango_spacequad_tripode.stl ../stl/v6 [uvk5v3|rt950pro|todas]
-        [--tilt-hacia +V|-V|empunadura] [--tilt-deg 20] [--sin-brida]
+        [--tilt-hacia +V|-V] [--lado-u -U|+U] [--tilt-deg 20] [--sin-brida]
 
 Cambios respecto a la v3/v5:
- 1. Inclinacion de la radio hacia la empunadura. El eje largo de la radio (extremo superior = el del clip) se
-    inclina TILT_DEG sobre la horizontal y su extremo superior queda del lado TILT_HACIA en el eje V del boom.
-    "empunadura" equivale a "+V" (direccion confirmada por el usuario sobre la pieza impresa; el defecto
-    v6.0, -V, estaba al reves). El clip sigue entrando paralelo a la placa por el borde libre (superior) y la radio
-    apoya en la cara exterior de la placa. La placa se asienta en la torre con dos cartelas.
+ 1. Posicion D (v6.2). El eje largo de la radio (extremo superior = el del clip) se inclina TILT_DEG sobre la
+    horizontal y su extremo superior queda del lado TILT_HACIA en el eje V del boom; por defecto -V (direccion
+    confirmada por el usuario sobre la pieza real). La radio, con su placa y el hueco, va al lado LADO_U del eje del
+    boom (U = 15,55): "-U" (defecto, lejos del duplexor) es el espejo en U del diseno "+U" anterior. El clip entra
+    paralelo a la placa por el borde libre (superior) y la radio apoya en la cara exterior de la placa. La placa se
+    sujeta con dos cartelas y, en "-U", con una viga (puente) que sale de la cara superior de la torre y se empotra en ella.
  2. Variantes reales por radio. La altura de la placa (PH0) se calcula con la envolvente de cada radio
     (largo x ancho x grueso de perfiles_radio.json) para que su punto mas bajo quede por encima de la torre,
     y el ancho del hueco del clip sale del clip estimado de cada modelo (o del override del JSON).
@@ -36,8 +37,10 @@ def _parse_cli():
     parser.add_argument("source", help="STL v1 de entrada")
     parser.add_argument("out_dir", help="directorio de salida")
     parser.add_argument("variant", nargs="?", default="todas")
-    parser.add_argument("--tilt-hacia", choices=("empunadura", "+V", "-V"), default="+V",
+    parser.add_argument("--tilt-hacia", choices=("+V", "-V"), default="-V",
                         help="lado V hacia el que se inclina el extremo superior de la radio")
+    parser.add_argument("--lado-u", choices=("-U", "+U"), default="-U",
+                        help="lado del eje del boom (U = 15,55) donde va la radio; -U = posicion D")
     parser.add_argument("--tilt-deg", type=float, default=20.0, help="inclinacion del eje largo de la radio sobre la horizontal")
     parser.add_argument("--sin-brida", action="store_true", help="no anade la brida opcional del culo")
     args = parser.parse_args()
@@ -60,9 +63,16 @@ import mango_v3 as mg
 import refuerzo_base as rb
 
 # ---------------------------------------------------------------- PARAMETROS (mm)
-TILT_HACIA = "+V"              # "+V" | "-V" | "empunadura" (= "+V")
+TILT_HACIA = "-V"              # "+V" | "-V" (confirmado -V sobre la pieza real)
+LADO_U = "-U"                  # "-U" (posicion D, nuevo) | "+U" (diseno anterior)
 TILT_DEG = 20.0                # inclinacion del eje largo de la radio sobre la horizontal
 BRIDA = True                   # brida opcional del culo
+
+# viga de soporte (solo LADO_U = "-U"): sale de la torre y lleva la placa al otro lado del boom
+U_BOOM = 15.55                 # eje U del tunel del boom
+TORRE_U0 = 8.0                 # supuesto: la torre ocupa U ~8..78 hasta H = TOWER_H
+EMBED_U = 4.0                  # la viga entra esta distancia en U dentro de la torre (>= 2 mm)
+VIGA_H0, VIGA_H1 = 50.5, 58.0  # H de la viga: embebida bajo la cara superior de la torre (58,64), muy por encima del tunel y del duplexor
 
 # radio y clip
 H_LIBRE = 62.0                 # H minimo de la radio: cara libre de la torre (58,64) + 3,4 mm
@@ -98,11 +108,22 @@ def claves_v6():
 def resolver_tilt(tilt_hacia=None):
     """+1 = el extremo superior de la radio queda hacia +V; -1 = hacia -V."""
     t = TILT_HACIA if tilt_hacia is None else tilt_hacia
-    if t in ("+V", "empunadura"):
+    if t == "+V":
         return 1
     if t == "-V":
         return -1
     raise ValueError(f"TILT_HACIA desconocido: {t}")
+
+
+def resolver_lado(lado_u=None):
+    """Centro U de la placa: espejo en U respecto al eje del boom para '-U'."""
+    s = LADO_U if lado_u is None else lado_u
+    uc0 = mg.PLATE_U0 + mg.PLATE_W / 2
+    if s == "+U":
+        return uc0
+    if s == "-U":
+        return 2 * U_BOOM - uc0
+    raise ValueError(f"LADO_U desconocido: {s}")
 
 
 # ---------------------------------------------------------------- configuracion por radio
@@ -120,7 +141,7 @@ def configuracion(key, tilt_hacia=None, tilt_deg=None):
     w_in = clip_w + 2 * CLIP_LAT
     plate_w = w_in + 2 * mg.SIDE_T
     min_clear = clip_t + CLIP_HOLG_T
-    uc = mg.PLATE_U0 + mg.PLATE_W / 2
+    uc = resolver_lado()
     s1 = mg.PLATE_L + pos_clip                 # extremo superior de la radio
     s_lo = s1 - radio["largo_mm"]              # extremo inferior de la radio
     pv0 = V_RAIZ_C - d * mg.PLATE_L * np.cos(a) / 2
@@ -157,6 +178,19 @@ def cartelas(cfg):
     return out
 
 
+def viga(cfg):
+    """Viga rigida de 7,5 x 14 mm: de la placa (-U) hasta EMBED_U dentro de la torre; None con LADO_U = '+U'."""
+    if LADO_U == "+U":
+        return None
+    return mg.use_prism([(mg.ROOT_V0, VIGA_H0), (mg.ROOT_V1, VIGA_H0), (mg.ROOT_V1, VIGA_H1), (mg.ROOT_V0, VIGA_H1)],
+                        cfg["u0"], TORRE_U0 + EMBED_U)
+
+
+def soporte(cfg):
+    v = viga(cfg)
+    return cartelas(cfg) if v is None else cartelas(cfg) + v
+
+
 def placa(cfg):
     p = caja(cfg, cfg["u0"], cfg["u0"] + cfg["plate_w"], 0, mg.PLATE_L, 0, mg.PLATE_T)
     if mg.HOOK_WINDOW:   # ventana opcional cerca del fondo del hueco (extremo cerrado, lejos del borde libre)
@@ -166,7 +200,7 @@ def placa(cfg):
 
 
 def clip_holder(cfg):
-    return placa(cfg) + cartelas(cfg)
+    return placa(cfg) + soporte(cfg)
 
 
 def envolvente_radio(cfg, ancho=None, extra_s=0.0):
@@ -316,14 +350,14 @@ def build_variant(src, out_dir, key):
     out = to_tm(body)
     out.export(dst)
     digest = hashlib.sha256(dst.read_bytes()).hexdigest()
-    print(f"{key}: tilt {cfg['deg']:g} grados hacia {'+V' if cfg['d'] > 0 else '-V'} ({TILT_HACIA}), PH0={cfg['ph0']}, "
+    print(f"{key}: tilt {cfg['deg']:g} grados hacia {'+V' if cfg['d'] > 0 else '-V'} ({TILT_HACIA}), lado {LADO_U} (uc={cfg['uc']:.2f}), PH0={cfg['ph0']}, "
           f"hueco clip {cfg['w_in']:g} mm, radio {cfg['radio_l']:g}x{cfg['radio_w']:g}x{cfg['radio_t']:g} "
           f"({perfil['radio'].get('estado_medida')}), {np.round(out.extents, 1)} mm, {body.status()}, {digest[:16]}")
     return dst
 
 
 if __name__ == "__main__":
-    TILT_HACIA, TILT_DEG, BRIDA = _cli_args.tilt_hacia, _cli_args.tilt_deg, not _cli_args.sin_brida
+    TILT_HACIA, LADO_U, TILT_DEG, BRIDA = _cli_args.tilt_hacia, _cli_args.lado_u, _cli_args.tilt_deg, not _cli_args.sin_brida
     out = Path(_cli_args.out_dir)
     out.mkdir(parents=True, exist_ok=True)
     keys = claves_v6() if _cli_args.variant == "todas" else [_cli_args.variant]

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Renders de montaje v6: radio inclinada (envolvente estimada), duplexor, boom y detalle del culo reforzado. Requiere pyvista.
 Escribe docs/img/v6_<variante>_montaje.png. Solo CAD ilustrativo.
-    python render_v6.py ../stl ../docs/img [--tilt-hacia +V|-V|empunadura] [--tilt-deg 20] [--sin-brida]
+    python render_v6.py ../stl ../docs/img [--tilt-hacia +V|-V] [--lado-u -U|+U] [--tilt-deg 20] [--sin-brida]
 """
 import argparse
 from pathlib import Path
@@ -13,7 +13,8 @@ def _parse_cli():
                                      epilog="Ejemplo: python src/render_v6.py stl docs/img")
     parser.add_argument("stl_dir", help="directorio con el subdirectorio v6/")
     parser.add_argument("output_dir", help="directorio de salida de los PNG")
-    parser.add_argument("--tilt-hacia", choices=("empunadura", "+V", "-V"), default="+V")
+    parser.add_argument("--tilt-hacia", choices=("+V", "-V"), default="-V")
+    parser.add_argument("--lado-u", choices=("-U", "+U"), default="-U")
     parser.add_argument("--tilt-deg", type=float, default=20.0)
     parser.add_argument("--sin-brida", action="store_true")
     args = parser.parse_args()
@@ -62,8 +63,10 @@ def main(stl_dir, out):
         clip = to_tm(mv6.clip_radio(cfg))
         v = radio.vertices @ mv6.eje_radio(cfg)
         top, bot = radio.vertices[v > v.max() - 1e-3].mean(axis=0), radio.vertices[v < v.min() + 1e-3].mean(axis=0)
-        pl = pv.Plotter(off_screen=True, shape=(1, 2), window_size=(2000, 1000))
+        pl = pv.Plotter(off_screen=True, shape=(1, 3), window_size=(3000, 1000))
         lado = "+V" if cfg["d"] > 0 else "-V"
+        lado_u = mv6.LADO_U
+        su = -1 if lado_u == "-U" else 1   # signo de U del lado de la radio
 
         pl.subplot(0, 0)
         for m, col, op in ((mango, '#8d9399', 1), (radio, '#2e9e5b', 0.35), (clip, '#244a85', 1),
@@ -74,11 +77,11 @@ def main(stl_dir, out):
         pl.add_mesh(pv.Sphere(radius=4, center=t), color='#f39c12')
         pl.add_mesh(pv.Sphere(radius=4, center=b), color='#3498db')
         c = np.array([45, 150, 20.0])
-        pl.camera_position = [tuple(c + np.array((1, -0.45, 0.25)) * 520), tuple(c), (0, 0, 1)]
+        pl.camera_position = [tuple(c + np.array((su, -0.45, 0.25)) * 520), tuple(c), (0, 0, 1)]
         pl.camera.parallel_projection = True
         pl.camera.parallel_scale = 150
         pl.set_background('white')
-        pl.add_text(f"v6 {perfil['modelo']}: extremo superior de la radio hacia {lado}, {cfg['deg']:g} grados",
+        pl.add_text(f"v6.2 posicion D {perfil['modelo']}: radio en {lado_u}, extremo superior hacia {lado}, {cfg['deg']:g} grados",
                     font_size=12, position=(20, 950), color='black')
         pl.add_text(f"Envolvente {cfg['radio_l']:g} x {cfg['radio_w']:g} x {cfg['radio_t']:g} mm ({perfil['radio'].get('estado_medida')}), NO el contorno real",
                     font_size=10, position=(20, 80), color='black')
@@ -100,10 +103,24 @@ def main(stl_dir, out):
         pl.add_text(f"Piel {mv6.SKIN_V6:g} mm, pared >= {mv6.PARED_MIN:g} mm, cavidad maciza {mv6.FILL_L:g} mm con rampa, brida {'si' if mv6.BRIDA else 'no'}",
                     font_size=10, position=(20, 55), color='black')
         pl.add_text('CAD ilustrativo: sin prueba de carga ni de impresion', font_size=10, position=(20, 30), color='black')
+
+        pl.subplot(0, 2)
+        for m, col, op in ((mango, '#8d9399', 1), (radio, '#2e9e5b', 0.35), (clip, '#244a85', 1),
+                           (boom, '#c9ced3', 1), (dup, '#c0392b', 0.7)):
+            pl.add_mesh(pv.wrap(rd.rot(m)), color=col, opacity=op, smooth_shading=False)
+        pl.add_mesh(pv.Line(b, t), color='#f39c12', line_width=6)
+        pl.add_mesh(pv.Sphere(radius=4, center=t), color='#f39c12')
+        pl.camera_position = [tuple(c + np.array((0.45 * su, -1, 0.45)) * 520), tuple(c), (0, 0, 1)]   # desde el extremo -V, arriba y de lado
+        pl.camera.parallel_projection = True
+        pl.camera.parallel_scale = 150
+        pl.set_background('white')
+        pl.add_text(f"Vista desde atras del operador (extremo -V, empunadura abajo): radio en {lado_u}, tilt {lado}",
+                    font_size=12, position=(20, 950), color='black')
+        pl.add_text('CAD ilustrativo: sin medidas de clip verificadas ni prueba fisica', font_size=10, position=(20, 30), color='black')
         pl.screenshot(os.path.join(out, f'v6_{key}_montaje.png'))
         pl.close()
 
 
 if __name__ == '__main__':
-    mv6.TILT_HACIA, mv6.TILT_DEG, mv6.BRIDA = _cli_args.tilt_hacia, _cli_args.tilt_deg, not _cli_args.sin_brida
+    mv6.TILT_HACIA, mv6.LADO_U, mv6.TILT_DEG, mv6.BRIDA = _cli_args.tilt_hacia, _cli_args.lado_u, _cli_args.tilt_deg, not _cli_args.sin_brida
     main(_cli_args.stl_dir, _cli_args.output_dir)

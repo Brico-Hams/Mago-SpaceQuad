@@ -1,7 +1,8 @@
 {
   "passed": true,
   "parametros": {
-    "tilt_hacia": "+V",
+    "tilt_hacia": "-V",
+    "lado_u": "-U",
     "tilt_deg": 20.0,
     "brida": true,
     "pared_min_mm": 3.0,
@@ -45,43 +46,55 @@
     {
       "name": "uvk5v3:one_solid",
       "passed": true,
-      "volume_mm3": 220437.6922749793
+      "volume_mm3": 225875.0038472704
     },
     {
-      "name": "uvk5v3:radio_tilt_toward_+V",
+      "name": "uvk5v3:radio_tilt_toward_-V",
       "passed": true,
       "top_centre_stl": [
         -119.32,
-        185.09,
-        51.5
+        108.91,
+        -20.4
       ],
       "bottom_centre_stl": [
         -79.98,
-        77.03,
-        51.5
+        216.97,
+        -20.4
       ],
-      "delta_v_mm": 108.06465530395508,
+      "delta_v_mm": -108.06464767456055,
       "delta_h_mm": 39.33231735229492,
-      "expected_sign_v": 1,
-      "tilt_deg_measured": 19.999999740357143
+      "expected_sign_v": -1,
+      "tilt_deg_measured": 20.00000104042661
     },
     {
-      "name": "uvk5v3:radio_tilt_config_sign_matches_+V",
+      "name": "uvk5v3:radio_tilt_config_sign_matches_-V",
       "passed": true,
-      "config_sign": 1,
-      "expected_sign": 1
+      "config_sign": -1,
+      "expected_sign": -1
     },
     {
       "name": "uvk5v3:assembly_connected",
       "passed": true
     },
     {
+      "name": "uvk5v3:radio_side_minus_u",
+      "passed": true,
+      "radio_centroid_u": -20.40000057220459,
+      "plate_centre_u": -20.4,
+      "boom_axis_u": 15.55
+    },
+    {
       "name": "uvk5v3:radio_vs_mango_0mm3",
       "passed": true,
-      "collision_mm3": 1.543061958586708e-05
+      "collision_mm3": 1.6004178439295337e-06
     },
     {
       "name": "uvk5v3:radio_vs_duplexor_0mm3",
+      "passed": true,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "uvk5v3:radio_vs_boom_0mm3",
       "passed": true,
       "collision_mm3": 0.0
     },
@@ -99,7 +112,22 @@
       "name": "uvk5v3:insertion_sweep_clear",
       "passed": true,
       "sweep_mm": 40.0,
-      "mango_collision_mm3": 0.0
+      "mango_collision_mm3": -2.842170943040401e-14,
+      "boom_collision_mm3": 0.0
+    },
+    {
+      "name": "uvk5v3:bracket_clear_tunnel_duplexer",
+      "passed": true,
+      "bracket_tunnel_mm3": 0.0,
+      "bracket_duplexer_mm3": 0.0
+    },
+    {
+      "name": "uvk5v3:bracket_anchored_in_tower",
+      "passed": true,
+      "overlap_depth_u_mm": 8.57128381729126,
+      "overlap_depth_h_mm": 7.882297515869141,
+      "overlap_volume_mm3": 882.0588229160903,
+      "wall_mm": 4.0
     },
     {
       "name": "uvk5v3:clearance_above_tower",
@@ -142,20 +170,20 @@
       "name": "uvk5v3:gusset_1_anchored",
       "passed": true,
       "missing_foot_mm3": 0.0,
-      "overlap_with_v1_mm3": 477.8752668017282,
+      "overlap_with_v1_mm3": 187.6792936759188,
       "gusset_height_mm": 18.5
     },
     {
       "name": "uvk5v3:gusset_2_anchored",
       "passed": true,
       "missing_foot_mm3": 0.0,
-      "overlap_with_v1_mm3": 477.8752668017282,
+      "overlap_with_v1_mm3": 187.6792936759188,
       "gusset_height_mm": 18.5
     },
     {
       "name": "uvk5v3:changes_localized",
       "passed": true,
-      "outside_mm3": 7.986036490597245e-08
+      "outside_mm3": 8.429660042947374e-08
     },
     {
       "name": "uvk5v3:tripod_cavity_filled_35mm",
@@ -200,7 +228,7 @@
     {
       "name": "uvk5v3:butt_face_flat",
       "passed": true,
-      "flat_area_mm2": 1734.8014402964866,
+      "flat_area_mm2": 1734.8014402964864,
       "max_x": 110.0
     },
     {
@@ -224,43 +252,55 @@
     {
       "name": "rt950pro:one_solid",
       "passed": true,
-      "volume_mm3": 224251.87584297222
+      "volume_mm3": 229668.2161162928
     },
     {
-      "name": "rt950pro:radio_tilt_toward_+V",
+      "name": "rt950pro:radio_tilt_toward_-V",
       "passed": true,
       "top_centre_stl": [
         -140.25,
-        183.3,
-        51.5
+        110.7,
+        -20.4
       ],
       "bottom_centre_stl": [
         -84.84,
-        31.07,
-        51.5
+        262.93,
+        -20.4
       ],
-      "delta_v_mm": 152.23020362854004,
+      "delta_v_mm": -152.2302017211914,
       "delta_h_mm": 55.40726280212402,
-      "expected_sign_v": 1,
-      "tilt_deg_measured": 19.999999975091367
+      "expected_sign_v": -1,
+      "tilt_deg_measured": 20.00000020581357
     },
     {
-      "name": "rt950pro:radio_tilt_config_sign_matches_+V",
+      "name": "rt950pro:radio_tilt_config_sign_matches_-V",
       "passed": true,
-      "config_sign": 1,
-      "expected_sign": 1
+      "config_sign": -1,
+      "expected_sign": -1
     },
     {
       "name": "rt950pro:assembly_connected",
       "passed": true
     },
     {
+      "name": "rt950pro:radio_side_minus_u",
+      "passed": true,
+      "radio_centroid_u": -20.40000057220459,
+      "plate_centre_u": -20.4,
+      "boom_axis_u": 15.55
+    },
+    {
       "name": "rt950pro:radio_vs_mango_0mm3",
       "passed": true,
-      "collision_mm3": 1.5430619863925552e-05
+      "collision_mm3": 1.6004179059099764e-06
     },
     {
       "name": "rt950pro:radio_vs_duplexor_0mm3",
+      "passed": true,
+      "collision_mm3": 0.0
+    },
+    {
+      "name": "rt950pro:radio_vs_boom_0mm3",
       "passed": true,
       "collision_mm3": 0.0
     },
@@ -278,7 +318,22 @@
       "name": "rt950pro:insertion_sweep_clear",
       "passed": true,
       "sweep_mm": 40.0,
-      "mango_collision_mm3": 0.0
+      "mango_collision_mm3": 1.4210854715202004e-14,
+      "boom_collision_mm3": 0.0
+    },
+    {
+      "name": "rt950pro:bracket_clear_tunnel_duplexer",
+      "passed": true,
+      "bracket_tunnel_mm3": 0.0,
+      "bracket_duplexer_mm3": 0.0
+    },
+    {
+      "name": "rt950pro:bracket_anchored_in_tower",
+      "passed": true,
+      "overlap_depth_u_mm": 8.57128381729126,
+      "overlap_depth_h_mm": 7.882282257080078,
+      "overlap_volume_mm3": 871.5068022592063,
+      "wall_mm": 4.0
     },
     {
       "name": "rt950pro:clearance_above_tower",
@@ -321,20 +376,20 @@
       "name": "rt950pro:gusset_1_anchored",
       "passed": true,
       "missing_foot_mm3": 0.0,
-      "overlap_with_v1_mm3": 446.35001391664406,
+      "overlap_with_v1_mm3": 177.12727301902927,
       "gusset_height_mm": 34.5
     },
     {
       "name": "rt950pro:gusset_2_anchored",
       "passed": true,
       "missing_foot_mm3": 0.0,
-      "overlap_with_v1_mm3": 446.35001391664406,
+      "overlap_with_v1_mm3": 177.12727301902927,
       "gusset_height_mm": 34.5
     },
     {
       "name": "rt950pro:changes_localized",
       "passed": true,
-      "outside_mm3": 1.2804388643879913e-07
+      "outside_mm3": 1.3395069054922256e-07
     },
     {
       "name": "rt950pro:tripod_cavity_filled_35mm",
@@ -379,7 +434,7 @@
     {
       "name": "rt950pro:butt_face_flat",
       "passed": true,
-      "flat_area_mm2": 1734.8014402964866,
+      "flat_area_mm2": 1734.8014402964864,
       "max_x": 110.0
     },
     {
