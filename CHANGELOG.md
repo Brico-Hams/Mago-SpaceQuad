@@ -2,6 +2,12 @@
 
 **Ayuda:** [guía del proyecto](docs/AYUDA.md) · [README](README.md) · [montaje](docs/MONTAJE.md) · [materiales](docs/MATERIALES.md).
 
+## v6 — radio inclinada y base de trípode reforzada (solo CAD)
+- Nuevo `src/mango_v6.py`: la radio se inclina `TILT_DEG` (20°) con su extremo superior hacia `TILT_HACIA` (`empunadura` = −V, alternativas `+V`/`-V`); el clip entra paralelo a la placa por el borde libre y las cartelas mantienen la placa anclada.
+- Variantes distintas por radio: altura de placa calculada con la envolvente (UV-K5 V3 115×60×37,5 mm, RT-950 Pro 162×66×48 mm, ambas estimadas) y hueco del clip desde el clip estimado o un override de `perfiles_radio.json`.
+- Tuerca 1/4"-20 (se rompió en una impresión real): piel 2,0 mm, bolsillo hexagonal con ≥ 3 mm de pared y esquinas redondeadas, labios de retención en el canal de entrada, cavidad maciza 36 mm con rampa cónica y brida opcional de 50 × 36 mm.
+- Nuevos `src/verificar_v6.py`, `src/render_v6.py` y `docs/VARIANTES_V6.md`. Sin medidas físicas de clip ni prueba de carga; los STL se generan con los comandos de ese documento.
+
 ## Ayuda, CLI e imágenes — 2026-11-01
 - Índice de ayuda en español, navegación cruzada y opciones `-h`/`--help` sin dependencias CAD.
 - Renders explicativos del STL v3 actual: conjunto estimado, acceso al duplexor y detalle de placa/cartelas; sin cambios de STL ni de resultados CAD.
