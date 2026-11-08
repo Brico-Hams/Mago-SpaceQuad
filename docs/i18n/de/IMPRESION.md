@@ -1,4 +1,4 @@
-# Material und Ausrichtung — SpaceQuad v5
+# Material und Ausrichtung — SpaceQuad v6.2
 
 [Español](../es/README.md) · [English](../en/README.md) · **Deutsch** · [Français](../fr/README.md) · [Italiano](../it/README.md)
 
@@ -14,11 +14,11 @@
 
 | Bettfläche | Höhe | Kontakt | Überhang >45° | Kommentar |
 |---|---|---|---|---|
-| Y− | 95.6 mm | 355 mm² | 7688 mm² | Empfohlen: Tunnel vertikal; Schichten als Ringe um den Ausleger; Mutterlast in Schichtebene; Brim nutzen |
-| X+ | 195.2 mm | 1284 mm² | 10144 mm² | Vertikale Mutterachse: Zug quer zu den Schichten (schwach) |
-| Z+ | 79.0 mm | 711 mm² | 11941 mm² | Alternative |
+| Y− | 93.7 mm | 355 mm² | 7603 mm² | Empfohlen: Tunnel vertikal; Schichten als Ringe um den Ausleger; Mutterlast in Schichtebene; Brim nutzen |
+| X+ | 202.7 mm | 1735 mm² | 10736 mm² | Vertikale Mutterachse: Zug quer zu den Schichten (schwach) |
+| Z+ | 126.2 mm | 325 mm² | 12057 mm² | Alternative |
 
-![Druckausrichtungen im Vergleich](../../img/guia/v5/de/fig04_orientacion_impresion.png)
+![Druckausrichtungen im Vergleich](../../img/guia/v6/de/fig04_orientacion_impresion.png)
 
 ## Anfängliche Profile
 
@@ -26,10 +26,17 @@
 |---|---|
 | Schichthöhe | 0.20 mm |
 | Perimeter | 4 |
-| Füllung | Gyroid 40 % |
+| Füllung | Gyroid 40 % (60–100 % oder zusätzliche Wände im Träger und im Stativbereich) |
 | Brim | 5 mm (Option A) |
+| Stützen | unter Platte und Träger |
 | Maßkorrektur | 0 bis zur Messung des Prüfkörpers |
 
 Alles sind Startwerte, **physische Prüfung ausstehend**; keine universellen Parameter: den auf der Spule angegebenen Temperaturbereich verwenden.
+
+## Druckhinweise
+
+- Stützen unter der Platte und unter dem Träger.
+- Hohe Füllung (60–100 %) oder zusätzliche Wände im Träger und im Stativbereich.
+- Vor dem Vertrauen in das Teil einen Belastungstest durchführen (siehe Abschnitt Festigkeitsprüfung).
 
 - https://wiki.bambulab.com/en/filament/petg

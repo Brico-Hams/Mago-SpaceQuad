@@ -2,6 +2,11 @@
 
 **Ayuda:** [guía del proyecto](docs/AYUDA.md) · [README](README.md) · [montaje](docs/MONTAJE.md) · [materiales](docs/MATERIALES.md).
 
+## v6.2 limpieza
+- Se conservan solo v6.2, v1 (entrada de `mango_v6.py`), v3 (generador base y referencia del Anytone) y el Anytone genérico. v2, v4 y v5 se recuperan del historial de git (commit anterior a esta limpieza).
+- Eliminados: `legacy/` (v1 pinza del móvil, v2 soporte GoPro, v4 canal en V); toda la v5 (`stl/v5/`, `stl/refuerzo/`, `src/mango_v5.py`, `verificar_v5.py`, `render_v5.py`, `docs/VARIANTES_V5.md`, `docs/cad_checks_v5.json`, `docs/refuerzo_v5_*_checks.json`, `docs/img/v5_*_montaje.png`, `docs/img/guia/v5/` y `v5_refuerzo/`); `stl/mango_spacequad_v3_refuerzo.stl`; las figuras antiguas `docs/img/guia/fig*.png` y `orientaciones.json` (las vigentes están en `docs/img/guia/v6/<idioma>/`).
+- Se corrigen las referencias en README, AGENTS, ayuda, montaje, materiales, refuerzo de base, `gen_docs_i18n.py` y comentarios de `mango_v3.py`/`refuerzo_base.py`; el README muestra los montajes v6.2 en lugar de `vista_uso.png`. Sin cambios de geometría ni de STL.
+
 ## v6.2 — posición D: inclinación −V y radio en el lado −U (solo CAD)
 - El usuario eligió la posición D entre 4 renders: `TILT_HACIA = "-V"` por defecto (confirmado sobre la pieza real; se elimina el alias `empunadura`) y nuevo `LADO_U = "-U"` / `--lado-u` (`+U` = disposición anterior). Placa y hueco se espejan en U respecto al eje del boom (U = 15,55), y una viga empotrada 4 mm en la torre sujeta las cartelas. `verificar_v6.py` añade `radio_side_minus_u`, `radio_vs_boom_0mm3`, `bracket_anchored_in_tower` y `bracket_clear_tunnel_duplexer`; `render_v6.py` añade una vista desde atrás del operador. Sin cambios en la base de trípode, perfiles ni dimensiones del clip/radio. Pendiente: ejecutar verificación, medir clips e imprimir.
 

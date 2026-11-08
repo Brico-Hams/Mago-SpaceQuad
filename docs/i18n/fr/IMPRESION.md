@@ -1,4 +1,4 @@
-# Matériau et orientation — SpaceQuad v5
+# Matériau et orientation — SpaceQuad v6.2
 
 [Español](../es/README.md) · [English](../en/README.md) · [Deutsch](../de/README.md) · **Français** · [Italiano](../it/README.md)
 
@@ -14,11 +14,11 @@
 
 | Face sur le plateau | Hauteur | Contact | Surplomb >45° | Commentaire |
 |---|---|---|---|---|
-| Y− | 95.6 mm | 355 mm² | 7688 mm² | Recommandée : tunnel vertical ; couches en cerceaux autour du mât ; charge de l'écrou dans le plan des couches ; utiliser un brim |
-| X+ | 195.2 mm | 1284 mm² | 10144 mm² | Axe d'écrou vertical : traction perpendiculaire aux couches (faible) |
-| Z+ | 79.0 mm | 711 mm² | 11941 mm² | Alternative |
+| Y− | 93.7 mm | 355 mm² | 7603 mm² | Recommandée : tunnel vertical ; couches en cerceaux autour du mât ; charge de l'écrou dans le plan des couches ; utiliser un brim |
+| X+ | 202.7 mm | 1735 mm² | 10736 mm² | Axe d'écrou vertical : traction perpendiculaire aux couches (faible) |
+| Z+ | 126.2 mm | 325 mm² | 12057 mm² | Alternative |
 
-![Orientations d'impression comparées](../../img/guia/v5/fr/fig04_orientacion_impresion.png)
+![Orientations d'impression comparées](../../img/guia/v6/fr/fig04_orientacion_impresion.png)
 
 ## Profils initiaux
 
@@ -26,10 +26,17 @@
 |---|---|
 | Hauteur de couche | 0.20 mm |
 | Périmètres | 4 |
-| Remplissage | gyroïde 40 % |
+| Remplissage | gyroïde 40 % (60–100 % ou parois supplémentaires dans la poutre et la zone du trépied) |
 | Brim | 5 mm (option A) |
+| Supports | sous la plaque et la poutre |
 | Ajustement dimensionnel | 0 jusqu'à mesure de l'éprouvette |
 
 Toutes sont des valeurs initiales **en attente d'essai physique** ; pas de paramètres universels : utiliser la plage de température imprimée sur la bobine.
+
+## Conseils d'impression
+
+- Supports sous la plaque et sous la poutre.
+- Remplissage élevé (60–100 %) ou parois supplémentaires dans la poutre et la zone du trépied.
+- Faire un essai de charge avant de se fier à la pièce (voir la section de vérification de résistance).
 
 - https://wiki.bambulab.com/en/filament/petg

@@ -1,93 +1,65 @@
-# Mango SpaceQuad v5 — Guía de montaje ilustrada
+# Mango SpaceQuad v6.2 — Guía de montaje ilustrada
 
 **Español** · [English](../en/README.md) · [Deutsch](../de/README.md) · [Français](../fr/README.md) · [Italiano](../it/README.md)
 
-> Basado en la geometría final de main (v5, v5+refuerzo y Anytone). Si cambia la geometría, regenerar con `src/render_guia.py`. Las dimensiones del clip son estimadas, no medidas.
+> Basado en la geometría v6.2 (posición D) de `stl/v6/`. Si cambia la geometría, regenerar con `src/render_guia.py`. Solo CAD: las dimensiones del clip y de cada radio son estimadas, no medidas, y no hay prueba de carga.
 
-## Variantes (geometría final)
+## Posición D (v6.2)
 
-| Variante | Archivo STL | Envolvente (mm) | Volumen (mm³) |
+- Con la empuñadura en la mano, la radio queda en el lado del boom opuesto a la torre y al duplexor (lado −U) e inclinada 20° hacia el operador (extremo superior hacia −V).
+- Una viga de 14 × 7.5 mm une las dos cartelas de la placa con la torre y se empotra en ella; no toca el túnel del boom ni el duplexor.
+- El clip entra paralelo a la placa por su borde libre alto y avanza hacia el fondo del hueco, donde está la ventana de retención (recorrido útil 40 mm).
+
+## Variantes por radio
+
+| Radio | Archivo STL | Envolvente de la radio (estimada, mm) | Altura de la placa PH0 (mm) |
 |---|---|---|---|
-| v5 (UV-K5 V3 / RT-950 Pro, idénticos) | `stl/v5/*uvk5v3.stl, *rt950pro.stl` | 195.2 × 95.6 × 79.0 | 191951 |
-| v5 + base reforzada (UV-K5 V3 / RT-950 Pro) | `stl/refuerzo/*_v5_*_refuerzo.stl` | 195.2 × 95.6 × 79.0 | 205173 |
-| Anytone genérico ajustable (base ya reforzada; calzos opcionales) | `stl/mango_spacequad_anytone_generico.stl + stl/anytone_calzos/*.stl` | 195.2 × 93.7 × 79.0 | 213099 |
+| UV-K5 V3 | `stl/v6/mango_spacequad_v6_uvk5v3.stl` | 115 × 60 × 37.5 | 72.5 |
+| RT-950 Pro | `stl/v6/mango_spacequad_v6_rt950pro.stl` | 162 × 66 × 48 | 88.5 |
+
+## Tuerca de trípode reforzada
+
+- Piel de la cara del culo de 2.0 mm (antes 1.2 mm) y paredes de al menos 3 mm alrededor del alojamiento hexagonal.
+- La tuerca entra a presión: se introduce por el canal lateral y encaja al pasar los labios de retención (apertura 10.6 mm frente a 11.1 mm de la tuerca). La interferencia es teórica.
+- Un tornillo de trípode de 6 mm o más engrana unos 4 mm de la tuerca (nominal 5.6 mm).
+- Cavidad del mango rellena 36 mm con transición cónica y brida opcional en el culo.
+
+## Consejos de impresión
+
+- Soportes bajo la placa y bajo la viga.
+- Relleno alto (60–100 %) o paredes extra en la viga y en la zona del trípode.
+- Hacer una prueba de carga antes de fiarse de la pieza (ver la sección de verificación de resistencia).
 
 ## Gráficos
 
-### v5 (UV-K5 V3 / RT-950 Pro, idénticos)
+> Figuras de la variante UV-K5 V3; la RT-950 Pro comparte la misma geometría salvo la altura de la placa.
 
-![Vista lateral con cotas (X apunta al agarre)](../../img/guia/v5/es/fig01a_vista_lateral.png)
-*Vista lateral con cotas (X apunta al agarre)*
+![Vista lateral con cotas (X apunta al agarre; radio en el lado −U)](../../img/guia/v6/es/fig01a_vista_lateral.png)
+*Vista lateral con cotas (X apunta al agarre; radio en el lado −U)*
 
-![Vista de extremo (culata)](../../img/guia/v5/es/fig01b_vista_extremo.png)
+![Vista de extremo (culata)](../../img/guia/v6/es/fig01b_vista_extremo.png)
 *Vista de extremo (culata)*
 
-![Planta de la placa del clip: 55 × 48 × 4 mm a 20°](../../img/guia/v5/es/fig01c_planta_placa.png)
-*Planta de la placa del clip: 55 × 48 × 4 mm a 20°*
+![Planta de la placa del clip y de la viga: 55 × 48 × 4 mm a 20°](../../img/guia/v6/es/fig01c_planta_placa.png)
+*Planta de la placa del clip y de la viga: 55 × 48 × 4 mm a 20°*
 
-![Explosionado y pasos numerados ①–④ (la tuerca entra desde Z−)](../../img/guia/v5/es/fig02_explosionado.png)
-*Explosionado y pasos numerados ①–④ (la tuerca entra desde Z−)*
+![Explosionado y pasos numerados ①–④ (la tuerca entra a presión desde Z−)](../../img/guia/v6/es/fig02_explosionado.png)
+*Explosionado y pasos numerados ①–④ (la tuerca entra a presión desde Z−)*
 
-![Cortes A-A (túnel) y B-B (alojamiento de tuerca)](../../img/guia/v5/es/fig03_cortes.png)
-*Cortes A-A (túnel) y B-B (alojamiento de tuerca)*
+![Cortes A-A (túnel) y B-B (alojamiento de tuerca, piel de 2 mm)](../../img/guia/v6/es/fig03_cortes.png)
+*Cortes A-A (túnel) y B-B (alojamiento de tuerca, piel de 2 mm)*
 
-![Orientaciones de impresión comparadas](../../img/guia/v5/es/fig04_orientacion_impresion.png)
+![Orientaciones de impresión comparadas](../../img/guia/v6/es/fig04_orientacion_impresion.png)
 *Orientaciones de impresión comparadas*
 
-![Inserción del clip (v3 entra por +V; v5 por −V)](../../img/guia/v5/es/fig05_insercion_clip.png)
-*Inserción del clip (v3 entra por +V; v5 por −V)*
-
-### v5 + base reforzada (UV-K5 V3 / RT-950 Pro)
-
-![Vista lateral con cotas (X apunta al agarre)](../../img/guia/v5_refuerzo/es/fig01a_vista_lateral.png)
-*Vista lateral con cotas (X apunta al agarre)*
-
-![Vista de extremo (culata)](../../img/guia/v5_refuerzo/es/fig01b_vista_extremo.png)
-*Vista de extremo (culata)*
-
-![Planta de la placa del clip: 55 × 48 × 4 mm a 20°](../../img/guia/v5_refuerzo/es/fig01c_planta_placa.png)
-*Planta de la placa del clip: 55 × 48 × 4 mm a 20°*
-
-![Explosionado y pasos numerados ①–④ (la tuerca entra desde Z−)](../../img/guia/v5_refuerzo/es/fig02_explosionado.png)
-*Explosionado y pasos numerados ①–④ (la tuerca entra desde Z−)*
-
-![Cortes A-A (túnel) y B-B (alojamiento de tuerca)](../../img/guia/v5_refuerzo/es/fig03_cortes.png)
-*Cortes A-A (túnel) y B-B (alojamiento de tuerca)*
-
-![Orientaciones de impresión comparadas](../../img/guia/v5_refuerzo/es/fig04_orientacion_impresion.png)
-*Orientaciones de impresión comparadas*
-
-![Inserción del clip (v3 entra por +V; v5 por −V)](../../img/guia/v5_refuerzo/es/fig05_insercion_clip.png)
-*Inserción del clip (v3 entra por +V; v5 por −V)*
-
-### Anytone genérico ajustable (base ya reforzada; calzos opcionales)
-
-![Vista lateral con cotas (X apunta al agarre)](../../img/guia/anytone/es/fig01a_vista_lateral.png)
-*Vista lateral con cotas (X apunta al agarre)*
-
-![Vista de extremo (culata)](../../img/guia/anytone/es/fig01b_vista_extremo.png)
-*Vista de extremo (culata)*
-
-![Planta de la placa del clip: 55 × 48 × 4 mm a 20°](../../img/guia/anytone/es/fig01c_planta_placa.png)
-*Planta de la placa del clip: 55 × 48 × 4 mm a 20°*
-
-![Explosionado y pasos numerados ①–④ (la tuerca entra desde Z−)](../../img/guia/anytone/es/fig02_explosionado.png)
-*Explosionado y pasos numerados ①–④ (la tuerca entra desde Z−)*
-
-![Cortes A-A (túnel) y B-B (alojamiento de tuerca)](../../img/guia/anytone/es/fig03_cortes.png)
-*Cortes A-A (túnel) y B-B (alojamiento de tuerca)*
-
-![Orientaciones de impresión comparadas](../../img/guia/anytone/es/fig04_orientacion_impresion.png)
-*Orientaciones de impresión comparadas*
-
-![Inserción del clip (v3 entra por +V; v5 por −V)](../../img/guia/anytone/es/fig05_insercion_clip.png)
-*Inserción del clip (v3 entra por +V; v5 por −V)*
+![Inserción del clip (posición D: por el borde libre alto, paralelo a la placa)](../../img/guia/v6/es/fig05_insercion_clip.png)
+*Inserción del clip (posición D: por el borde libre alto, paralelo a la placa)*
 
 ## Lista de materiales (BOM)
 
 | Nº | Cant. | Elemento | Medida / especificación | Nota |
 |---|---|---|---|---|
-| 1 | 1 | Mango impreso v5 (`stl/v5/*uvk5v3.stl`) | Envolvente 195.2 × 95.6 × 79.0 mm | PETG recomendado |
+| 1 | 1 | Mango impreso v6.2 (`stl/v6/*_v6_uvk5v3.stl` o `*_v6_rt950pro.stl`) | Envolvente 202.7 × 93.7 × 126.2 mm (UV-K5 V3) | PETG recomendado |
 | 2 | 1 | Tuerca hexagonal 1/4"-20 UNC | Entre caras 11.1 mm, espesor 5.6 mm | Alojamiento AF 11.4 × 5.9 mm |
 | 3 | 1 | Pluma / boom (no incluida) | Ø15 mm, túnel 15.5 × 15.5 mm (juego nominal 0.25 mm por lado) | Medir la pluma real |
 | 4 | 0–1 | Placa/tornillo de zapata de trípode (opcional) | 1/4"-20 | Según uso |
@@ -98,9 +70,9 @@ Este diseño **no lleva rodamientos ni ejes**; la única tornillería es la tuer
 ## Orden de montaje
 
 1. Verificar la pieza: limpiar rebabas del túnel y del alojamiento hexagonal.
-2. Insertar la tuerca por el lado Z− en el alojamiento (piel de 1.2 mm hacia la culata).
+2. Insertar la tuerca a presión por el canal lateral del lado Z−, pasando los labios de retención (piel de 2.0 mm hacia la culata; un tornillo de 6 mm o más engrana unos 4 mm).
 3. Deslizar la pluma Ø15 mm por el túnel de 15.5 × 15.5 mm.
-4. Montar el clip en la placa (55 × 48 × 4 a 20°) y fijar la radio.
+4. Introducir la lengua del clip por el borde libre alto de la placa (55 × 48 × 4 a 20°), paralela a ella, y fijar la radio en el lado −U.
 
 ## Medir y ajustar holguras (ajuste mecánico)
 
@@ -120,6 +92,14 @@ Este diseño **no lleva rodamientos ni ejes**; la única tornillería es la tuer
 2. Carga de prueba = 2 × M, aplicada en escalones del 25 %, 50 % y 100 % de esa carga, 60 s cada uno, con lastre sobre superficie baja y protegido.
 3. Inspeccionar tras cada escalón; detener si hay grietas, blanqueo o deformación > 0.3 mm.
 4. Es un procedimiento práctico, no una certificación. Con cargas justificadas por M, nunca con la radio sobre una persona o equipo valioso.
+
+## Versiones anteriores
+
+Solo siguen v1 (entrada), v3 (generador base y referencia del Anytone) y el Anytone genérico (figuras en `docs/img/guia/anytone/`). v2, v4 y v5 se eliminaron; se recuperan desde el historial de git (commit anterior a la limpieza).
+
+| Variante | Archivo STL | Envolvente (mm) | Volumen (mm³) |
+|---|---|---|---|
+| Anytone genérico ajustable (base ya reforzada; calzos opcionales) | `stl/mango_spacequad_anytone_generico.stl + stl/anytone_calzos/*.stl` | 195.2 × 93.7 × 79.0 | 213099 |
 
 ## Licencia y atribución
 
