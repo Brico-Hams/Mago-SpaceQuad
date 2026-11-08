@@ -2,13 +2,19 @@
   "uvk5v3": {
     "modelo": "Quansheng UV-K5 V3",
     "stl": "mango_spacequad_v5_uvk5v3.stl",
+    "stl_v6": "mango_spacequad_v6_uvk5v3.stl",
     "estado": "provisional: geometria validada con envolvente generica; clip sin medir",
     "clip": {
       "ancho_mm": null, "grueso_max_mm": null, "entrada_util_mm": null,
       "separacion_tornillos_mm": null, "saliente_retencion_mm": null,
       "fuente": "ninguna verificable: sin ficha oficial con cotas del clip accesible desde este entorno"
     },
-    "radio": {"ancho_mm": null, "grueso_mm": null, "largo_mm": null, "pos_clip_desde_extremo_A_mm": null},
+    "radio": {
+      "ancho_mm": 60.0, "grueso_mm": 37.5, "largo_mm": 115.0, "pos_clip_desde_extremo_A_mm": null,
+      "masa_g": 234,
+      "estado_medida": "estimada, fuentes de terceros",
+      "fuente": "onesdr.com y newegg (115 x 60 x 37,5 mm, ~234 g); hamradio.my indica 110 x 58 x 32 mm. Sin medir la unidad real."
+    },
     "medidas_necesarias": [
       "Ancho de la lengua del clip (calibre, en el punto mas ancho)",
       "Grueso maximo de la lengua incluido el saliente de retencion",
@@ -22,13 +28,19 @@
   "rt950pro": {
     "modelo": "Radtel RT-950 Pro",
     "stl": "mango_spacequad_v5_rt950pro.stl",
+    "stl_v6": "mango_spacequad_v6_rt950pro.stl",
     "estado": "provisional: geometria validada con envolvente generica; clip sin medir",
     "clip": {
       "ancho_mm": null, "grueso_max_mm": null, "entrada_util_mm": null,
       "separacion_tornillos_mm": null, "saliente_retencion_mm": null,
       "fuente": "radtels.com (ficha del RT-950 Pro, 2026-11) solo indica '1x Belt clip', sin cotas"
     },
-    "radio": {"ancho_mm": null, "grueso_mm": null, "largo_mm": null, "pos_clip_desde_extremo_A_mm": null},
+    "radio": {
+      "ancho_mm": 66.0, "grueso_mm": 48.0, "largo_mm": 162.0, "pos_clip_desde_extremo_A_mm": null,
+      "masa_g": 660,
+      "estado_medida": "estimada",
+      "fuente": "copias en manuals.plus del manual de Radtel (no oficiales): ~162 x 66 x 48 mm (alto probablemente con botones), ~0,66 kg. Sin medir la unidad real."
+    },
     "medidas_necesarias": [
       "Ancho de la lengua del clip (calibre, en el punto mas ancho)",
       "Grueso maximo de la lengua incluido el saliente de retencion",

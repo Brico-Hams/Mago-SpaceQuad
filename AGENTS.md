@@ -12,3 +12,4 @@
 | v5 giro radio 180° (UV-K5 V3, RT-950 Pro) | `src/verificar_v5.py` OK | medir clips; imprimir |
 | Anytone genérico ajustable | `src/verificar_anytone.py` OK | medir clip y elegir calzo; imprimir |
 | Refuerzo base trípode | `docs/refuerzo_base_checks.json` | prueba de carga e impresión |
+| v6 radio inclinada hacia la empuñadura + base de trípode reforzada (UV-K5 V3, RT-950 Pro) | `src/verificar_v6.py` → `docs/cad_checks_v6.json` (pendiente de ejecutar; solo CAD) | medir clips y radios; imprimir; prueba de carga de la tuerca |
