@@ -59,7 +59,7 @@
 
 | No. | Qty | Item | Size / specification | Note |
 |---|---|---|---|---|
-| 1 | 1 | Printed handle v6.2 (`stl/v6/*_v6_uvk5v3.stl` or `*_v6_rt950pro.stl`) | Envelope 202.7 × 93.7 × 126.2 mm (UV-K5 V3) | PETG recommended |
+| 1 | 1 | Printed handle v6.2 (`stl/v6/*_v6_uvk5v3.stl` or `*_v6_rt950pro.stl`) | Envelope 202.7 × 93.7 × 78.3 mm (UV-K5 V3) | PETG recommended |
 | 2 | 1 | Hex nut 1/4"-20 UNC | Across flats 11.1 mm, thickness 5.6 mm | Pocket AF 11.4 × 5.9 mm |
 | 3 | 1 | Boom (not included) | Ø15 mm, tunnel 15.5 × 15.5 mm (nominal clearance 0.25 mm per side) | Measure the real boom |
 | 4 | 0–1 | Tripod quick-release plate/screw (optional) | 1/4"-20 | As needed |

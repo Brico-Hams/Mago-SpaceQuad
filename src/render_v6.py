@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Renders de montaje v6: radio inclinada (envolvente estimada), duplexor, boom y detalle del culo reforzado. Requiere pyvista.
 Escribe docs/img/v6_<variante>_montaje.png. Solo CAD ilustrativo.
-    python render_v6.py ../stl ../docs/img [--tilt-hacia +V|-V] [--lado-u -U|+U] [--tilt-deg 20] [--sin-brida]
+    python render_v6.py ../stl ../docs/img [--tilt-hacia +V|-V] [--lado-u plano|-U|+U] [--tilt-deg 20] [--sin-brida]
 """
 import argparse
 from pathlib import Path
@@ -14,7 +14,7 @@ def _parse_cli():
     parser.add_argument("stl_dir", help="directorio con el subdirectorio v6/")
     parser.add_argument("output_dir", help="directorio de salida de los PNG")
     parser.add_argument("--tilt-hacia", choices=("+V", "-V"), default="-V")
-    parser.add_argument("--lado-u", choices=("-U", "+U"), default="-U")
+    parser.add_argument("--lado-u", choices=("plano", "-U", "+U"), default="plano")
     parser.add_argument("--tilt-deg", type=float, default=20.0)
     parser.add_argument("--sin-brida", action="store_true")
     args = parser.parse_args()
@@ -66,7 +66,7 @@ def main(stl_dir, out):
         pl = pv.Plotter(off_screen=True, shape=(1, 3), window_size=(3000, 1000))
         lado = "+V" if cfg["d"] > 0 else "-V"
         lado_u = mv6.LADO_U
-        su = -1 if lado_u == "-U" else 1   # signo de U del lado de la radio
+        su = -1 if lado_u == "-U" else 1   # signo de U del lado de la radio ("plano" y "+U": +1)
 
         pl.subplot(0, 0)
         for m, col, op in ((mango, '#8d9399', 1), (radio, '#2e9e5b', 0.35), (clip, '#244a85', 1),
@@ -81,7 +81,8 @@ def main(stl_dir, out):
         pl.camera.parallel_projection = True
         pl.camera.parallel_scale = 150
         pl.set_background('white')
-        pl.add_text(f"v6.2 posicion D {perfil['modelo']}: radio en {lado_u}, extremo superior hacia {lado}, {cfg['deg']:g} grados",
+        titulo = (f"v6.4 pieza plana {perfil['modelo']}" if lado_u == "plano" else f"v6.2 posicion D {perfil['modelo']}")
+        pl.add_text(f"{titulo}: radio en {lado_u}, extremo superior hacia {lado}, {cfg['deg']:g} grados",
                     font_size=12, position=(20, 950), color='black')
         pl.add_text(f"Envolvente {cfg['radio_l']:g} x {cfg['radio_w']:g} x {cfg['radio_t']:g} mm ({perfil['radio'].get('estado_medida')}), NO el contorno real",
                     font_size=10, position=(20, 80), color='black')
@@ -119,6 +120,22 @@ def main(stl_dir, out):
         pl.add_text('CAD ilustrativo: sin medidas de clip verificadas ni prueba fisica', font_size=10, position=(20, 30), color='black')
         pl.screenshot(os.path.join(out, f'v6_{key}_montaje.png'))
         pl.close()
+
+        # vista de impresion: marco del STL sin rotar (Z arriba), cama gris clara en z = 0
+        pi = pv.Plotter(off_screen=True, window_size=(1800, 1000))
+        pi.add_mesh(pv.wrap(mango), color='#8d9399', smooth_shading=False)
+        ctr = mango.bounds.mean(axis=0)
+        ext = float(np.max(mango.extents))
+        cama = pv.Plane(center=(ctr[0], ctr[1], 0), direction=(0, 0, 1), i_size=1.4 * ext, j_size=1.4 * ext)
+        pi.add_mesh(cama, color='#d9d9d9', opacity=0.6)
+        pi.camera_position = [tuple(ctr + np.array((0.25, -1, 0.12)) * 1.6 * ext), tuple(ctr), (0, 0, 1)]
+        pi.set_background('white')
+        pi.add_text(f"{'v6.4 pieza plana' if lado_u == 'plano' else 'v6 ' + lado_u} {perfil['modelo']}: como se imprime (Z arriba, cama gris en z = 0)",
+                    font_size=12, position=(20, 950), color='black')
+        pi.add_text(f"z minimo del STL: {mango.bounds[0][2]:.2f} mm", font_size=10, position=(20, 55), color='black')
+        pi.add_text('CAD ilustrativo: sin prueba de impresion ni de resistencia', font_size=10, position=(20, 30), color='black')
+        pi.screenshot(os.path.join(out, f'v6_{key}_impresion.png'))
+        pi.close()
 
 
 if __name__ == '__main__':

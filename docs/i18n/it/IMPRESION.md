@@ -14,9 +14,9 @@
 
 | Faccia sul piatto | Altezza | Contatto | Sporgenza >45° | Commento |
 |---|---|---|---|---|
-| Y− | 93.7 mm | 355 mm² | 7603 mm² | Consigliata: tunnel verticale; strati ad anello attorno all'asta; carico del dado nel piano degli strati; usare brim |
-| X+ | 202.7 mm | 1735 mm² | 10736 mm² | Asse del dado verticale: trazione perpendicolare agli strati (debole) |
-| Z+ | 126.2 mm | 325 mm² | 12057 mm² | Alternativa |
+| Y− | 93.7 mm | 355 mm² | 7438 mm² | Consigliata: tunnel verticale; strati ad anello attorno all'asta; carico del dado nel piano degli strati; usare brim |
+| X+ | 202.7 mm | 1620 mm² | 10044 mm² | Asse del dado verticale: trazione perpendicolare agli strati (debole) |
+| Z+ | 78.3 mm | 325 mm² | 13406 mm² | Alternativa |
 
 ![Orientamenti di stampa a confronto](../../img/guia/v6/it/fig04_orientacion_impresion.png)
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Verifica la v6 (radio inclinada hacia la empunadura y base de tripode reforzada); guarda resultados CAD en JSON.
 Clips y radio son envolventes ESTIMADAS (ver perfiles_radio.json): no es una validacion de ajuste ni de resistencia.
-    python verificar_v6.py ../stl/v6 [../docs/cad_checks_v6.json] [--tilt-hacia +V|-V] [--lado-u -U|+U] [--tilt-deg 20] [--sin-brida]
+    python verificar_v6.py ../stl/v6 [../docs/cad_checks_v6.json] [--tilt-hacia +V|-V] [--lado-u plano|-U|+U] [--tilt-deg 20] [--sin-brida]
 """
 import argparse
 from pathlib import Path
@@ -19,7 +19,7 @@ def _parse_cli():
     parser.add_argument("report", nargs="?", default=str(ROOT / "docs" / "cad_checks_v6.json"),
                         help="JSON de resultados (por defecto docs/cad_checks_v6.json)")
     parser.add_argument("--tilt-hacia", choices=("+V", "-V"), default="-V")
-    parser.add_argument("--lado-u", choices=("-U", "+U"), default="-U")
+    parser.add_argument("--lado-u", choices=("plano", "-U", "+U"), default="plano")
     parser.add_argument("--tilt-deg", type=float, default=20.0)
     parser.add_argument("--sin-brida", action="store_true")
     args = parser.parse_args()
@@ -35,6 +35,7 @@ import json
 import numpy as np
 import trimesh
 import shapely.geometry as sg
+from shapely.ops import unary_union
 from geom import to_mf, to_tm
 import mango_v3 as mg
 import mango_v6 as mv6
@@ -117,9 +118,18 @@ def main(stl_dir, report=None):
         conj = radio + mv6.clip_radio(cfg)
         check(f"{key}:assembly_connected", sum(c.volume() > 0 for c in conj.decompose()) == 1)
         cen_u = float(rt.vertices[:, 2].mean())
-        check(f"{key}:radio_side_minus_u" if mv6.LADO_U == "-U" else f"{key}:radio_side_plus_u",
-              (cen_u < mv6.U_BOOM - 20) if mv6.LADO_U == "-U" else (cen_u > mv6.U_BOOM + 20),
-              radio_centroid_u=cen_u, plate_centre_u=cfg["uc"], boom_axis_u=mv6.U_BOOM)
+        if mv6.LADO_U == "plano":
+            tmv = to_tm(mango)
+            ab = tmv.face_normals[:, 2] < -0.999
+            en_cama = ab & (tmv.triangles_center[:, 2] < 0.05)
+            min_z = float(tmv.bounds[0][2])
+            area_cama = float(tmv.area_faces[en_cama].sum())
+            check(f"{key}:flat_on_bed", min_z >= -0.01 and area_cama >= 1000.0, min_z=min_z, bed_area_mm2=area_cama,
+                  required_area_mm2=1000.0)
+        else:
+            check(f"{key}:radio_side_minus_u" if mv6.LADO_U == "-U" else f"{key}:radio_side_plus_u",
+                  (cen_u < mv6.U_BOOM - 20) if mv6.LADO_U == "-U" else (cen_u > mv6.U_BOOM + 20),
+                  radio_centroid_u=cen_u, plate_centre_u=cfg["uc"], boom_axis_u=mv6.U_BOOM)
         for nombre, otro in (("mango", mango), ("duplexor", dup), ("boom", boom)):
             check(f"{key}:radio_vs_{nombre}_0mm3", (radio ^ otro).volume() < TOL and (conj ^ otro).volume() < TOL,
                   collision_mm3=(conj ^ otro).volume())
@@ -135,22 +145,28 @@ def main(stl_dir, report=None):
               and (barrido ^ boom).volume() < TOL,
               sweep_mm=mg.USABLE_L, mango_collision_mm3=(barrido ^ mango).volume(),
               boom_collision_mm3=(barrido ^ boom).volume())
-        # la viga no puede entrar en el tunel del boom (15,5 mm + 0,5 mm de holgura) ni en el duplexor
+        # el pedestal y las paredes no pueden entrar en el tunel del boom (15,5 mm + 0,5 mm de holgura) ni en el duplexor
         tunel = vf.use_box(mv6.U_BOOM - 8.25, mv6.U_BOOM + 8.25, -100, 400, -8.25, 8.25)
         soporte = mv6.soporte(cfg)
         check(f"{key}:bracket_clear_tunnel_duplexer",
               (soporte ^ tunel).volume() < TOL and (soporte ^ dup).volume() < TOL
               and ((mango - v1) ^ tunel).volume() < TOL,
               bracket_tunnel_mm3=(soporte ^ tunel).volume(), bracket_duplexer_mm3=(soporte ^ dup).volume())
+        boom_1mm = vf.use_box(mv6.U_BOOM - 8.5, mv6.U_BOOM + 8.5, -100, 400, -8.5, 8.5)   # barra del boom + 1 mm
+        check(f"{key}:pedestal_clear_boom", (soporte ^ boom_1mm).volume() < TOL and ((mango - v1) ^ boom_1mm).volume() < TOL,
+              clearance_required_mm=1.0, pedestal_min_h_mm=mv6.PED_H0, support_vs_boom_grown_mm3=(soporte ^ boom_1mm).volume())
         solape = to_tm(soporte ^ v1)
         if solape.vertices.shape[0]:
             ext = solape.bounds[1] - solape.bounds[0]
-            prof_u, prof_h = float(ext[2]), float(ext[0])
+            prof_u = float(ext[2])
+            tri = solape.vertices[solape.faces][:, :, [1, 0]]
+            contacto = float(unary_union([sg.Polygon(t) for t in tri if sg.Polygon(t).area > 1e-9]).area)   # proyeccion V-H
         else:
-            prof_u = prof_h = 0.0
-        check(f"{key}:bracket_anchored_in_tower", prof_u >= 2.0 and prof_h >= 2.0,
-              overlap_depth_u_mm=prof_u, overlap_depth_h_mm=prof_h, overlap_volume_mm3=(soporte ^ v1).volume(),
-              wall_mm=mg.SIDE_T)
+            prof_u = contacto = 0.0
+        check(f"{key}:support_integrated_solid",
+              sum(c.volume() > 0 for c in mango.decompose()) == 1 and prof_u >= 3.0 and contacto >= 300.0,
+              overlap_depth_u_mm=prof_u, contact_area_mm2=contacto, overlap_volume_mm3=(soporte ^ v1).volume(),
+              required_depth_mm=3.0, required_area_mm2=300.0, wall_mm=mg.SIDE_T)
         check(f"{key}:clearance_above_tower", cfg["radio_h_min"] >= mg.TOWER_H + 3 and cfg["hueco_h_min"] >= mg.TOWER_H + 3,
               radio_h_min=cfg["radio_h_min"], slot_h_min=cfg["hueco_h_min"], tower_top_h=mg.TOWER_H, ph0=cfg["ph0"])
 
@@ -188,10 +204,11 @@ def main(stl_dir, report=None):
             check(f"{key}:gusset_{i + 1}_anchored", falta < TOL, missing_foot_mm3=falta,
                   overlap_with_v1_mm3=(cart ^ v1).volume(), gusset_height_mm=cfg["ph0"] - mg.ROOT_H0)
 
-        # --- cambios respecto a la v3: solo placa/cartelas/viga y zona de cavidad y culo
+        # --- cambios respecto a la v3: solo placa/pedestal/paredes y zona de cavidad y culo
         zona_placa = vf.use_box(-80, 100, 0, 300, 50, 230)
+        zona_pedestal = vf.use_box(-80, mv6.TORRE_U0 + mv6.EMBED_U + mv6.PED_CHAFLAN, 0, 300, mv6.PED_H0 - 1.0, 50)
         zona_base = vf.use_box(-20, 100, 0, 300, -112, -39)
-        fuera = abs((sdiff_(mango, v3) - zona_placa - zona_base).volume())
+        fuera = abs((sdiff_(mango, v3) - zona_placa - zona_pedestal - zona_base).volume())
         check(f"{key}:changes_localized", fuera < 0.01, outside_mm3=fuera)
 
         # --- tripode

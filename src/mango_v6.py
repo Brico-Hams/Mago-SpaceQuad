@@ -3,7 +3,7 @@
 Mango SpaceQuad v6 (Bricohams): v5 corregida. Solo CAD: ni ajuste ni resistencia estan probados fisicamente.
 
     python mango_v6.py ../stl/mango_spacequad_tripode.stl ../stl/v6 [uvk5v3|rt950pro|todas]
-        [--tilt-hacia +V|-V] [--lado-u -U|+U] [--tilt-deg 20] [--sin-brida]
+        [--tilt-hacia +V|-V] [--lado-u plano|-U|+U] [--tilt-deg 20] [--sin-brida]
 
 Cambios respecto a la v3/v5:
  1. Posicion D (v6.2). El eje largo de la radio (extremo superior = el del clip) se inclina TILT_DEG sobre la
@@ -11,7 +11,12 @@ Cambios respecto a la v3/v5:
     confirmada por el usuario sobre la pieza real). La radio, con su placa y el hueco, va al lado LADO_U del eje del
     boom (U = 15,55): "-U" (defecto, lejos del duplexor) es el espejo en U del diseno "+U" anterior. El clip entra
     paralelo a la placa por el borde libre (superior) y la radio apoya en la cara exterior de la placa. La placa se
-    sujeta con dos cartelas y, en "-U", con una viga (puente) que sale de la cara superior de la torre y se empotra en ella.
+    sujeta con dos paredes y, en "-U", con un pedestal macizo (alma) fundido con el mango: suelo bajo el hueco, dos paredes
+    y la placa forman una funda cerrada, abierta por el borde libre y por el extremo opuesto (v6.3).
+    Posicion "plano" (v6.4, defecto): el marco del STL tiene Z = U y el mango v1 se imprime tumbado sobre su cara
+    z = 0 (U = 0). Con "-U" la placa y el pedestal llegaban a U = -48 (por debajo de la cama). En "plano" la placa
+    ocupa U = 0..plate_w (borde -U al ras de la cama), con el mismo pedestal, la misma inclinacion -V y la radio
+    sobre la torre: una sola pieza que apoya entera en la cama, sin soportes bajo el mango.
  2. Variantes reales por radio. La altura de la placa (PH0) se calcula con la envolvente de cada radio
     (largo x ancho x grueso de perfiles_radio.json) para que su punto mas bajo quede por encima de la torre,
     y el ancho del hueco del clip sale del clip estimado de cada modelo (o del override del JSON).
@@ -39,8 +44,8 @@ def _parse_cli():
     parser.add_argument("variant", nargs="?", default="todas")
     parser.add_argument("--tilt-hacia", choices=("+V", "-V"), default="-V",
                         help="lado V hacia el que se inclina el extremo superior de la radio")
-    parser.add_argument("--lado-u", choices=("-U", "+U"), default="-U",
-                        help="lado del eje del boom (U = 15,55) donde va la radio; -U = posicion D")
+    parser.add_argument("--lado-u", choices=("plano", "-U", "+U"), default="plano",
+                        help="plano = placa en U 0..plate_w, todo sobre la cama (v6.4); -U/+U = lado del eje del boom (U = 15,55)")
     parser.add_argument("--tilt-deg", type=float, default=20.0, help="inclinacion del eje largo de la radio sobre la horizontal")
     parser.add_argument("--sin-brida", action="store_true", help="no anade la brida opcional del culo")
     args = parser.parse_args()
@@ -64,15 +69,17 @@ import refuerzo_base as rb
 
 # ---------------------------------------------------------------- PARAMETROS (mm)
 TILT_HACIA = "-V"              # "+V" | "-V" (confirmado -V sobre la pieza real)
-LADO_U = "-U"                  # "-U" (posicion D, nuevo) | "+U" (diseno anterior)
+LADO_U = "plano"               # "plano" (v6.4: U >= 0, apoya en la cama) | "-U" (v6.3) | "+U" (diseno anterior)
 TILT_DEG = 20.0                # inclinacion del eje largo de la radio sobre la horizontal
 BRIDA = True                   # brida opcional del culo
 
-# viga de soporte (solo LADO_U = "-U"): sale de la torre y lleva la placa al otro lado del boom
+# pedestal macizo (LADO_U = "-U" o "plano"): bloque unico con el mango que lleva la placa al otro lado del boom
 U_BOOM = 15.55                 # eje U del tunel del boom
 TORRE_U0 = 8.0                 # supuesto: la torre ocupa U ~8..78 hasta H = TOWER_H
-EMBED_U = 4.0                  # la viga entra esta distancia en U dentro de la torre (>= 2 mm)
-VIGA_H0, VIGA_H1 = 50.5, 58.0  # H de la viga: embebida bajo la cara superior de la torre (58,64), muy por encima del tunel y del duplexor
+EMBED_U = 6.0                  # el pedestal entra esta distancia en U dentro de la torre / bloque del tunel (>= 3 mm)
+PED_H0 = 8.75                  # H minimo del pedestal: 1,25 mm sobre la barra del boom (15 x 15 mm, H = +-7,5)
+PED_FLOOR_GAP = 0.01           # el suelo del pedestal queda este margen bajo el hueco del clip (evita caras coincidentes)
+PED_CHAFLAN = 3.0              # chaflan 45 grados del pedestal sobre la cara superior de la torre (>= 3 mm)
 
 # radio y clip
 H_LIBRE = 62.0                 # H minimo de la radio: cara libre de la torre (58,64) + 3,4 mm
@@ -116,7 +123,7 @@ def resolver_tilt(tilt_hacia=None):
 
 
 def resolver_lado(lado_u=None):
-    """Centro U de la placa: espejo en U respecto al eje del boom para '-U'."""
+    """Centro U de la placa para '+U' / '-U' (espejo en U respecto al eje del boom). 'plano' se calcula en configuracion()."""
     s = LADO_U if lado_u is None else lado_u
     uc0 = mg.PLATE_U0 + mg.PLATE_W / 2
     if s == "+U":
@@ -141,7 +148,10 @@ def configuracion(key, tilt_hacia=None, tilt_deg=None):
     w_in = clip_w + 2 * CLIP_LAT
     plate_w = w_in + 2 * mg.SIDE_T
     min_clear = clip_t + CLIP_HOLG_T
-    uc = resolver_lado()
+    if LADO_U == "plano":
+        uc = plate_w / 2   # borde -U de la placa en U = 0: nada por debajo de la cara plana de la cama
+    else:
+        uc = resolver_lado()
     s1 = mg.PLATE_L + pos_clip                 # extremo superior de la radio
     s_lo = s1 - radio["largo_mm"]              # extremo inferior de la radio
     pv0 = V_RAIZ_C - d * mg.PLATE_L * np.cos(a) / 2
@@ -178,17 +188,43 @@ def cartelas(cfg):
     return out
 
 
-def viga(cfg):
-    """Viga rigida de 7,5 x 14 mm: de la placa (-U) hasta EMBED_U dentro de la torre; None con LADO_U = '+U'."""
-    if LADO_U == "+U":
-        return None
-    return mg.use_prism([(mg.ROOT_V0, VIGA_H0), (mg.ROOT_V1, VIGA_H0), (mg.ROOT_V1, VIGA_H1), (mg.ROOT_V0, VIGA_H1)],
-                        cfg["u0"], TORRE_U0 + EMBED_U)
+def pedestal(cfg):
+    """Alma maciza bajo el hueco del clip, fundida con el mango (solo LADO_U = '-U').
+
+    Suelo paralelo a la placa a min_clear (+ PED_FLOOR_GAP) bajo ella; por debajo, el alma baja hasta PED_H0 y se limita
+    con un plano inclinado que sube hacia -U (empalme en chaflan con el cuerpo). Cierra con las dos paredes y la
+    placa una funda abierta por el borde libre y por el extremo opuesto. Entra EMBED_U en la torre y el bloque del boom.
+    """
+    n_f = -cfg["min_clear"] - PED_FLOOR_GAP
+    u_in = TORRE_U0 + EMBED_U
+    f0, f1 = punto(cfg, 0, n_f), punto(cfg, mg.PLATE_L, n_f)
+    perfil_vh = [f0, f1, (f1[0], PED_H0), (f0[0], PED_H0)]
+    alma = mg.use_prism(perfil_vh, cfg["u0"], u_in)
+    # plano inferior: de (U = u_in, H = PED_H0) a (U = u0, H = ROOT_H0), extendido 1 mm mas alla de u0
+    pend = (mg.ROOT_H0 - PED_H0) / (u_in - cfg["u0"])
+    u_ext = cfg["u0"] - 1.0
+    por_encima = sg.Polygon([(mg.FACE_X + PED_H0, u_in), (mg.FACE_X + PED_H0 + pend * (u_in - u_ext), u_ext),
+                             (mg.FACE_X + 400.0, u_ext), (mg.FACE_X + 400.0, u_in)])
+    v_lo, v_hi = min(f0[0], f1[0]), max(f0[0], f1[0])
+    alma = alma ^ mg.prism_y(por_encima, v_lo, v_hi)
+    # paredes: de la placa al suelo, a todo lo largo (4 mm de solape con el suelo)
+    cuerpo = [punto(cfg, 0, 0.2), punto(cfg, mg.PLATE_L, 0.2), punto(cfg, mg.PLATE_L, n_f - 1.0), punto(cfg, 0, n_f - 1.0)]
+    for u in (cfg["u0"], cfg["u0"] + cfg["plate_w"] - mg.SIDE_T):
+        alma = alma + mg.use_prism(cuerpo, u, u + mg.SIDE_T)
+    # chaflan sobre la cara superior de la torre, en el canto del pedestal (cara +U)
+    c, t = PED_CHAFLAN, mg.TOWER_H
+    cuna = sg.Polygon([(mg.FACE_X + t - 1.0, u_in - 1.0), (mg.FACE_X + t - 1.0, u_in + c), (mg.FACE_X + t, u_in + c),
+                       (mg.FACE_X + t + c, u_in), (mg.FACE_X + t + c, u_in - 1.0)])
+    y0, y1 = max(mg.TY0, v_lo), min(mg.TY1, v_hi)
+    if y1 > y0:
+        alma = alma + mg.prism_y(cuna, y0, y1)
+    return alma
 
 
 def soporte(cfg):
-    v = viga(cfg)
-    return cartelas(cfg) if v is None else cartelas(cfg) + v
+    if LADO_U == "+U":
+        return cartelas(cfg)
+    return cartelas(cfg) + pedestal(cfg)
 
 
 def placa(cfg):
@@ -245,7 +281,8 @@ def bolsillo_2d(z_ext):
 
 
 def brida_poly():
-    return sg.box(mg.T_YC - BRIDA_Y / 2, mg.T_ZC - BRIDA_Z / 2,
+    # la brida no baja de z = 0: la pieza apoya plana en la cama (v6.4)
+    return sg.box(mg.T_YC - BRIDA_Y / 2, max(mg.T_ZC - BRIDA_Z / 2, 0.0),
                   mg.T_YC + BRIDA_Y / 2, mg.T_ZC + BRIDA_Z / 2).buffer(-BRIDA_R).buffer(BRIDA_R)
 
 
@@ -274,7 +311,7 @@ def brida():
 def z_exterior(verts):
     """Z de la cara lateral por donde entra la tuerca (minimo del culo, o de la brida si es mas baja)."""
     z = float(verts[verts[:, 0] > mg.BUTT_FACE - 12][:, 2].min())
-    return min(z, mg.T_ZC - BRIDA_Z / 2) if BRIDA else z
+    return max(min(z, mg.T_ZC - BRIDA_Z / 2), 0.0) if BRIDA else z
 
 
 def rampa_relleno(malla, x_solido):
@@ -350,7 +387,7 @@ def build_variant(src, out_dir, key):
     out = to_tm(body)
     out.export(dst)
     digest = hashlib.sha256(dst.read_bytes()).hexdigest()
-    print(f"{key}: tilt {cfg['deg']:g} grados hacia {'+V' if cfg['d'] > 0 else '-V'} ({TILT_HACIA}), lado {LADO_U} (uc={cfg['uc']:.2f}), PH0={cfg['ph0']}, "
+    print(f"{key}: v6.4 tilt {cfg['deg']:g} grados hacia {'+V' if cfg['d'] > 0 else '-V'} ({TILT_HACIA}), lado {LADO_U} (uc={cfg['uc']:.2f}, placa U {cfg['u0']:.1f}..{cfg['u0'] + cfg['plate_w']:.1f}), PH0={cfg['ph0']}, "
           f"hueco clip {cfg['w_in']:g} mm, radio {cfg['radio_l']:g}x{cfg['radio_w']:g}x{cfg['radio_t']:g} "
           f"({perfil['radio'].get('estado_medida')}), {np.round(out.extents, 1)} mm, {body.status()}, {digest[:16]}")
     return dst

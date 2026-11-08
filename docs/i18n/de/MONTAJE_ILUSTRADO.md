@@ -59,7 +59,7 @@
 
 | Nr. | Menge | Teil | Maß / Spezifikation | Hinweis |
 |---|---|---|---|---|
-| 1 | 1 | Gedruckter Griff v6.2 (`stl/v6/*_v6_uvk5v3.stl` oder `*_v6_rt950pro.stl`) | Hüllmaß 202.7 × 93.7 × 126.2 mm (UV-K5 V3) | PETG empfohlen |
+| 1 | 1 | Gedruckter Griff v6.2 (`stl/v6/*_v6_uvk5v3.stl` oder `*_v6_rt950pro.stl`) | Hüllmaß 202.7 × 93.7 × 78.3 mm (UV-K5 V3) | PETG empfohlen |
 | 2 | 1 | Sechskantmutter 1/4"-20 UNC | Schlüsselweite 11.1 mm, Dicke 5.6 mm | Tasche SW 11.4 × 5.9 mm |
 | 3 | 1 | Ausleger (nicht enthalten) | Ø15 mm, Tunnel 15.5 × 15.5 mm (Nennspiel 0.25 mm je Seite) | Echten Ausleger messen |
 | 4 | 0–1 | Stativ-Schnellwechselplatte/-schraube (optional) | 1/4"-20 | Nach Bedarf |
