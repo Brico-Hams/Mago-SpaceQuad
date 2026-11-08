@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Verifica la v6 (radio inclinada hacia la empunadura y base de tripode reforzada); guarda resultados CAD en JSON.
 Clips y radio son envolventes ESTIMADAS (ver perfiles_radio.json): no es una validacion de ajuste ni de resistencia.
-    python verificar_v6.py ../stl/v6 [../docs/cad_checks_v6.json] [--tilt-hacia empunadura|+V|-V] [--tilt-deg 20] [--sin-brida]
+    python verificar_v6.py ../stl/v6 [../docs/cad_checks_v6.json] [--tilt-hacia +V|-V|empunadura] [--tilt-deg 20] [--sin-brida]
 """
 import argparse
 from pathlib import Path
@@ -18,7 +18,7 @@ def _parse_cli():
     parser.add_argument("stl_dir", help="directorio con los STL v6")
     parser.add_argument("report", nargs="?", default=str(ROOT / "docs" / "cad_checks_v6.json"),
                         help="JSON de resultados (por defecto docs/cad_checks_v6.json)")
-    parser.add_argument("--tilt-hacia", choices=("empunadura", "+V", "-V"), default="empunadura")
+    parser.add_argument("--tilt-hacia", choices=("empunadura", "+V", "-V"), default="+V")
     parser.add_argument("--tilt-deg", type=float, default=20.0)
     parser.add_argument("--sin-brida", action="store_true")
     args = parser.parse_args()
@@ -62,8 +62,7 @@ def _json_default(o):
 
 def tilt_esperado():
     """Signo en V esperado del extremo superior de la radio, calculado sin pasar por mango_v6.resolver_tilt."""
-    t = {"+V": 1, "-V": -1}.get(mv6.TILT_HACIA)
-    return t if t else (-1 if mg.T_YC < mg.YC else 1)
+    return {"+V": 1, "empunadura": 1, "-V": -1}[mv6.TILT_HACIA]
 
 
 def main(stl_dir, report=None):
@@ -109,8 +108,8 @@ def main(stl_dir, report=None):
         check(f"{key}:radio_tilt_toward_{mv6.TILT_HACIA}", dv * esp > 0 and dh > 0 and abs(ang - mv6.TILT_DEG) < 0.5,
               top_centre_stl=np.round(top, 2), bottom_centre_stl=np.round(bot, 2), delta_v_mm=dv, delta_h_mm=dh,
               expected_sign_v=esp, tilt_deg_measured=ang)
-        check(f"{key}:radio_tilt_resolves_to_grip_side", mv6.TILT_HACIA != "empunadura"
-              or (esp == (-1 if mg.T_YC < mg.YC else 1) and cfg["d"] == esp), grip_y=mg.T_YC, tower_y=mg.YC)
+        check(f"{key}:radio_tilt_config_sign_matches_{mv6.TILT_HACIA}", cfg["d"] == esp,
+              config_sign=cfg["d"], expected_sign=esp)
 
         # --- radio y clip contra mango, duplexor y corredor del duplexor
         conj = radio + mv6.clip_radio(cfg)

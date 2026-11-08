@@ -3,13 +3,13 @@
 Mango SpaceQuad v6 (Bricohams): v5 corregida. Solo CAD: ni ajuste ni resistencia estan probados fisicamente.
 
     python mango_v6.py ../stl/mango_spacequad_tripode.stl ../stl/v6 [uvk5v3|rt950pro|todas]
-        [--tilt-hacia empunadura|+V|-V] [--tilt-deg 20] [--sin-brida]
+        [--tilt-hacia +V|-V|empunadura] [--tilt-deg 20] [--sin-brida]
 
 Cambios respecto a la v3/v5:
  1. Inclinacion de la radio hacia la empunadura. El eje largo de la radio (extremo superior = el del clip) se
     inclina TILT_DEG sobre la horizontal y su extremo superior queda del lado TILT_HACIA en el eje V del boom.
-    "empunadura" se resuelve como el lado V donde esta el eje del tripode (T_YC=115,2 frente a la torre
-    en YC=147,6): -V. El clip sigue entrando paralelo a la placa por el borde libre (superior) y la radio
+    "empunadura" equivale a "+V" (direccion confirmada por el usuario sobre la pieza impresa; el defecto
+    v6.0, -V, estaba al reves). El clip sigue entrando paralelo a la placa por el borde libre (superior) y la radio
     apoya en la cara exterior de la placa. La placa se asienta en la torre con dos cartelas.
  2. Variantes reales por radio. La altura de la placa (PH0) se calcula con la envolvente de cada radio
     (largo x ancho x grueso de perfiles_radio.json) para que su punto mas bajo quede por encima de la torre,
@@ -36,7 +36,7 @@ def _parse_cli():
     parser.add_argument("source", help="STL v1 de entrada")
     parser.add_argument("out_dir", help="directorio de salida")
     parser.add_argument("variant", nargs="?", default="todas")
-    parser.add_argument("--tilt-hacia", choices=("empunadura", "+V", "-V"), default="empunadura",
+    parser.add_argument("--tilt-hacia", choices=("empunadura", "+V", "-V"), default="+V",
                         help="lado V hacia el que se inclina el extremo superior de la radio")
     parser.add_argument("--tilt-deg", type=float, default=20.0, help="inclinacion del eje largo de la radio sobre la horizontal")
     parser.add_argument("--sin-brida", action="store_true", help="no anade la brida opcional del culo")
@@ -60,7 +60,7 @@ import mango_v3 as mg
 import refuerzo_base as rb
 
 # ---------------------------------------------------------------- PARAMETROS (mm)
-TILT_HACIA = "empunadura"      # "empunadura" | "+V" | "-V"
+TILT_HACIA = "+V"              # "+V" | "-V" | "empunadura" (= "+V")
 TILT_DEG = 20.0                # inclinacion del eje largo de la radio sobre la horizontal
 BRIDA = True                   # brida opcional del culo
 
@@ -98,12 +98,10 @@ def claves_v6():
 def resolver_tilt(tilt_hacia=None):
     """+1 = el extremo superior de la radio queda hacia +V; -1 = hacia -V."""
     t = TILT_HACIA if tilt_hacia is None else tilt_hacia
-    if t == "+V":
+    if t in ("+V", "empunadura"):
         return 1
     if t == "-V":
         return -1
-    if t == "empunadura":
-        return -1 if mg.T_YC < mg.YC else 1
     raise ValueError(f"TILT_HACIA desconocido: {t}")
 
 

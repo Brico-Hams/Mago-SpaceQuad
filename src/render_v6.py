@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Renders de montaje v6: radio inclinada (envolvente estimada), duplexor, boom y detalle del culo reforzado. Requiere pyvista.
 Escribe docs/img/v6_<variante>_montaje.png. Solo CAD ilustrativo.
-    python render_v6.py ../stl ../docs/img [--tilt-hacia empunadura|+V|-V] [--tilt-deg 20] [--sin-brida]
+    python render_v6.py ../stl ../docs/img [--tilt-hacia +V|-V|empunadura] [--tilt-deg 20] [--sin-brida]
 """
 import argparse
 from pathlib import Path
@@ -13,7 +13,7 @@ def _parse_cli():
                                      epilog="Ejemplo: python src/render_v6.py stl docs/img")
     parser.add_argument("stl_dir", help="directorio con el subdirectorio v6/")
     parser.add_argument("output_dir", help="directorio de salida de los PNG")
-    parser.add_argument("--tilt-hacia", choices=("empunadura", "+V", "-V"), default="empunadura")
+    parser.add_argument("--tilt-hacia", choices=("empunadura", "+V", "-V"), default="+V")
     parser.add_argument("--tilt-deg", type=float, default=20.0)
     parser.add_argument("--sin-brida", action="store_true")
     args = parser.parse_args()
@@ -78,7 +78,7 @@ def main(stl_dir, out):
         pl.camera.parallel_projection = True
         pl.camera.parallel_scale = 150
         pl.set_background('white')
-        pl.add_text(f"v6 {perfil['modelo']}: extremo superior de la radio hacia {mv6.TILT_HACIA} ({lado}), {cfg['deg']:g} grados",
+        pl.add_text(f"v6 {perfil['modelo']}: extremo superior de la radio hacia {lado}, {cfg['deg']:g} grados",
                     font_size=12, position=(20, 950), color='black')
         pl.add_text(f"Envolvente {cfg['radio_l']:g} x {cfg['radio_w']:g} x {cfg['radio_t']:g} mm ({perfil['radio'].get('estado_medida')}), NO el contorno real",
                     font_size=10, position=(20, 80), color='black')
