@@ -59,7 +59,7 @@
 
 | Nº | Cant. | Elemento | Medida / especificación | Nota |
 |---|---|---|---|---|
-| 1 | 1 | Mango impreso v6.2 (`stl/v6/*_v6_uvk5v3.stl` o `*_v6_rt950pro.stl`) | Envolvente 202.7 × 93.7 × 126.2 mm (UV-K5 V3) | PETG recomendado |
+| 1 | 1 | Mango impreso v6.2 (`stl/v6/*_v6_uvk5v3.stl` o `*_v6_rt950pro.stl`) | Envolvente 202.7 × 93.7 × 78.3 mm (UV-K5 V3) | PETG recomendado |
 | 2 | 1 | Tuerca hexagonal 1/4"-20 UNC | Entre caras 11.1 mm, espesor 5.6 mm | Alojamiento AF 11.4 × 5.9 mm |
 | 3 | 1 | Pluma / boom (no incluida) | Ø15 mm, túnel 15.5 × 15.5 mm (juego nominal 0.25 mm por lado) | Medir la pluma real |
 | 4 | 0–1 | Placa/tornillo de zapata de trípode (opcional) | 1/4"-20 | Según uso |

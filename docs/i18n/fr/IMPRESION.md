@@ -14,9 +14,9 @@
 
 | Face sur le plateau | Hauteur | Contact | Surplomb >45° | Commentaire |
 |---|---|---|---|---|
-| Y− | 93.7 mm | 355 mm² | 9676 mm² | Recommandée : tunnel vertical ; couches en cerceaux autour du mât ; charge de l'écrou dans le plan des couches ; utiliser un brim |
-| X+ | 202.7 mm | 1735 mm² | 13051 mm² | Axe d'écrou vertical : traction perpendiculaire aux couches (faible) |
-| Z+ | 126.2 mm | 325 mm² | 12985 mm² | Alternative |
+| Y− | 93.7 mm | 355 mm² | 7438 mm² | Recommandée : tunnel vertical ; couches en cerceaux autour du mât ; charge de l'écrou dans le plan des couches ; utiliser un brim |
+| X+ | 202.7 mm | 1620 mm² | 10044 mm² | Axe d'écrou vertical : traction perpendiculaire aux couches (faible) |
+| Z+ | 78.3 mm | 325 mm² | 13406 mm² | Alternative |
 
 ![Orientations d'impression comparées](../../img/guia/v6/fr/fig04_orientacion_impresion.png)
 

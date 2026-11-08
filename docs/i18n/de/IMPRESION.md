@@ -14,9 +14,9 @@
 
 | Bettfläche | Höhe | Kontakt | Überhang >45° | Kommentar |
 |---|---|---|---|---|
-| Y− | 93.7 mm | 355 mm² | 9676 mm² | Empfohlen: Tunnel vertikal; Schichten als Ringe um den Ausleger; Mutterlast in Schichtebene; Brim nutzen |
-| X+ | 202.7 mm | 1735 mm² | 13051 mm² | Vertikale Mutterachse: Zug quer zu den Schichten (schwach) |
-| Z+ | 126.2 mm | 325 mm² | 12985 mm² | Alternative |
+| Y− | 93.7 mm | 355 mm² | 7438 mm² | Empfohlen: Tunnel vertikal; Schichten als Ringe um den Ausleger; Mutterlast in Schichtebene; Brim nutzen |
+| X+ | 202.7 mm | 1620 mm² | 10044 mm² | Vertikale Mutterachse: Zug quer zu den Schichten (schwach) |
+| Z+ | 78.3 mm | 325 mm² | 13406 mm² | Alternative |
 
 ![Druckausrichtungen im Vergleich](../../img/guia/v6/de/fig04_orientacion_impresion.png)
 

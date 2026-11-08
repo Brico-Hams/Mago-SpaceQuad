@@ -59,7 +59,7 @@
 
 | N° | Qté | Élément | Dimension / spécification | Remarque |
 |---|---|---|---|---|
-| 1 | 1 | Poignée imprimée v6.2 (`stl/v6/*_v6_uvk5v3.stl` ou `*_v6_rt950pro.stl`) | Encombrement 202.7 × 93.7 × 126.2 mm (UV-K5 V3) | PETG recommandé |
+| 1 | 1 | Poignée imprimée v6.2 (`stl/v6/*_v6_uvk5v3.stl` ou `*_v6_rt950pro.stl`) | Encombrement 202.7 × 93.7 × 78.3 mm (UV-K5 V3) | PETG recommandé |
 | 2 | 1 | Écrou hexagonal 1/4"-20 UNC | Sur plats 11.1 mm, épaisseur 5.6 mm | Logement SP 11.4 × 5.9 mm |
 | 3 | 1 | Mât / boom (non inclus) | Ø15 mm, tunnel 15.5 × 15.5 mm (jeu nominal 0.25 mm par côté) | Mesurer le mât réel |
 | 4 | 0–1 | Plaque/vis de déclenchement rapide trépied (option) | 1/4"-20 | Selon usage |

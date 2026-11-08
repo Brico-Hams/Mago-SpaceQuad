@@ -16,10 +16,10 @@ en la torre y una funda para el duplexor.
   <img src="docs/img/v6_rt950pro_montaje.png" alt="Montaje v6.2 RT-950 Pro en posición de uso" width="48%">
 </p>
 
-## Novedades de la v6.2 (posición D) — pieza recomendada
+## Novedades de la v6.4 (pieza plana) — pieza recomendada
 
-La **v6.2** es la pieza recomendada. Con la empuñadura en la mano, la **radio queda en el lado del boom opuesto a la torre y al duplexor
-(lado −U), inclinada 20° hacia el operador** (posición D). Una viga de 14 × 7.5 mm une las dos cartelas con la torre y se empotra en ella.
+La **v6.4** es la pieza recomendada. Toda la pieza **apoya en la cama**: la placa del clip y el pedestal quedan en U ≥ 0, sin nada por debajo
+de la cara plana z = 0. La **radio se acerca a la torre** (placa en U 0…55 en la UV-K5 V3, antes −48…7), sigue **inclinada 20° hacia −V** y por encima de la torre.
 La zona de la tuerca de trípode está reforzada.
 
 | Variante | STL |
@@ -28,10 +28,10 @@ La zona de la tuerca de trípode está reforzada.
 | RT-950 Pro (162 × 66 × 48 mm, estimada) | `stl/v6/mango_spacequad_v6_rt950pro.stl` |
 
 - **Inserción del clip**: el clip entra **paralelo a la placa por su borde libre alto** y avanza hacia el fondo del hueco (recorrido útil de 40 mm);
-  la lengua queda debajo de la placa y la radio, en el lado −U.
+  la lengua queda debajo de la placa y la radio, sobre la torre.
 - **Tuerca de trípode reforzada**: piel de **2,0 mm** en la cara, paredes de al menos 3 mm, labios de retención (apertura 10,6 mm) y cavidad de la empuñadura
   rellena 36 mm con transición cónica; brida opcional en el culo. La tuerca **entra a presión**, pasando los labios; un tornillo de **6 mm o más engrana unos 4 mm**.
-- **Impresión**: soportes bajo la placa y bajo la viga; relleno alto o paredes extra en la viga y en la zona del trípode; **prueba de carga antes de fiarse de la pieza**.
+- **Impresión**: se imprime **plana sobre la cara z = 0**; no hacen falta soportes bajo el mango. Relleno alto o paredes extra en el pedestal y en la zona del trípode; **prueba de carga antes de fiarse de la pieza**. Vista de impresión: `docs/img/v6_<variante>_impresion.png` (tras ejecutar `render_v6.py`).
 - Las medidas del clip y de las radios son **estimaciones de fuentes de terceros**: ninguna está medida físicamente.
 - Detalles en [docs/VARIANTES_V6.md](docs/VARIANTES_V6.md) y resultados en [docs/cad_checks_v6.json](docs/cad_checks_v6.json).
 

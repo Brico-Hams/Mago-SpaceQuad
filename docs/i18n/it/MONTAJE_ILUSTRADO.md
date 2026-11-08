@@ -59,7 +59,7 @@
 
 | N. | Q.tà | Elemento | Misura / specifica | Nota |
 |---|---|---|---|---|
-| 1 | 1 | Impugnatura stampata v6.2 (`stl/v6/*_v6_uvk5v3.stl` o `*_v6_rt950pro.stl`) | Ingombro 202.7 × 93.7 × 126.2 mm (UV-K5 V3) | PETG consigliato |
+| 1 | 1 | Impugnatura stampata v6.2 (`stl/v6/*_v6_uvk5v3.stl` o `*_v6_rt950pro.stl`) | Ingombro 202.7 × 93.7 × 78.3 mm (UV-K5 V3) | PETG consigliato |
 | 2 | 1 | Dado esagonale 1/4"-20 UNC | Chiave 11.1 mm, spessore 5.6 mm | Sede CH 11.4 × 5.9 mm |
 | 3 | 1 | Asta / boom (non inclusa) | Ø15 mm, tunnel 15.5 × 15.5 mm (gioco nominale 0.25 mm per lato) | Misurare l'asta reale |
 | 4 | 0–1 | Piastra/vite a sgancio rapido per treppiede (opzionale) | 1/4"-20 | Secondo l'uso |

@@ -14,9 +14,9 @@
 
 | Bed face | Height | Contact | Overhang >45° | Comment |
 |---|---|---|---|---|
-| Y− | 93.7 mm | 355 mm² | 9676 mm² | Recommended: vertical tunnel; layers as hoops around the boom; nut load in the layer plane; use brim |
-| X+ | 202.7 mm | 1735 mm² | 13051 mm² | Vertical nut axis: tension perpendicular to layers (weak) |
-| Z+ | 126.2 mm | 325 mm² | 12985 mm² | Alternative |
+| Y− | 93.7 mm | 355 mm² | 7438 mm² | Recommended: vertical tunnel; layers as hoops around the boom; nut load in the layer plane; use brim |
+| X+ | 202.7 mm | 1620 mm² | 10044 mm² | Vertical nut axis: tension perpendicular to layers (weak) |
+| Z+ | 78.3 mm | 325 mm² | 13406 mm² | Alternative |
 
 ![Print orientations compared](../../img/guia/v6/en/fig04_orientacion_impresion.png)
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Verifica la v6 (radio inclinada hacia la empunadura y base de tripode reforzada); guarda resultados CAD en JSON.
 Clips y radio son envolventes ESTIMADAS (ver perfiles_radio.json): no es una validacion de ajuste ni de resistencia.
-    python verificar_v6.py ../stl/v6 [../docs/cad_checks_v6.json] [--tilt-hacia +V|-V] [--lado-u -U|+U] [--tilt-deg 20] [--sin-brida]
+    python verificar_v6.py ../stl/v6 [../docs/cad_checks_v6.json] [--tilt-hacia +V|-V] [--lado-u plano|-U|+U] [--tilt-deg 20] [--sin-brida]
 """
 import argparse
 from pathlib import Path
@@ -19,7 +19,7 @@ def _parse_cli():
     parser.add_argument("report", nargs="?", default=str(ROOT / "docs" / "cad_checks_v6.json"),
                         help="JSON de resultados (por defecto docs/cad_checks_v6.json)")
     parser.add_argument("--tilt-hacia", choices=("+V", "-V"), default="-V")
-    parser.add_argument("--lado-u", choices=("-U", "+U"), default="-U")
+    parser.add_argument("--lado-u", choices=("plano", "-U", "+U"), default="plano")
     parser.add_argument("--tilt-deg", type=float, default=20.0)
     parser.add_argument("--sin-brida", action="store_true")
     args = parser.parse_args()
@@ -118,9 +118,18 @@ def main(stl_dir, report=None):
         conj = radio + mv6.clip_radio(cfg)
         check(f"{key}:assembly_connected", sum(c.volume() > 0 for c in conj.decompose()) == 1)
         cen_u = float(rt.vertices[:, 2].mean())
-        check(f"{key}:radio_side_minus_u" if mv6.LADO_U == "-U" else f"{key}:radio_side_plus_u",
-              (cen_u < mv6.U_BOOM - 20) if mv6.LADO_U == "-U" else (cen_u > mv6.U_BOOM + 20),
-              radio_centroid_u=cen_u, plate_centre_u=cfg["uc"], boom_axis_u=mv6.U_BOOM)
+        if mv6.LADO_U == "plano":
+            tmv = to_tm(mango)
+            ab = tmv.face_normals[:, 2] < -0.999
+            en_cama = ab & (tmv.triangles_center[:, 2] < 0.05)
+            min_z = float(tmv.bounds[0][2])
+            area_cama = float(tmv.area_faces[en_cama].sum())
+            check(f"{key}:flat_on_bed", min_z >= -0.01 and area_cama >= 1000.0, min_z=min_z, bed_area_mm2=area_cama,
+                  required_area_mm2=1000.0)
+        else:
+            check(f"{key}:radio_side_minus_u" if mv6.LADO_U == "-U" else f"{key}:radio_side_plus_u",
+                  (cen_u < mv6.U_BOOM - 20) if mv6.LADO_U == "-U" else (cen_u > mv6.U_BOOM + 20),
+                  radio_centroid_u=cen_u, plate_centre_u=cfg["uc"], boom_axis_u=mv6.U_BOOM)
         for nombre, otro in (("mango", mango), ("duplexor", dup), ("boom", boom)):
             check(f"{key}:radio_vs_{nombre}_0mm3", (radio ^ otro).volume() < TOL and (conj ^ otro).volume() < TOL,
                   collision_mm3=(conj ^ otro).volume())
