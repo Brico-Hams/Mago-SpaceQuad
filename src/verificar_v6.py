@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Verifica la v6 (radio inclinada hacia la empunadura y base de tripode reforzada); guarda resultados CAD en JSON.
 Clips y radio son envolventes ESTIMADAS (ver perfiles_radio.json): no es una validacion de ajuste ni de resistencia.
-    python verificar_v6.py ../stl/v6 [../docs/cad_checks_v6.json] [--tilt-hacia empunadura|+V|-V] [--tilt-deg 20] [--sin-brida]
+    python verificar_v6.py ../stl/v6 [../docs/cad_checks_v6.json] [--tilt-hacia +V|-V] [--lado-u -U|+U] [--tilt-deg 20] [--sin-brida]
 """
 import argparse
 from pathlib import Path
@@ -18,7 +18,8 @@ def _parse_cli():
     parser.add_argument("stl_dir", help="directorio con los STL v6")
     parser.add_argument("report", nargs="?", default=str(ROOT / "docs" / "cad_checks_v6.json"),
                         help="JSON de resultados (por defecto docs/cad_checks_v6.json)")
-    parser.add_argument("--tilt-hacia", choices=("empunadura", "+V", "-V"), default="empunadura")
+    parser.add_argument("--tilt-hacia", choices=("+V", "-V"), default="-V")
+    parser.add_argument("--lado-u", choices=("-U", "+U"), default="-U")
     parser.add_argument("--tilt-deg", type=float, default=20.0)
     parser.add_argument("--sin-brida", action="store_true")
     args = parser.parse_args()
@@ -62,8 +63,7 @@ def _json_default(o):
 
 def tilt_esperado():
     """Signo en V esperado del extremo superior de la radio, calculado sin pasar por mango_v6.resolver_tilt."""
-    t = {"+V": 1, "-V": -1}.get(mv6.TILT_HACIA)
-    return t if t else (-1 if mg.T_YC < mg.YC else 1)
+    return {"+V": 1, "-V": -1}[mv6.TILT_HACIA]
 
 
 def main(stl_dir, report=None):
@@ -73,6 +73,7 @@ def main(stl_dir, report=None):
     v3_mesh = trimesh.load(V3)
     v3 = to_mf(v3_mesh)
     dup = vf.duplexor()
+    boom = vf.use_box(mv6.U_BOOM - 7.5, mv6.U_BOOM + 7.5, -100, 400, -7.5, 7.5)   # barra 15 x 15 mm extendida en V
     z_ext = mv6.z_exterior(v1_mesh.vertices)
     results = []
 
@@ -109,13 +110,17 @@ def main(stl_dir, report=None):
         check(f"{key}:radio_tilt_toward_{mv6.TILT_HACIA}", dv * esp > 0 and dh > 0 and abs(ang - mv6.TILT_DEG) < 0.5,
               top_centre_stl=np.round(top, 2), bottom_centre_stl=np.round(bot, 2), delta_v_mm=dv, delta_h_mm=dh,
               expected_sign_v=esp, tilt_deg_measured=ang)
-        check(f"{key}:radio_tilt_resolves_to_grip_side", mv6.TILT_HACIA != "empunadura"
-              or (esp == (-1 if mg.T_YC < mg.YC else 1) and cfg["d"] == esp), grip_y=mg.T_YC, tower_y=mg.YC)
+        check(f"{key}:radio_tilt_config_sign_matches_{mv6.TILT_HACIA}", cfg["d"] == esp,
+              config_sign=cfg["d"], expected_sign=esp)
 
         # --- radio y clip contra mango, duplexor y corredor del duplexor
         conj = radio + mv6.clip_radio(cfg)
         check(f"{key}:assembly_connected", sum(c.volume() > 0 for c in conj.decompose()) == 1)
-        for nombre, otro in (("mango", mango), ("duplexor", dup)):
+        cen_u = float(rt.vertices[:, 2].mean())
+        check(f"{key}:radio_side_minus_u" if mv6.LADO_U == "-U" else f"{key}:radio_side_plus_u",
+              (cen_u < mv6.U_BOOM - 20) if mv6.LADO_U == "-U" else (cen_u > mv6.U_BOOM + 20),
+              radio_centroid_u=cen_u, plate_centre_u=cfg["uc"], boom_axis_u=mv6.U_BOOM)
+        for nombre, otro in (("mango", mango), ("duplexor", dup), ("boom", boom)):
             check(f"{key}:radio_vs_{nombre}_0mm3", (radio ^ otro).volume() < TOL and (conj ^ otro).volume() < TOL,
                   collision_mm3=(conj ^ otro).volume())
         for direction, v0, v2 in (("minus_v", -100, 177), ("plus_v", 118, 400)):
@@ -126,8 +131,26 @@ def main(stl_dir, report=None):
         barrido = mv6.envolvente_radio(cfg, extra_s=mg.USABLE_L) + mv6.caja(
             cfg, cfg["uc"] - cfg["clip_w"] / 2, cfg["uc"] + cfg["clip_w"] / 2, mg.PLATE_L, mg.PLATE_L + 2 + mg.USABLE_L,
             -cfg["clip_t"] - 0.5, mg.PLATE_T + 1)
-        check(f"{key}:insertion_sweep_clear", (barrido ^ mango).volume() < TOL and (barrido ^ dup).volume() < TOL,
-              sweep_mm=mg.USABLE_L, mango_collision_mm3=(barrido ^ mango).volume())
+        check(f"{key}:insertion_sweep_clear", (barrido ^ mango).volume() < TOL and (barrido ^ dup).volume() < TOL
+              and (barrido ^ boom).volume() < TOL,
+              sweep_mm=mg.USABLE_L, mango_collision_mm3=(barrido ^ mango).volume(),
+              boom_collision_mm3=(barrido ^ boom).volume())
+        # la viga no puede entrar en el tunel del boom (15,5 mm + 0,5 mm de holgura) ni en el duplexor
+        tunel = vf.use_box(mv6.U_BOOM - 8.25, mv6.U_BOOM + 8.25, -100, 400, -8.25, 8.25)
+        soporte = mv6.soporte(cfg)
+        check(f"{key}:bracket_clear_tunnel_duplexer",
+              (soporte ^ tunel).volume() < TOL and (soporte ^ dup).volume() < TOL
+              and ((mango - v1) ^ tunel).volume() < TOL,
+              bracket_tunnel_mm3=(soporte ^ tunel).volume(), bracket_duplexer_mm3=(soporte ^ dup).volume())
+        solape = to_tm(soporte ^ v1)
+        if solape.vertices.shape[0]:
+            ext = solape.bounds[1] - solape.bounds[0]
+            prof_u, prof_h = float(ext[2]), float(ext[0])
+        else:
+            prof_u = prof_h = 0.0
+        check(f"{key}:bracket_anchored_in_tower", prof_u >= 2.0 and prof_h >= 2.0,
+              overlap_depth_u_mm=prof_u, overlap_depth_h_mm=prof_h, overlap_volume_mm3=(soporte ^ v1).volume(),
+              wall_mm=mg.SIDE_T)
         check(f"{key}:clearance_above_tower", cfg["radio_h_min"] >= mg.TOWER_H + 3 and cfg["hueco_h_min"] >= mg.TOWER_H + 3,
               radio_h_min=cfg["radio_h_min"], slot_h_min=cfg["hueco_h_min"], tower_top_h=mg.TOWER_H, ph0=cfg["ph0"])
 
@@ -165,8 +188,8 @@ def main(stl_dir, report=None):
             check(f"{key}:gusset_{i + 1}_anchored", falta < TOL, missing_foot_mm3=falta,
                   overlap_with_v1_mm3=(cart ^ v1).volume(), gusset_height_mm=cfg["ph0"] - mg.ROOT_H0)
 
-        # --- cambios respecto a la v3: solo placa/cartelas y zona de cavidad y culo
-        zona_placa = vf.use_box(-20, 100, 0, 300, 50, 230)
+        # --- cambios respecto a la v3: solo placa/cartelas/viga y zona de cavidad y culo
+        zona_placa = vf.use_box(-80, 100, 0, 300, 50, 230)
         zona_base = vf.use_box(-20, 100, 0, 300, -112, -39)
         fuera = abs((sdiff_(mango, v3) - zona_placa - zona_base).volume())
         check(f"{key}:changes_localized", fuera < 0.01, outside_mm3=fuera)
@@ -227,7 +250,7 @@ def main(stl_dir, report=None):
               plate_h0_mm={k: c["ph0"] for k, c in cfgs.items()}, radio_envelope_mm={
                   k: [c["radio_l"], c["radio_w"], c["radio_t"]] for k, c in cfgs.items()})
     passed = all(r["passed"] for r in results) and len(cfgs) == len(mv6.claves_v6())
-    data = dict(passed=passed, parametros=dict(tilt_hacia=mv6.TILT_HACIA, tilt_deg=mv6.TILT_DEG, brida=mv6.BRIDA,
+    data = dict(passed=passed, parametros=dict(tilt_hacia=mv6.TILT_HACIA, lado_u=mv6.LADO_U, tilt_deg=mv6.TILT_DEG, brida=mv6.BRIDA,
                                               pared_min_mm=mv6.PARED_MIN, piel_mm=mv6.SKIN_V6, relleno_mm=mv6.FILL_L),
                 variantes={k: dict(ph0_mm=c["ph0"], hueco_clip_mm=c["w_in"], placa_ancho_mm=c["plate_w"],
                                    radio_estado=c["perfil"]["radio"].get("estado_medida"),
@@ -246,5 +269,5 @@ def main(stl_dir, report=None):
 
 
 if __name__ == "__main__":
-    mv6.TILT_HACIA, mv6.TILT_DEG, mv6.BRIDA = _cli_args.tilt_hacia, _cli_args.tilt_deg, not _cli_args.sin_brida
+    mv6.TILT_HACIA, mv6.LADO_U, mv6.TILT_DEG, mv6.BRIDA = _cli_args.tilt_hacia, _cli_args.lado_u, _cli_args.tilt_deg, not _cli_args.sin_brida
     sys.exit(0 if main(_cli_args.stl_dir, _cli_args.report) else 1)
