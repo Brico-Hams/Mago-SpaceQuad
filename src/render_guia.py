@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 """Genera los diagramas de las guias (vistas acotadas, explosionado, cortes, orientacion de impresion).
 
-    python src/render_guia.py stl/v5/mango_spacequad_v5_uvk5v3.stl docs/img/guia
+    python src/render_guia.py stl/v6/mango_spacequad_v6_uvk5v3.stl docs/img/guia/v6
 
-Requiere trimesh, numpy, matplotlib y pyvista. Las cotas del CAD salen de src/mango_v3.py; las medidas del
-STL se leen del propio modelo. Las piezas comerciales (boom, tuerca, tornillo, lengua del clip) son esquemas
-a escala nominal, no modelos de fabricante. Sobrescribe los PNG destino.
-Sistema de coordenadas del STL: X hacia la empunadura, Y a lo largo del boom, Z hacia la torre."""
+Requiere trimesh, numpy, matplotlib, pyvista y manifold3d. Las cotas del CAD salen de src/mango_v3.py y
+src/mango_v6.py (posicion D: radio en el lado -U, inclinada -V; el marco de la placa sale de
+mango_v6.configuracion); las medidas del STL se leen del propio modelo. La variante de radio se deduce del
+nombre del STL (uvk5v3 o rt950pro) o de --radio. Las piezas comerciales (boom, tuerca, tornillo, lengua del
+clip) son esquemas a escala nominal, no modelos de fabricante. Sobrescribe los PNG destino.
+Sistema de coordenadas del STL: X = -H (hacia la empunadura), Y = V (a lo largo del boom), Z = U (hacia la torre)."""
 import argparse
 import json
 from pathlib import Path
@@ -21,23 +23,38 @@ from matplotlib.patches import PathPatch, Rectangle
 from matplotlib.path import Path as MplPath
 from shapely.geometry import Polygon as ShPoly
 
+import mango_v3 as mg
+import mango_v6 as mv6
 from i18n_figuras import LANGS, num, set_lang, t
 from orientacion_impresion import orientaciones
 
-# Cotas de src/mango_v3.py (mm)
+# Cotas del CAD (mm), de src/mango_v3.py y src/mango_v6.py
 TUNEL, BOOM = 15.5, 15.0
-TUNEL_X, TUNEL_Z = 0.0, 15.55          # eje del tunel en el plano XZ (medido en el STL)
-BUTT_X, T_YC, T_ZC = 110.0, 115.2, 15.7
-NUT_AF, NUT_SLOT, NUT_HOLE, SKIN = 11.4, 5.9, 6.6, 1.2
-NUT_NOM_AF, NUT_NOM_T = 11.1, 5.6
-PLATE_W, PLATE_L, PLATE_T, ANGLE, WALL = 55.0, 48.0, 4.0, 20.0, 4.0
-PLATE_U0, PLATE_V0, PLATE_H0 = 24.0, 130.0, 65.0
-CLIP_W, CLIP_T, USABLE = 45.0, 6.0, 40.0
+TUNEL_X, TUNEL_Z = 0.0, mv6.U_BOOM     # eje del tunel en el plano XZ
+BUTT_X, T_YC, T_ZC = mg.BUTT_FACE, mg.T_YC, mg.T_ZC
+NUT_AF, NUT_SLOT, NUT_HOLE, SKIN = mg.NUT_AF, mg.NUT_T, mg.NUT_HOLE, mv6.SKIN_V6
+NUT_NOM_AF, NUT_NOM_T = 11.1, mg.NUT_T_NOMINAL
+PLATE_L, PLATE_T, WALL, USABLE = mg.PLATE_L, mg.PLATE_T, mg.SIDE_T, mg.USABLE_L
 GRIS, AZUL, ROJO, VERDE, NARANJA = "#b8bec6", "#1f6fb2", "#c0392b", "#2e8b57", "#e67e22"
+CFG = None   # marco de la placa de la radio (mango_v6.configuracion), fijado en main()
+
+
+def pt(s, n=0.0, u=None):
+    """Punto del marco de la placa (s a lo largo, n normal, u transversal) en coordenadas del STL (X = -H, Y = V, Z = U)."""
+    v, h = mv6.punto(CFG, s, n)
+    return np.array([-h, v, CFG["uc"] if u is None else u])
+
+
+def dir_s():
+    return np.array([-np.sin(CFG["a"]), CFG["d"] * np.cos(CFG["a"]), 0.0])   # eje largo de la radio, hacia el borde libre
+
+
+def dir_n():
+    return np.array([-np.cos(CFG["a"]), -CFG["d"] * np.sin(CFG["a"]), 0.0])  # normal de la placa, hacia la radio
 
 
 def cargar(ruta):
-    return pv.wrap(trimesh.load(ruta)) if False else pv.read(str(ruta))
+    return pv.read(str(ruta))
 
 
 class Vista:
@@ -128,13 +145,25 @@ def fig_vistas(malla, mallas_pv, out, bb):
          t("f1a_h", v=num(ex[0])), off=(80, 0))
     cota(ax, v, (bb[0][0], bb[0][1], bb[1][2]), (bb[0][0], bb[1][1], bb[1][2]),
          t("f1a_l", v=num(ex[1])), off=(0, -45))
-    # angulo de la placa
-    p0 = np.array([-(PLATE_H0), PLATE_V0, 79.0])
-    a = np.deg2rad(ANGLE)
-    p1 = p0 + PLATE_L * np.array([-np.sin(a), np.cos(a), 0])
+    # angulo de la placa (posicion D: inclinada -V, en el lado -U del boom)
+    p0, p1 = pt(0, 0), pt(PLATE_L, 0)
     ax.plot(*zip(v.px(p0), v.px(p1)), color=NARANJA, lw=3)
-    etiqueta(ax, (v.px(p1)[0] + 15, v.px(p1)[1] - 30), t("f1a_plate", l=f"{PLATE_L:.0f}", w=f"{PLATE_W:.0f}", t=f"{PLATE_T:.0f}", a=f"{ANGLE:.0f}"),
+    etiqueta(ax, (v.px(p1)[0] + 15, v.px(p1)[1] - 30), t("f1a_plate", l=f"{PLATE_L:.0f}", w=f"{CFG['plate_w']:.0f}", t=f"{PLATE_T:.0f}", a=f"{CFG['deg']:.0f}"),
              color=NARANJA)
+    # envolvente estimada de la radio sobre la placa
+    s_a, s_b = CFG["s1"] - CFG["radio_l"], CFG["s1"]
+    n_a, n_b = mv6.RADIO_N0, mv6.RADIO_N0 + CFG["radio_t"]
+    cont = [v.px(pt(s, n)) for s, n in ((s_a, n_a), (s_b, n_a), (s_b, n_b), (s_a, n_b), (s_a, n_a))]
+    ax.plot(*zip(*cont), color=AZUL, lw=1.8, ls="--")
+    etiqueta(ax, (cont[2][0] + 10, cont[2][1] - 10), t("f1a_radio", l=num(CFG["radio_l"], 0), t=num(CFG["radio_t"])), color=AZUL)
+    # cartelas y viga
+    g = (pt(0.5 * PLATE_L, 0.2) + np.array([-mg.ROOT_H0, (mg.ROOT_V0 + mg.ROOT_V1) / 2, CFG["uc"]])) / 2
+    etiqueta(ax, (v.px(g)[0] - 250, v.px(g)[1] + 5), t("f1a_gusset", t=f"{mg.SIDE_T:.0f}"), color=ROJO)
+    if mv6.LADO_U == "-U":
+        viga = (-(mv6.VIGA_H0 + mv6.VIGA_H1) / 2, (mg.ROOT_V0 + mg.ROOT_V1) / 2, CFG["u0"])
+        ax.plot(*v.px(viga), "o", color=VERDE, ms=7)
+        etiqueta(ax, (v.px(viga)[0] - 270, v.px(viga)[1] + 25),
+                 t("f1a_beam", w=num(mg.ROOT_V1 - mg.ROOT_V0, 0), h=num(mv6.VIGA_H1 - mv6.VIGA_H0)), color=VERDE)
     ejes_uso(ax, v, (110, 900))
     fig.savefig(out / "fig01a_vista_lateral.png")
     plt.close(fig)
@@ -151,14 +180,20 @@ def fig_vistas(malla, mallas_pv, out, bb):
     fig.savefig(out / "fig01b_vista_extremo.png")
     plt.close(fig)
 
-    # 3) planta de la placa (desde -X)
-    v = Vista([(mallas_pv, kw)], (-1, 0, 0), (0, 1, 0), 70, (-70, 140, 52))
+    # 3) planta de la placa (desde -X): placa en el lado -U, viga hacia la torre
+    v = Vista([(mallas_pv, kw)], (-1, 0, 0), (0, 1, 0), 70, (-70, 140, 15))
     fig, ax = v.figura(t("f1c"))
-    zc = PLATE_U0
-    cota(ax, v, (-80, PLATE_V0, zc), (-80, PLATE_V0, zc + PLATE_W), f"{PLATE_W:.0f}", off=(0, -60))
-    cota(ax, v, (-80, PLATE_V0, 5), (-80, PLATE_V0 + PLATE_L * np.cos(np.deg2rad(ANGLE)), 5),
-         t("f1c_proj", v=num(PLATE_L * np.cos(np.deg2rad(ANGLE))), l=f"{PLATE_L:.0f}"), off=(-40, 0))
-    etiqueta(ax, (30, 960), t("f1c_gap", g=f"{PLATE_W - 2 * WALL:.0f}", w=f"{WALL:.0f}"), color=AZUL)
+    v_s0 = pt(0)[1]
+    v_s1 = pt(PLATE_L)[1]
+    u0, u1 = CFG["u0"], CFG["u0"] + CFG["plate_w"]
+    cota(ax, v, (-80, v_s0, u0), (-80, v_s0, u1), f"{CFG['plate_w']:.0f}", off=(0, -60))
+    cota(ax, v, (-80, v_s1, u0 - 4), (-80, v_s0, u0 - 4),
+         t("f1c_proj", v=num(abs(v_s0 - v_s1)), l=f"{PLATE_L:.0f}"), off=(-40, 0))
+    if mv6.LADO_U == "-U":
+        cota(ax, v, (-80, mg.ROOT_V1, u0), (-80, mg.ROOT_V1, mv6.TORRE_U0 + mv6.EMBED_U),
+             t("f1c_beam", w=num(mg.ROOT_V1 - mg.ROOT_V0, 0), h=num(mv6.VIGA_H1 - mv6.VIGA_H0), e=num(mv6.EMBED_U)),
+             off=(0, -25), color=VERDE)
+    etiqueta(ax, (30, 960), t("f1c_gap", g=f"{CFG['w_in']:.0f}", w=f"{WALL:.0f}"), color=AZUL)
     ejes_uso(ax, v, (1250, 900))
     fig.savefig(out / "fig01c_planta_placa.png")
     plt.close(fig)
@@ -170,18 +205,14 @@ def caja(centro, ext, **kw):
 
 
 def fig_explosionado(mallas_pv, out, bb):
-    ang = np.deg2rad(ANGLE)
-    s_dir = np.array([-np.sin(ang), np.cos(ang), 0])       # a lo largo de la placa (hacia +V)
-    n_dir = np.array([-np.cos(ang), -np.sin(ang), 0])      # normal de la placa (hacia fuera)
-    origen_placa = np.array([-PLATE_H0, PLATE_V0, 0.0])
-    uc = PLATE_U0 + PLATE_W / 2
-    # lengua del clip bajo la placa: s 0..USABLE, n de -CLIP_T a 0 (v5: entra por el extremo bajo, -V)
-    centro_lengua = origen_placa + s_dir * (USABLE / 2) - n_dir * (CLIP_T / 2 + 0.5)
-    centro_lengua[2] = uc
-    desp_clip = -s_dir * 70
-    lengua = pv.Box(bounds=(-CLIP_T / 2, CLIP_T / 2, -USABLE / 2, USABLE / 2, -CLIP_W / 2, CLIP_W / 2))
+    s_dir, n_dir = dir_s(), dir_n()
+    # lengua del clip bajo la placa: s de PLATE_L-USABLE a PLATE_L, bajo la cara inferior; en la posicion D entra
+    # paralela a la placa por el borde libre (extremo alto, s = PLATE_L), desplazandose hacia -s
+    centro_lengua = pt(PLATE_L - USABLE / 2, -CFG["clip_t"] / 2 - 0.5)
+    desp_clip = s_dir * 70
+    lengua = pv.Box(bounds=(-CFG["clip_t"] / 2, CFG["clip_t"] / 2, -USABLE / 2, USABLE / 2, -CFG["clip_w"] / 2, CFG["clip_w"] / 2))
     rot = np.eye(4)
-    rot[:3, :3] = np.column_stack([-n_dir, s_dir, [0, 0, 1]])
+    rot[:3, :3] = np.column_stack([-n_dir, s_dir, [0, 0, CFG["d"]]])   # determinante +1 para -V y +V
     lengua.transform(rot, inplace=True)
     lengua.translate(centro_lengua + desp_clip, inplace=True)
     boom = pv.Box(bounds=(-BOOM / 2, BOOM / 2, 0, 190, -BOOM / 2, BOOM / 2))
@@ -195,8 +226,8 @@ def fig_explosionado(mallas_pv, out, bb):
               (boom, dict(color="#9fb4c7", opacity=0.9)), (tuerca, dict(color="#d4a017")),
               (tornillo, dict(color="#555555")), (plano, dict(color="#7f8c8d", opacity=0.9)),
               (lengua, dict(color="#2980b9", opacity=0.85))]
-    c = np.array([15, 120, 40.0])
-    v = Vista(escena, (-0.55, -0.62, 0.55), (-1, 0, 0), 175, c, size=(1500, 1100))
+    c = np.array([10, 115, 5.0])
+    v = Vista(escena, (-0.55, -0.62, 0.55), (-1, 0, 0), 190, c, size=(1500, 1100))
     fig, ax = v.figura(t("f2"))
     # flechas de montaje
     def flecha(p0, p1, n, col=AZUL, d=(20, -20)):
@@ -263,6 +294,10 @@ def fig_cortes(malla, out):
     ax.text(BUTT_X - SKIN - NUT_SLOT / 2, T_YC - NUT_AF / 2 - 2.5, t("af", v=num(NUT_AF), n=num(NUT_NOM_AF)),
             color=NARANJA, ha="center")
     ax.text(80, T_YC + 15, t("hole", v=num(NUT_HOLE)), color=ROJO)
+    # cavidad del mango maciza FILL_L mm desde el culo y rosca engranada con la piel de 2 mm
+    ax.annotate("", xy=(BUTT_X - mv6.FILL_L, T_YC - 16), xytext=(BUTT_X, T_YC - 16), arrowprops=dict(arrowstyle="<->", color=VERDE))
+    ax.text(BUTT_X - mv6.FILL_L / 2, T_YC - 18.5, t("f3b_fill", v=num(mv6.FILL_L, 0)), color=VERDE, ha="center")
+    ax.text(80, T_YC + 17.5, t("f3b_screw"), color=NARANJA)
     ax.set_xlabel(t("f3b_xlab"))
     ax.set_ylabel("Y (mm)")
     fig.tight_layout()
@@ -295,28 +330,34 @@ def fig_orientacion(malla, mallas_pv, out, filas):
 
 
 def fig_clip(mallas_pv, out, bb):
-    v = Vista([(mallas_pv, dict(color=GRIS, specular=0.2))], (0, 0, 1), (-1, 0, 0), 60, (-58, 147, 50), size=(1400, 1000))
+    # el clip entra paralelo a la placa por el borde libre (extremo alto, s = PLATE_L) hacia -s
+    centro = (pt(PLATE_L / 2, 0) + np.array([0, 0, 0]))
+    v = Vista([(mallas_pv, dict(color=GRIS, specular=0.2))], (0, 0, 1), (-1, 0, 0), 60, centro, size=(1400, 1000))
     fig, ax = v.figura(t("f5"))
-    ang = np.deg2rad(ANGLE)
-    s = np.array([-np.sin(ang), np.cos(ang), 0])
-    n = np.array([-np.cos(ang), -np.sin(ang), 0])
-    o = np.array([-PLATE_H0, PLATE_V0, 79.0])
-    cota(ax, v, o, o + s * PLATE_L, f"{PLATE_L:.0f}", off=(0, -70))
-    etiqueta(ax, (40, 940), t("f5_gap", t=f"{PLATE_T:.0f}", c=f"{CLIP_T:.0f}"), color=AZUL)
-    a = v.px(o + s * 0 - n * 3 - s * 30)
-    b = v.px(o + s * USABLE - n * 3)
+    cota(ax, v, pt(0, 0), pt(PLATE_L, 0), f"{PLATE_L:.0f}", off=(0, -70))
+    etiqueta(ax, (40, 940), t("f5_gap", t=f"{PLATE_T:.0f}", g=f"{CFG['min_clear']:.0f}", c=f"{CFG['clip_t']:.0f}"), color=AZUL)
+    a = v.px(pt(PLATE_L + 30, -3))
+    b = v.px(pt(PLATE_L - USABLE, -3))
     ax.annotate("", xy=b, xytext=a, arrowprops=dict(arrowstyle="-|>", color=NARANJA, lw=3))
     etiqueta(ax, (a[0] - 10, a[1] + 40), t("f5_run", u=f"{USABLE:.0f}"), color=NARANJA)
+    pe = v.px(pt(PLATE_L, 0))
+    etiqueta(ax, (pe[0] + 15, pe[1] - 60), t("f5_edge"), color=VERDE)
     fig.savefig(out / "fig05_insercion_clip.png")
     plt.close(fig)
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    ap.add_argument("stl", type=Path, help="STL del mango (p. ej. stl/v5/mango_spacequad_v5_uvk5v3.stl)")
-    ap.add_argument("salida", type=Path, help="directorio base de PNG; se crea una subcarpeta por idioma")
+    ap.add_argument("stl", type=Path, nargs="?", default=Path("stl/v6/mango_spacequad_v6_uvk5v3.stl"),
+                    help="STL v6 del mango (por defecto stl/v6/mango_spacequad_v6_uvk5v3.stl)")
+    ap.add_argument("salida", type=Path, nargs="?", default=Path("docs/img/guia/v6"),
+                    help="directorio base de PNG; se crea una subcarpeta por idioma")
+    ap.add_argument("--radio", choices=("uvk5v3", "rt950pro"), help="variante de radio (por defecto, la del nombre del STL)")
     ap.add_argument("--langs", default=",".join(LANGS), help="idiomas separados por coma")
     a = ap.parse_args()
+    global CFG
+    radio = a.radio or next((k for k in ("rt950pro", "uvk5v3") if k in a.stl.name), "uvk5v3")
+    CFG = mv6.configuracion(radio)
     malla = trimesh.load(a.stl)
     mpv = pv.read(str(a.stl))
     bb = malla.bounds

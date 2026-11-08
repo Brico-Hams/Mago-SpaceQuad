@@ -1,93 +1,65 @@
-# SpaceQuad v5 handle — Illustrated assembly guide
+# SpaceQuad v6.2 handle — Illustrated assembly guide
 
 [Español](../es/README.md) · **English** · [Deutsch](../de/README.md) · [Français](../fr/README.md) · [Italiano](../it/README.md)
 
-> Based on the final geometry on main (v5, v5+reinforcement and Anytone). If geometry changes, regenerate with `src/render_guia.py`. Clip dimensions are estimated, not measured.
+> Based on the v6.2 geometry (position D) in `stl/v6/`. If geometry changes, regenerate with `src/render_guia.py`. CAD only: clip and radio dimensions are estimated, not measured, and there is no load test.
 
-## Variants (final geometry)
+## Position D (v6.2)
 
-| Variant | STL file | Envelope (mm) | Volume (mm³) |
+- With the grip in hand, the radio sits on the side of the boom opposite the tower and the duplexer (−U side), leaning 20° toward the operator (upper end toward −V).
+- A 14 × 7.5 mm beam joins the two plate gussets to the tower and is embedded in it; it touches neither the boom tunnel nor the duplexer.
+- The clip enters parallel to the plate through its high free edge and advances toward the bottom of the gap, where the retention window is (usable travel 40 mm).
+
+## Per-radio variants
+
+| Radio | STL file | Radio envelope (estimated, mm) | Plate height PH0 (mm) |
 |---|---|---|---|
-| v5 (UV-K5 V3 / RT-950 Pro, identical) | `stl/v5/*uvk5v3.stl, *rt950pro.stl` | 195.2 × 95.6 × 79.0 | 191951 |
-| v5 + reinforced base (UV-K5 V3 / RT-950 Pro) | `stl/refuerzo/*_v5_*_refuerzo.stl` | 195.2 × 95.6 × 79.0 | 205173 |
-| Adjustable generic Anytone (base already reinforced; optional shims) | `stl/mango_spacequad_anytone_generico.stl + stl/anytone_calzos/*.stl` | 195.2 × 93.7 × 79.0 | 213099 |
+| UV-K5 V3 | `stl/v6/mango_spacequad_v6_uvk5v3.stl` | 115 × 60 × 37.5 | 72.5 |
+| RT-950 Pro | `stl/v6/mango_spacequad_v6_rt950pro.stl` | 162 × 66 × 48 | 88.5 |
+
+## Reinforced tripod nut
+
+- 2.0 mm skin on the butt face (was 1.2 mm) and walls of at least 3 mm around the hex pocket.
+- The nut snaps in: insert it through the side channel and it seats once it passes the retention lips (10.6 mm opening versus the 11.1 mm nut). The interference is theoretical.
+- A tripod screw of 6 mm or more engages about 4 mm of the nut (nominal 5.6 mm).
+- Handle cavity filled 36 mm with a tapered transition, and an optional butt flange.
+
+## Printing advice
+
+- Supports under the plate and under the beam.
+- High infill (60–100 %) or extra walls in the beam and the tripod zone.
+- Run a load test before trusting the part (see the strength verification section).
 
 ## Graphics
 
-### v5 (UV-K5 V3 / RT-950 Pro, identical)
+> Figures show the UV-K5 V3 variant; the RT-950 Pro shares the geometry except for the plate height.
 
-![Side view with dimensions (X points to the grip)](../../img/guia/v5/en/fig01a_vista_lateral.png)
-*Side view with dimensions (X points to the grip)*
+![Side view with dimensions (X points to the grip; radio on the −U side)](../../img/guia/v6/en/fig01a_vista_lateral.png)
+*Side view with dimensions (X points to the grip; radio on the −U side)*
 
-![End view (butt face)](../../img/guia/v5/en/fig01b_vista_extremo.png)
+![End view (butt face)](../../img/guia/v6/en/fig01b_vista_extremo.png)
 *End view (butt face)*
 
-![Clip plate plan: 55 × 48 × 4 mm at 20°](../../img/guia/v5/en/fig01c_planta_placa.png)
-*Clip plate plan: 55 × 48 × 4 mm at 20°*
+![Clip plate and beam plan: 55 × 48 × 4 mm at 20°](../../img/guia/v6/en/fig01c_planta_placa.png)
+*Clip plate and beam plan: 55 × 48 × 4 mm at 20°*
 
-![Exploded view and numbered steps ①–④ (nut enters from Z−)](../../img/guia/v5/en/fig02_explosionado.png)
-*Exploded view and numbered steps ①–④ (nut enters from Z−)*
+![Exploded view and numbered steps ①–④ (nut snaps in from Z−)](../../img/guia/v6/en/fig02_explosionado.png)
+*Exploded view and numbered steps ①–④ (nut snaps in from Z−)*
 
-![Sections A-A (tunnel) and B-B (nut slot)](../../img/guia/v5/en/fig03_cortes.png)
-*Sections A-A (tunnel) and B-B (nut slot)*
+![Sections A-A (tunnel) and B-B (nut slot, 2 mm skin)](../../img/guia/v6/en/fig03_cortes.png)
+*Sections A-A (tunnel) and B-B (nut slot, 2 mm skin)*
 
-![Print orientations compared](../../img/guia/v5/en/fig04_orientacion_impresion.png)
+![Print orientations compared](../../img/guia/v6/en/fig04_orientacion_impresion.png)
 *Print orientations compared*
 
-![Clip insertion (v3 enters from +V; v5 from −V)](../../img/guia/v5/en/fig05_insercion_clip.png)
-*Clip insertion (v3 enters from +V; v5 from −V)*
-
-### v5 + reinforced base (UV-K5 V3 / RT-950 Pro)
-
-![Side view with dimensions (X points to the grip)](../../img/guia/v5_refuerzo/en/fig01a_vista_lateral.png)
-*Side view with dimensions (X points to the grip)*
-
-![End view (butt face)](../../img/guia/v5_refuerzo/en/fig01b_vista_extremo.png)
-*End view (butt face)*
-
-![Clip plate plan: 55 × 48 × 4 mm at 20°](../../img/guia/v5_refuerzo/en/fig01c_planta_placa.png)
-*Clip plate plan: 55 × 48 × 4 mm at 20°*
-
-![Exploded view and numbered steps ①–④ (nut enters from Z−)](../../img/guia/v5_refuerzo/en/fig02_explosionado.png)
-*Exploded view and numbered steps ①–④ (nut enters from Z−)*
-
-![Sections A-A (tunnel) and B-B (nut slot)](../../img/guia/v5_refuerzo/en/fig03_cortes.png)
-*Sections A-A (tunnel) and B-B (nut slot)*
-
-![Print orientations compared](../../img/guia/v5_refuerzo/en/fig04_orientacion_impresion.png)
-*Print orientations compared*
-
-![Clip insertion (v3 enters from +V; v5 from −V)](../../img/guia/v5_refuerzo/en/fig05_insercion_clip.png)
-*Clip insertion (v3 enters from +V; v5 from −V)*
-
-### Adjustable generic Anytone (base already reinforced; optional shims)
-
-![Side view with dimensions (X points to the grip)](../../img/guia/anytone/en/fig01a_vista_lateral.png)
-*Side view with dimensions (X points to the grip)*
-
-![End view (butt face)](../../img/guia/anytone/en/fig01b_vista_extremo.png)
-*End view (butt face)*
-
-![Clip plate plan: 55 × 48 × 4 mm at 20°](../../img/guia/anytone/en/fig01c_planta_placa.png)
-*Clip plate plan: 55 × 48 × 4 mm at 20°*
-
-![Exploded view and numbered steps ①–④ (nut enters from Z−)](../../img/guia/anytone/en/fig02_explosionado.png)
-*Exploded view and numbered steps ①–④ (nut enters from Z−)*
-
-![Sections A-A (tunnel) and B-B (nut slot)](../../img/guia/anytone/en/fig03_cortes.png)
-*Sections A-A (tunnel) and B-B (nut slot)*
-
-![Print orientations compared](../../img/guia/anytone/en/fig04_orientacion_impresion.png)
-*Print orientations compared*
-
-![Clip insertion (v3 enters from +V; v5 from −V)](../../img/guia/anytone/en/fig05_insercion_clip.png)
-*Clip insertion (v3 enters from +V; v5 from −V)*
+![Clip insertion (position D: from the high free edge, parallel to the plate)](../../img/guia/v6/en/fig05_insercion_clip.png)
+*Clip insertion (position D: from the high free edge, parallel to the plate)*
 
 ## Bill of materials (BOM)
 
 | No. | Qty | Item | Size / specification | Note |
 |---|---|---|---|---|
-| 1 | 1 | Printed handle v5 (`stl/v5/*uvk5v3.stl`) | Envelope 195.2 × 95.6 × 79.0 mm | PETG recommended |
+| 1 | 1 | Printed handle v6.2 (`stl/v6/*_v6_uvk5v3.stl` or `*_v6_rt950pro.stl`) | Envelope 202.7 × 93.7 × 126.2 mm (UV-K5 V3) | PETG recommended |
 | 2 | 1 | Hex nut 1/4"-20 UNC | Across flats 11.1 mm, thickness 5.6 mm | Pocket AF 11.4 × 5.9 mm |
 | 3 | 1 | Boom (not included) | Ø15 mm, tunnel 15.5 × 15.5 mm (nominal clearance 0.25 mm per side) | Measure the real boom |
 | 4 | 0–1 | Tripod quick-release plate/screw (optional) | 1/4"-20 | As needed |
@@ -98,9 +70,9 @@ This design has **no bearings or shafts**; the only hardware is the 1/4"-20 nut.
 ## Assembly order
 
 1. Check the part: remove burrs from the tunnel and hex pocket.
-2. Insert the nut from the Z− side into the pocket (1.2 mm skin toward the butt face).
+2. Snap the nut in through the side channel on the Z− side, past the retention lips (2.0 mm skin toward the butt face; a screw of 6 mm or more engages about 4 mm).
 3. Slide the Ø15 mm boom through the 15.5 × 15.5 mm tunnel.
-4. Mount the clip on the plate (55 × 48 × 4 at 20°) and secure the radio.
+4. Insert the clip tongue through the high free edge of the plate (55 × 48 × 4 at 20°), parallel to it, and secure the radio on the −U side.
 
 ## Measure and adjust clearances (mechanical fit)
 
@@ -120,6 +92,14 @@ This design has **no bearings or shafts**; the only hardware is the 1/4"-20 nut.
 2. Proof load = 2 × M, applied in steps of 25 %, 50 % and 100 % of that load, 60 s each, ballast over a low, protected surface.
 3. Inspect after each step; stop on cracks, whitening or deformation > 0.3 mm.
 4. A practical procedure, not a certification. Loads justified by M; never over a person or valuable equipment.
+
+## Earlier versions
+
+Only v1 (input), v3 (base generator and Anytone baseline) and the generic Anytone remain (figures in `docs/img/guia/anytone/`). v2, v4 and v5 were removed; recover them from git history (the commit before the cleanup).
+
+| Variant | STL file | Envelope (mm) | Volume (mm³) |
+|---|---|---|---|
+| Adjustable generic Anytone (base already reinforced; optional shims) | `stl/mango_spacequad_anytone_generico.stl + stl/anytone_calzos/*.stl` | 195.2 × 93.7 × 79.0 | 213099 |
 
 ## License and attribution
 

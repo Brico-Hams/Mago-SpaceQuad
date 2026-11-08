@@ -2,7 +2,9 @@
 """
 Refuerzo de la base de trípode del mango SpaceQuad (post-proceso de cualquier STL de la familia v3).
 
-    python refuerzo_base.py ../stl/mango_spacequad_v3.stl ../stl/mango_spacequad_v3_refuerzo.stl [informe.json]
+    python refuerzo_base.py ../stl/mango_spacequad_v3.stl <salida.stl> [informe.json]
+
+El refuerzo vive ahora dentro de mango_v6.py, que reutiliza este modulo (stl/mango_spacequad_v3_refuerzo.stl se elimino).
 
 Diagnóstico medido sobre el STL v3 (no sobre cargas reales): la empuñadura es una cáscara hueca (cavidad
 cerrada de ~790 mm2) que termina en un tapón macizo con un escalón plano en X~87,9; la sección pasa de

@@ -5,9 +5,23 @@ ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 OUT = os.path.join(ROOT, "docs", "i18n")
 LANGS = ["es", "en", "de", "fr", "it"]
 NAMES = {"es": "Español", "en": "English", "de": "Deutsch", "fr": "Français", "it": "Italiano"}
-IMG = "../../img/guia/"
+IMG = "../../img/guia/v6/"
 FIGS = ["fig01a_vista_lateral", "fig01b_vista_extremo", "fig01c_planta_placa", "fig02_explosionado",
         "fig03_cortes", "fig04_orientacion_impresion", "fig05_insercion_clip"]
+V6_STL = {"uvk5v3": "stl/v6/mango_spacequad_v6_uvk5v3.stl", "rt950pro": "stl/v6/mango_spacequad_v6_rt950pro.stl"}
+
+
+def medidas_stl(ruta):
+    """Envolvente (mm) y volumen (mm³) del STL v6 si existe; '—' si aún no se ha generado."""
+    p = os.path.join(ROOT, ruta)
+    if not os.path.isfile(p):
+        return "—", "—"
+    import trimesh
+    m = trimesh.load(p)
+    return " × ".join("%.1f" % e for e in m.extents), "%d" % round(abs(m.volume))
+
+
+BBOX_UV = medidas_stl(V6_STL["uvk5v3"])[0]
 
 SRC = {
     "k_quick": "https://wiki.anycubic.com/en/fdm-3d-printer/kobra-s1-combo/quick-start-guide",
@@ -27,26 +41,26 @@ SRC = {
 }
 
 # Cifras comunes (mm) -> identicas en todos los idiomas
-N = dict(bbox="195.2 × 95.6 × 79.0", tunel="15.5 × 15.5", pluma="15", jgo="0.25",
-         af="11.4", esp="5.9", tal="6.6", piel="1.2", placa="55 × 48 × 4", ang="20°",
-         gus="47", libre="7", rec="40", cupon="124 × 92 × 8")
+N = dict(bbox=BBOX_UV, tunel="15.5 × 15.5", pluma="15", jgo="0.25",
+         af="11.4", esp="5.9", tal="6.6", piel="2.0", placa="55 × 48 × 4", ang="20°",
+         gus="47", libre="7", rec="40", cupon="124 × 92 × 8", viga="14 × 7.5", rampa="36")
 
 L = {}
 L["es"] = dict(
-    title="Mango SpaceQuad v5 — Guía de montaje ilustrada",
+    title="Mango SpaceQuad v6.2 — Guía de montaje ilustrada",
     idx_title="Guías SpaceQuad (multiidioma)", idx_intro="Documentación coherente en 5 idiomas. Todos los perfiles de impresión y pruebas de carga son **valores iniciales PENDIENTES DE PRUEBA FÍSICA**.",
     d_mont="Montaje ilustrado, BOM, holguras y pruebas de carga", d_imp="Material, orientación y perfiles iniciales de impresión", d_cal="Calibración Anycubic Kobra S1 y Bambu Lab",
-    pend="⚠ PENDIENTE DE PRUEBA FÍSICA", geo="Basado en la geometría final de main (v5, v5+refuerzo y Anytone). Si cambia la geometría, regenerar con `src/render_guia.py`. Las dimensiones del clip son estimadas, no medidas.",
-    figs=["Vista lateral con cotas (X apunta al agarre)", "Vista de extremo (culata)", "Planta de la placa del clip: %s mm a %s" % (N["placa"], N["ang"]),
-          "Explosionado y pasos numerados ①–④ (la tuerca entra desde Z−)", "Cortes A-A (túnel) y B-B (alojamiento de tuerca)", "Orientaciones de impresión comparadas", "Inserción del clip (v3 entra por +V; v5 por −V)"],
+    pend="⚠ PENDIENTE DE PRUEBA FÍSICA",     geo="Basado en la geometría v6.2 (posición D) de `stl/v6/`. Si cambia la geometría, regenerar con `src/render_guia.py`. Solo CAD: las dimensiones del clip y de cada radio son estimadas, no medidas, y no hay prueba de carga.",
+        figs=["Vista lateral con cotas (X apunta al agarre; radio en el lado −U)", "Vista de extremo (culata)", "Planta de la placa del clip y de la viga: %s mm a %s" % (N["placa"], N["ang"]),
+              "Explosionado y pasos numerados ①–④ (la tuerca entra a presión desde Z−)", "Cortes A-A (túnel) y B-B (alojamiento de tuerca, piel de 2 mm)", "Orientaciones de impresión comparadas", "Inserción del clip (posición D: por el borde libre alto, paralelo a la placa)"],
     h_fig="Gráficos", h_bom="Lista de materiales (BOM)", bom_h=["Nº", "Cant.", "Elemento", "Medida / especificación", "Nota"],
-    bom=[("1", "1", "Mango impreso v5 (`stl/v5/*uvk5v3.stl`)", "Envolvente %s mm" % N["bbox"], "PETG recomendado"),
+    bom=[("1", "1", "Mango impreso v6.2 (`stl/v6/*_v6_uvk5v3.stl` o `*_v6_rt950pro.stl`)", "Envolvente %s mm (UV-K5 V3)" % N["bbox"], "PETG recomendado"),
          ("2", "1", "Tuerca hexagonal 1/4\"-20 UNC", "Entre caras 11.1 mm, espesor 5.6 mm", "Alojamiento AF %s × %s mm" % (N["af"], N["esp"])),
          ("3", "1", "Pluma / boom (no incluida)", "Ø%s mm, túnel %s mm (juego nominal %s mm por lado)" % (N["pluma"], N["tunel"], N["jgo"]), "Medir la pluma real"),
          ("4", "0–1", "Placa/tornillo de zapata de trípode (opcional)", "1/4\"-20", "Según uso"),
          ("5", "0–1", "Duplexor y tira EVA (opcionales)", "—", "Según radio")],
     nobear="Este diseño **no lleva rodamientos ni ejes**; la única tornillería es la tuerca 1/4\"-20.",
-    h_ord="Orden de montaje", steps=["Verificar la pieza: limpiar rebabas del túnel y del alojamiento hexagonal.", "Insertar la tuerca por el lado Z− en el alojamiento (piel de %s mm hacia la culata)." % N["piel"], "Deslizar la pluma Ø%s mm por el túnel de %s mm." % (N["pluma"], N["tunel"]), "Montar el clip en la placa (%s a %s) y fijar la radio." % (N["placa"], N["ang"])],
+    h_ord="Orden de montaje", steps=["Verificar la pieza: limpiar rebabas del túnel y del alojamiento hexagonal.", "Insertar la tuerca a presión por el canal lateral del lado Z−, pasando los labios de retención (piel de %s mm hacia la culata; un tornillo de 6 mm o más engrana unos 4 mm)." % N["piel"], "Deslizar la pluma Ø%s mm por el túnel de %s mm." % (N["pluma"], N["tunel"]), "Introducir la lengua del clip por el borde libre alto de la placa (%s a %s), paralela a ella, y fijar la radio en el lado −U." % (N["placa"], N["ang"])],
     h_hol="Medir y ajustar holguras (ajuste mecánico)", hol=[
         "Imprimir `stl/calibracion/prueba_holguras.stl` (%s mm) con el perfil FINAL y el mismo filamento." % N["cupon"],
         "Fila 1: agujeros cuadrados 15.1–15.9 mm para la pluma. Fila 2: hexágonos AF 11.1–11.9 mm. Fila 3: ranuras 6.0–8.0 mm. Los hoyuelos 1–5 indican el tamaño.",
@@ -64,7 +78,7 @@ L["es"] = dict(
          ("PLA", "No recomendado: fluencia/deformación con calor", "—")],
     ori_h=["Cara en cama", "Altura", "Contacto", "Voladizo >45°", "Comentario"],
     ori_c=["Recomendada: túnel vertical; capas en aros alrededor de la pluma; carga de tuerca en el plano de capa; usar brim", "Eje de tuerca vertical: tracción perpendicular a capas (débil)", "Alternativa"],
-    h_prof="Perfiles iniciales", prof_h=["Parámetro", "Valor inicial"], prof=[("Altura de capa", "0.20 mm"), ("Perímetros", "4"), ("Relleno", "gyroid 40 %"), ("Brim", "5 mm (opción A)"), ("Ajuste dimensional", "0 hasta medir el cupón")],
+    h_prof="Perfiles iniciales", prof_h=["Parámetro", "Valor inicial"], prof=[("Altura de capa", "0.20 mm"), ("Perímetros", "4"), ("Relleno", "gyroid 40 % (60–100 % o paredes extra en la viga y la zona del trípode)"), ("Brim", "5 mm (opción A)"), ("Soportes", "bajo la placa y la viga"), ("Ajuste dimensional", "0 hasta medir el cupón")],
     prof_note="Todos son valores iniciales **pendientes de prueba física**; sin parámetros universales: usar el rango de temperatura impreso en la bobina.",
     h_sep="Calibración de impresora (separada del ajuste mecánico)", sep="Los pasos de esta guía calibran la **impresora**. El ajuste de holguras del montaje está en `MONTAJE_ILUSTRADO.md`.",
     h_k="Anycubic Kobra S1", k=[
@@ -86,20 +100,20 @@ L["es"] = dict(
 )
 
 L["en"] = dict(
-    title="SpaceQuad v5 handle — Illustrated assembly guide",
+    title="SpaceQuad v6.2 handle — Illustrated assembly guide",
     idx_title="SpaceQuad guides (multilingual)", idx_intro="Consistent documentation in 5 languages. All print profiles and load tests are **initial values PENDING PHYSICAL TESTING**.",
     d_mont="Illustrated assembly, BOM, clearances and load tests", d_imp="Material, orientation and initial print profiles", d_cal="Anycubic Kobra S1 and Bambu Lab calibration",
-    pend="⚠ PENDING PHYSICAL TEST", geo="Based on the final geometry on main (v5, v5+reinforcement and Anytone). If geometry changes, regenerate with `src/render_guia.py`. Clip dimensions are estimated, not measured.",
-    figs=["Side view with dimensions (X points to the grip)", "End view (butt face)", "Clip plate plan: %s mm at %s" % (N["placa"], N["ang"]),
-          "Exploded view and numbered steps ①–④ (nut enters from Z−)", "Sections A-A (tunnel) and B-B (nut slot)", "Print orientations compared", "Clip insertion (v3 enters from +V; v5 from −V)"],
+    pend="⚠ PENDING PHYSICAL TEST",     geo="Based on the v6.2 geometry (position D) in `stl/v6/`. If geometry changes, regenerate with `src/render_guia.py`. CAD only: clip and radio dimensions are estimated, not measured, and there is no load test.",
+        figs=["Side view with dimensions (X points to the grip; radio on the −U side)", "End view (butt face)", "Clip plate and beam plan: %s mm at %s" % (N["placa"], N["ang"]),
+              "Exploded view and numbered steps ①–④ (nut snaps in from Z−)", "Sections A-A (tunnel) and B-B (nut slot, 2 mm skin)", "Print orientations compared", "Clip insertion (position D: from the high free edge, parallel to the plate)"],
     h_fig="Graphics", h_bom="Bill of materials (BOM)", bom_h=["No.", "Qty", "Item", "Size / specification", "Note"],
-    bom=[("1", "1", "Printed handle v5 (`stl/v5/*uvk5v3.stl`)", "Envelope %s mm" % N["bbox"], "PETG recommended"),
+    bom=[("1", "1", "Printed handle v6.2 (`stl/v6/*_v6_uvk5v3.stl` or `*_v6_rt950pro.stl`)", "Envelope %s mm (UV-K5 V3)" % N["bbox"], "PETG recommended"),
          ("2", "1", "Hex nut 1/4\"-20 UNC", "Across flats 11.1 mm, thickness 5.6 mm", "Pocket AF %s × %s mm" % (N["af"], N["esp"])),
          ("3", "1", "Boom (not included)", "Ø%s mm, tunnel %s mm (nominal clearance %s mm per side)" % (N["pluma"], N["tunel"], N["jgo"]), "Measure the real boom"),
          ("4", "0–1", "Tripod quick-release plate/screw (optional)", "1/4\"-20", "As needed"),
          ("5", "0–1", "Duplexer and EVA strip (optional)", "—", "Per radio")],
     nobear="This design has **no bearings or shafts**; the only hardware is the 1/4\"-20 nut.",
-    h_ord="Assembly order", steps=["Check the part: remove burrs from the tunnel and hex pocket.", "Insert the nut from the Z− side into the pocket (%s mm skin toward the butt face)." % N["piel"], "Slide the Ø%s mm boom through the %s mm tunnel." % (N["pluma"], N["tunel"]), "Mount the clip on the plate (%s at %s) and secure the radio." % (N["placa"], N["ang"])],
+    h_ord="Assembly order", steps=["Check the part: remove burrs from the tunnel and hex pocket.", "Snap the nut in through the side channel on the Z− side, past the retention lips (%s mm skin toward the butt face; a screw of 6 mm or more engages about 4 mm)." % N["piel"], "Slide the Ø%s mm boom through the %s mm tunnel." % (N["pluma"], N["tunel"]), "Insert the clip tongue through the high free edge of the plate (%s at %s), parallel to it, and secure the radio on the −U side." % (N["placa"], N["ang"])],
     h_hol="Measure and adjust clearances (mechanical fit)", hol=[
         "Print `stl/calibracion/prueba_holguras.stl` (%s mm) with the FINAL profile and same filament." % N["cupon"],
         "Row 1: square holes 15.1–15.9 mm for the boom. Row 2: hex pockets AF 11.1–11.9 mm. Row 3: slots 6.0–8.0 mm. Dimples 1–5 mark the size.",
@@ -117,7 +131,7 @@ L["en"] = dict(
          ("PLA", "Not recommended: creep/deformation with heat", "—")],
     ori_h=["Bed face", "Height", "Contact", "Overhang >45°", "Comment"],
     ori_c=["Recommended: vertical tunnel; layers as hoops around the boom; nut load in the layer plane; use brim", "Vertical nut axis: tension perpendicular to layers (weak)", "Alternative"],
-    h_prof="Initial profiles", prof_h=["Parameter", "Initial value"], prof=[("Layer height", "0.20 mm"), ("Perimeters", "4"), ("Infill", "gyroid 40 %"), ("Brim", "5 mm (option A)"), ("Dimensional adjustment", "0 until the coupon is measured")],
+    h_prof="Initial profiles", prof_h=["Parameter", "Initial value"], prof=[("Layer height", "0.20 mm"), ("Perimeters", "4"), ("Infill", "gyroid 40 % (60–100 % or extra walls in the beam and tripod zone)"), ("Brim", "5 mm (option A)"), ("Supports", "under the plate and the beam"), ("Dimensional adjustment", "0 until the coupon is measured")],
     prof_note="All are initial values **pending physical testing**; no universal parameters: use the temperature range printed on the spool.",
     h_sep="Printer calibration (separate from mechanical fit)", sep="The steps here calibrate the **printer**. Assembly clearance adjustment is in `MONTAJE_ILUSTRADO.md`.",
     h_k="Anycubic Kobra S1", k=[
@@ -139,20 +153,20 @@ L["en"] = dict(
 )
 
 L["de"] = dict(
-    title="SpaceQuad-Griff v5 — Bebilderte Montageanleitung",
+    title="SpaceQuad-Griff v6.2 — Bebilderte Montageanleitung",
     idx_title="SpaceQuad-Anleitungen (mehrsprachig)", idx_intro="Konsistente Dokumentation in 5 Sprachen. Alle Druckprofile und Belastungstests sind **Startwerte, DIE NOCH PHYSISCH ZU PRÜFEN SIND**.",
     d_mont="Bebilderte Montage, Stückliste, Spiel und Belastungstests", d_imp="Material, Ausrichtung und anfängliche Druckprofile", d_cal="Kalibrierung Anycubic Kobra S1 und Bambu Lab",
-    pend="⚠ PHYSISCHE PRÜFUNG AUSSTEHEND", geo="Basiert auf der endgültigen Geometrie in main (v5, v5+Verstärkung und Anytone). Bei Geometrieänderung mit `src/render_guia.py` neu erzeugen. Die Clip-Maße sind geschätzt, nicht gemessen.",
-    figs=["Seitenansicht mit Maßen (X zeigt zum Griff)", "Stirnansicht (Griffende)", "Draufsicht der Clip-Platte: %s mm bei %s" % (N["placa"], N["ang"]),
-          "Explosionsansicht und nummerierte Schritte ①–④ (Mutter von Z− einsetzen)", "Schnitte A-A (Tunnel) und B-B (Mutterntasche)", "Druckausrichtungen im Vergleich", "Clip-Einschub (v3 von +V; v5 von −V)"],
+    pend="⚠ PHYSISCHE PRÜFUNG AUSSTEHEND",     geo="Basiert auf der Geometrie v6.2 (Position D) in `stl/v6/`. Bei Geometrieänderung mit `src/render_guia.py` neu erzeugen. Nur CAD: Die Maße von Clip und Funkgerät sind geschätzt, nicht gemessen; es gibt keinen Belastungstest.",
+        figs=["Seitenansicht mit Maßen (X zeigt zum Griff; Funkgerät auf der −U-Seite)", "Stirnansicht (Griffende)", "Draufsicht der Clip-Platte und des Trägers: %s mm bei %s" % (N["placa"], N["ang"]),
+              "Explosionsansicht und nummerierte Schritte ①–④ (Mutter rastet von Z− ein)", "Schnitte A-A (Tunnel) und B-B (Mutterntasche, 2 mm Haut)", "Druckausrichtungen im Vergleich", "Clip-Einschub (Position D: am oberen freien Rand, parallel zur Platte)"],
     h_fig="Grafiken", h_bom="Stückliste (BOM)", bom_h=["Nr.", "Menge", "Teil", "Maß / Spezifikation", "Hinweis"],
-    bom=[("1", "1", "Gedruckter Griff v5 (`stl/v5/*uvk5v3.stl`)", "Hüllmaß %s mm" % N["bbox"], "PETG empfohlen"),
+    bom=[("1", "1", "Gedruckter Griff v6.2 (`stl/v6/*_v6_uvk5v3.stl` oder `*_v6_rt950pro.stl`)", "Hüllmaß %s mm (UV-K5 V3)" % N["bbox"], "PETG empfohlen"),
          ("2", "1", "Sechskantmutter 1/4\"-20 UNC", "Schlüsselweite 11.1 mm, Dicke 5.6 mm", "Tasche SW %s × %s mm" % (N["af"], N["esp"])),
          ("3", "1", "Ausleger (nicht enthalten)", "Ø%s mm, Tunnel %s mm (Nennspiel %s mm je Seite)" % (N["pluma"], N["tunel"], N["jgo"]), "Echten Ausleger messen"),
          ("4", "0–1", "Stativ-Schnellwechselplatte/-schraube (optional)", "1/4\"-20", "Nach Bedarf"),
          ("5", "0–1", "Duplexer und EVA-Streifen (optional)", "—", "Je nach Funkgerät")],
     nobear="Dieses Design hat **keine Lager oder Wellen**; einziges Beschlagteil ist die 1/4\"-20-Mutter.",
-    h_ord="Montagereihenfolge", steps=["Teil prüfen: Grate in Tunnel und Sechskanttasche entfernen.", "Mutter von der Z−-Seite in die Tasche einsetzen (%s mm Haut zum Griffende)." % N["piel"], "Ausleger Ø%s mm durch den %s-mm-Tunnel schieben." % (N["pluma"], N["tunel"]), "Clip auf der Platte (%s bei %s) montieren und Funkgerät sichern." % (N["placa"], N["ang"])],
+    h_ord="Montagereihenfolge", steps=["Teil prüfen: Grate in Tunnel und Sechskanttasche entfernen.", "Mutter von der Z−-Seite durch den seitlichen Kanal einrasten, über die Haltelippen (%s mm Haut zum Griffende; eine Schraube ab 6 mm greift etwa 4 mm)." % N["piel"], "Ausleger Ø%s mm durch den %s-mm-Tunnel schieben." % (N["pluma"], N["tunel"]), "Clip-Zunge am oberen freien Rand der Platte (%s bei %s) parallel zu ihr einschieben und das Funkgerät auf der −U-Seite sichern." % (N["placa"], N["ang"])],
     h_hol="Spiel messen und anpassen (mechanische Passung)", hol=[
         "`stl/calibracion/prueba_holguras.stl` (%s mm) mit dem ENDGÜLTIGEN Profil und demselben Filament drucken." % N["cupon"],
         "Reihe 1: Vierkantlöcher 15.1–15.9 mm für den Ausleger. Reihe 2: Sechskanttaschen SW 11.1–11.9 mm. Reihe 3: Schlitze 6.0–8.0 mm. Punkte 1–5 kennzeichnen die Größe.",
@@ -170,7 +184,7 @@ L["de"] = dict(
          ("PLA", "Nicht empfohlen: Kriechen/Verformung bei Wärme", "—")],
     ori_h=["Bettfläche", "Höhe", "Kontakt", "Überhang >45°", "Kommentar"],
     ori_c=["Empfohlen: Tunnel vertikal; Schichten als Ringe um den Ausleger; Mutterlast in Schichtebene; Brim nutzen", "Vertikale Mutterachse: Zug quer zu den Schichten (schwach)", "Alternative"],
-    h_prof="Anfängliche Profile", prof_h=["Parameter", "Startwert"], prof=[("Schichthöhe", "0.20 mm"), ("Perimeter", "4"), ("Füllung", "Gyroid 40 %"), ("Brim", "5 mm (Option A)"), ("Maßkorrektur", "0 bis zur Messung des Prüfkörpers")],
+    h_prof="Anfängliche Profile", prof_h=["Parameter", "Startwert"], prof=[("Schichthöhe", "0.20 mm"), ("Perimeter", "4"), ("Füllung", "Gyroid 40 % (60–100 % oder zusätzliche Wände im Träger und im Stativbereich)"), ("Brim", "5 mm (Option A)"), ("Stützen", "unter Platte und Träger"), ("Maßkorrektur", "0 bis zur Messung des Prüfkörpers")],
     prof_note="Alles sind Startwerte, **physische Prüfung ausstehend**; keine universellen Parameter: den auf der Spule angegebenen Temperaturbereich verwenden.",
     h_sep="Druckerkalibrierung (getrennt von mechanischer Passung)", sep="Die Schritte hier kalibrieren den **Drucker**. Die Spielanpassung der Montage steht in `MONTAJE_ILUSTRADO.md`.",
     h_k="Anycubic Kobra S1", k=[
@@ -192,20 +206,20 @@ L["de"] = dict(
 )
 
 L["fr"] = dict(
-    title="Poignée SpaceQuad v5 — Guide de montage illustré",
+    title="Poignée SpaceQuad v6.2 — Guide de montage illustré",
     idx_title="Guides SpaceQuad (multilingue)", idx_intro="Documentation cohérente en 5 langues. Tous les profils d'impression et essais de charge sont des **valeurs initiales EN ATTENTE D'ESSAI PHYSIQUE**.",
     d_mont="Montage illustré, nomenclature, jeux et essais de charge", d_imp="Matériau, orientation et profils d'impression initiaux", d_cal="Calibration Anycubic Kobra S1 et Bambu Lab",
-    pend="⚠ ESSAI PHYSIQUE EN ATTENTE", geo="Basé sur la géométrie finale de main (v5, v5+renfort et Anytone). Si la géométrie change, régénérer avec `src/render_guia.py`. Les dimensions du clip sont estimées, non mesurées.",
-    figs=["Vue latérale cotée (X pointe vers la prise)", "Vue de bout (culasse)", "Plan de la plaque du clip : %s mm à %s" % (N["placa"], N["ang"]),
-          "Vue éclatée et étapes numérotées ①–④ (l'écrou entre par Z−)", "Coupes A-A (tunnel) et B-B (logement d'écrou)", "Orientations d'impression comparées", "Insertion du clip (v3 par +V ; v5 par −V)"],
+    pend="⚠ ESSAI PHYSIQUE EN ATTENTE",     geo="Basé sur la géométrie v6.2 (position D) de `stl/v6/`. Si la géométrie change, régénérer avec `src/render_guia.py`. CAO uniquement : les dimensions du clip et de chaque radio sont estimées, non mesurées, et il n'y a pas d'essai de charge.",
+        figs=["Vue latérale cotée (X pointe vers la prise ; radio côté −U)", "Vue de bout (culasse)", "Plan de la plaque du clip et de la poutre : %s mm à %s" % (N["placa"], N["ang"]),
+              "Vue éclatée et étapes numérotées ①–④ (l'écrou se clipse par Z−)", "Coupes A-A (tunnel) et B-B (logement d'écrou, peau de 2 mm)", "Orientations d'impression comparées", "Insertion du clip (position D : par le bord libre haut, parallèle à la plaque)"],
     h_fig="Graphiques", h_bom="Nomenclature (BOM)", bom_h=["N°", "Qté", "Élément", "Dimension / spécification", "Remarque"],
-    bom=[("1", "1", "Poignée imprimée v5 (`stl/v5/*uvk5v3.stl`)", "Encombrement %s mm" % N["bbox"], "PETG recommandé"),
+    bom=[("1", "1", "Poignée imprimée v6.2 (`stl/v6/*_v6_uvk5v3.stl` ou `*_v6_rt950pro.stl`)", "Encombrement %s mm (UV-K5 V3)" % N["bbox"], "PETG recommandé"),
          ("2", "1", "Écrou hexagonal 1/4\"-20 UNC", "Sur plats 11.1 mm, épaisseur 5.6 mm", "Logement SP %s × %s mm" % (N["af"], N["esp"])),
          ("3", "1", "Mât / boom (non inclus)", "Ø%s mm, tunnel %s mm (jeu nominal %s mm par côté)" % (N["pluma"], N["tunel"], N["jgo"]), "Mesurer le mât réel"),
          ("4", "0–1", "Plaque/vis de déclenchement rapide trépied (option)", "1/4\"-20", "Selon usage"),
          ("5", "0–1", "Duplexeur et bande EVA (options)", "—", "Selon la radio")],
     nobear="Cette conception **n'a ni roulements ni arbres** ; la seule visserie est l'écrou 1/4\"-20.",
-    h_ord="Ordre de montage", steps=["Vérifier la pièce : ébavurer le tunnel et le logement hexagonal.", "Insérer l'écrou côté Z− dans le logement (peau de %s mm vers la culasse)." % N["piel"], "Faire glisser le mât Ø%s mm dans le tunnel de %s mm." % (N["pluma"], N["tunel"]), "Monter le clip sur la plaque (%s à %s) et fixer la radio." % (N["placa"], N["ang"])],
+    h_ord="Ordre de montage", steps=["Vérifier la pièce : ébavurer le tunnel et le logement hexagonal.", "Clipser l'écrou par le canal latéral du côté Z−, en passant les lèvres de retenue (peau de %s mm vers la culasse ; une vis de 6 mm ou plus engage environ 4 mm)." % N["piel"], "Faire glisser le mât Ø%s mm dans le tunnel de %s mm." % (N["pluma"], N["tunel"]), "Introduire la languette du clip par le bord libre haut de la plaque (%s à %s), parallèlement à elle, et fixer la radio côté −U." % (N["placa"], N["ang"])],
     h_hol="Mesurer et ajuster les jeux (ajustement mécanique)", hol=[
         "Imprimer `stl/calibracion/prueba_holguras.stl` (%s mm) avec le profil FINAL et le même filament." % N["cupon"],
         "Rangée 1 : trous carrés 15.1–15.9 mm pour le mât. Rangée 2 : logements hexagonaux SP 11.1–11.9 mm. Rangée 3 : fentes 6.0–8.0 mm. Les alvéoles 1–5 indiquent la taille.",
@@ -223,7 +237,7 @@ L["fr"] = dict(
          ("PLA", "Non recommandé : fluage/déformation à la chaleur", "—")],
     ori_h=["Face sur le plateau", "Hauteur", "Contact", "Surplomb >45°", "Commentaire"],
     ori_c=["Recommandée : tunnel vertical ; couches en cerceaux autour du mât ; charge de l'écrou dans le plan des couches ; utiliser un brim", "Axe d'écrou vertical : traction perpendiculaire aux couches (faible)", "Alternative"],
-    h_prof="Profils initiaux", prof_h=["Paramètre", "Valeur initiale"], prof=[("Hauteur de couche", "0.20 mm"), ("Périmètres", "4"), ("Remplissage", "gyroïde 40 %"), ("Brim", "5 mm (option A)"), ("Ajustement dimensionnel", "0 jusqu'à mesure de l'éprouvette")],
+    h_prof="Profils initiaux", prof_h=["Paramètre", "Valeur initiale"], prof=[("Hauteur de couche", "0.20 mm"), ("Périmètres", "4"), ("Remplissage", "gyroïde 40 % (60–100 % ou parois supplémentaires dans la poutre et la zone du trépied)"), ("Brim", "5 mm (option A)"), ("Supports", "sous la plaque et la poutre"), ("Ajustement dimensionnel", "0 jusqu'à mesure de l'éprouvette")],
     prof_note="Toutes sont des valeurs initiales **en attente d'essai physique** ; pas de paramètres universels : utiliser la plage de température imprimée sur la bobine.",
     h_sep="Calibration de l'imprimante (séparée de l'ajustement mécanique)", sep="Les étapes ici calibrent l'**imprimante**. L'ajustement des jeux du montage est dans `MONTAJE_ILUSTRADO.md`.",
     h_k="Anycubic Kobra S1", k=[
@@ -245,20 +259,20 @@ L["fr"] = dict(
 )
 
 L["it"] = dict(
-    title="Impugnatura SpaceQuad v5 — Guida di montaggio illustrata",
+    title="Impugnatura SpaceQuad v6.2 — Guida di montaggio illustrata",
     idx_title="Guide SpaceQuad (multilingue)", idx_intro="Documentazione coerente in 5 lingue. Tutti i profili di stampa e le prove di carico sono **valori iniziali IN ATTESA DI PROVA FISICA**.",
     d_mont="Montaggio illustrato, distinta, giochi e prove di carico", d_imp="Materiale, orientamento e profili di stampa iniziali", d_cal="Calibrazione Anycubic Kobra S1 e Bambu Lab",
-    pend="⚠ PROVA FISICA IN SOSPESO", geo="Basato sulla geometria finale di main (v5, v5+rinforzo e Anytone). Se la geometria cambia, rigenerare con `src/render_guia.py`. Le dimensioni della clip sono stimate, non misurate.",
-    figs=["Vista laterale quotata (X punta verso l'impugnatura)", "Vista di testa (culatta)", "Pianta della piastra della clip: %s mm a %s" % (N["placa"], N["ang"]),
-          "Vista esplosa e passi numerati ①–④ (il dado entra da Z−)", "Sezioni A-A (tunnel) e B-B (sede del dado)", "Orientamenti di stampa a confronto", "Inserimento della clip (v3 da +V; v5 da −V)"],
+    pend="⚠ PROVA FISICA IN SOSPESO",     geo="Basato sulla geometria v6.2 (posizione D) in `stl/v6/`. Se la geometria cambia, rigenerare con `src/render_guia.py`. Solo CAD: le dimensioni della clip e di ogni radio sono stimate, non misurate, e non c'è prova di carico.",
+        figs=["Vista laterale quotata (X punta verso l'impugnatura; radio sul lato −U)", "Vista di testa (culatta)", "Pianta della piastra della clip e della trave: %s mm a %s" % (N["placa"], N["ang"]),
+              "Vista esplosa e passi numerati ①–④ (il dado si inserisce a scatto da Z−)", "Sezioni A-A (tunnel) e B-B (sede del dado, pelle da 2 mm)", "Orientamenti di stampa a confronto", "Inserimento della clip (posizione D: dal bordo libero alto, parallelo alla piastra)"],
     h_fig="Grafici", h_bom="Distinta base (BOM)", bom_h=["N.", "Q.tà", "Elemento", "Misura / specifica", "Nota"],
-    bom=[("1", "1", "Impugnatura stampata v5 (`stl/v5/*uvk5v3.stl`)", "Ingombro %s mm" % N["bbox"], "PETG consigliato"),
+    bom=[("1", "1", "Impugnatura stampata v6.2 (`stl/v6/*_v6_uvk5v3.stl` o `*_v6_rt950pro.stl`)", "Ingombro %s mm (UV-K5 V3)" % N["bbox"], "PETG consigliato"),
          ("2", "1", "Dado esagonale 1/4\"-20 UNC", "Chiave 11.1 mm, spessore 5.6 mm", "Sede CH %s × %s mm" % (N["af"], N["esp"])),
          ("3", "1", "Asta / boom (non inclusa)", "Ø%s mm, tunnel %s mm (gioco nominale %s mm per lato)" % (N["pluma"], N["tunel"], N["jgo"]), "Misurare l'asta reale"),
          ("4", "0–1", "Piastra/vite a sgancio rapido per treppiede (opzionale)", "1/4\"-20", "Secondo l'uso"),
          ("5", "0–1", "Duplexer e striscia EVA (opzionali)", "—", "Secondo la radio")],
     nobear="Questo progetto **non ha cuscinetti né alberi**; l'unica minuteria è il dado 1/4\"-20.",
-    h_ord="Ordine di montaggio", steps=["Controllare il pezzo: sbavare tunnel e sede esagonale.", "Inserire il dado dal lato Z− nella sede (pelle di %s mm verso la culatta)." % N["piel"], "Far scorrere l'asta Ø%s mm nel tunnel di %s mm." % (N["pluma"], N["tunel"]), "Montare la clip sulla piastra (%s a %s) e fissare la radio." % (N["placa"], N["ang"])],
+    h_ord="Ordine di montaggio", steps=["Controllare il pezzo: sbavare tunnel e sede esagonale.", "Inserire a scatto il dado dal canale laterale del lato Z−, oltre i labbri di ritenzione (pelle di %s mm verso la culatta; una vite da 6 mm o più impegna circa 4 mm)." % N["piel"], "Far scorrere l'asta Ø%s mm nel tunnel di %s mm." % (N["pluma"], N["tunel"]), "Introdurre la linguetta della clip dal bordo libero alto della piastra (%s a %s), parallelamente ad essa, e fissare la radio sul lato −U." % (N["placa"], N["ang"])],
     h_hol="Misurare e regolare i giochi (accoppiamento meccanico)", hol=[
         "Stampare `stl/calibracion/prueba_holguras.stl` (%s mm) con il profilo FINALE e lo stesso filamento." % N["cupon"],
         "Fila 1: fori quadrati 15.1–15.9 mm per l'asta. Fila 2: sedi esagonali CH 11.1–11.9 mm. Fila 3: asole 6.0–8.0 mm. Le fossette 1–5 indicano la misura.",
@@ -276,7 +290,7 @@ L["it"] = dict(
          ("PLA", "Sconsigliato: scorrimento/deformazione col calore", "—")],
     ori_h=["Faccia sul piatto", "Altezza", "Contatto", "Sporgenza >45°", "Commento"],
     ori_c=["Consigliata: tunnel verticale; strati ad anello attorno all'asta; carico del dado nel piano degli strati; usare brim", "Asse del dado verticale: trazione perpendicolare agli strati (debole)", "Alternativa"],
-    h_prof="Profili iniziali", prof_h=["Parametro", "Valore iniziale"], prof=[("Altezza strato", "0.20 mm"), ("Perimetri", "4"), ("Riempimento", "gyroid 40 %"), ("Brim", "5 mm (opzione A)"), ("Correzione dimensionale", "0 fino alla misura del provino")],
+    h_prof="Profili iniziali", prof_h=["Parametro", "Valore iniziale"], prof=[("Altezza strato", "0.20 mm"), ("Perimetri", "4"), ("Riempimento", "gyroid 40 % (60–100 % o pareti extra nella trave e nella zona del treppiede)"), ("Brim", "5 mm (opzione A)"), ("Supporti", "sotto la piastra e la trave"), ("Correzione dimensionale", "0 fino alla misura del provino")],
     prof_note="Sono tutti valori iniziali **in attesa di prova fisica**; nessun parametro universale: usare l'intervallo di temperatura stampato sulla bobina.",
     h_sep="Calibrazione della stampante (separata dall'accoppiamento meccanico)", sep="I passi qui calibrano la **stampante**. La regolazione dei giochi del montaggio è in `MONTAJE_ILUSTRADO.md`.",
     h_k="Anycubic Kobra S1", k=[
@@ -297,6 +311,108 @@ L["it"] = dict(
     h_src="Fonti ufficiali", h_lic="Licenza e attribuzione", lic="Licenza CC del repository (`LICENSE`, Bricohams). Il riavvolgitore Pastamatic mantiene la paternità originale; la sua licenza non è verificata e non è pubblicato qui.",
 )
 
+# Contenido propio de v6.2 (posición D, tuerca reforzada, variantes por radio, impresión)
+V6TXT = {
+    "es": dict(
+        h_posd="Posición D (v6.2)",
+        posd=["Con la empuñadura en la mano, la radio queda en el lado del boom opuesto a la torre y al duplexor (lado −U) e inclinada %s hacia el operador (extremo superior hacia −V)." % N["ang"],
+              "Una viga de %s mm une las dos cartelas de la placa con la torre y se empotra en ella; no toca el túnel del boom ni el duplexor." % N["viga"],
+              "El clip entra paralelo a la placa por su borde libre alto y avanza hacia el fondo del hueco, donde está la ventana de retención (recorrido útil %s mm)." % N["rec"]],
+        h_var="Variantes por radio", var_h=["Radio", "Archivo STL", "Envolvente de la radio (estimada, mm)", "Altura de la placa PH0 (mm)"],
+        h_nut="Tuerca de trípode reforzada",
+        nut=["Piel de la cara del culo de %s mm (antes 1.2 mm) y paredes de al menos 3 mm alrededor del alojamiento hexagonal." % N["piel"],
+             "La tuerca entra a presión: se introduce por el canal lateral y encaja al pasar los labios de retención (apertura 10.6 mm frente a 11.1 mm de la tuerca). La interferencia es teórica.",
+             "Un tornillo de trípode de 6 mm o más engrana unos 4 mm de la tuerca (nominal 5.6 mm).",
+             "Cavidad del mango rellena %s mm con transición cónica y brida opcional en el culo." % N["rampa"]],
+        h_print="Consejos de impresión",
+        prn=["Soportes bajo la placa y bajo la viga.",
+             "Relleno alto (60–100 %) o paredes extra en la viga y en la zona del trípode.",
+             "Hacer una prueba de carga antes de fiarse de la pieza (ver la sección de verificación de resistencia)."],
+        h_prev="Versiones anteriores",
+        prev="Solo siguen v1 (entrada), v3 (generador base y referencia del Anytone) y el Anytone genérico (figuras en `docs/img/guia/anytone/`). v2, v4 y v5 se eliminaron; se recuperan desde el historial de git (commit anterior a la limpieza).",
+        n_img="Figuras de la variante UV-K5 V3; la RT-950 Pro comparte la misma geometría salvo la altura de la placa.",
+    ),
+    "en": dict(
+        h_posd="Position D (v6.2)",
+        posd=["With the grip in hand, the radio sits on the side of the boom opposite the tower and the duplexer (−U side), leaning %s toward the operator (upper end toward −V)." % N["ang"],
+              "A %s mm beam joins the two plate gussets to the tower and is embedded in it; it touches neither the boom tunnel nor the duplexer." % N["viga"],
+              "The clip enters parallel to the plate through its high free edge and advances toward the bottom of the gap, where the retention window is (usable travel %s mm)." % N["rec"]],
+        h_var="Per-radio variants", var_h=["Radio", "STL file", "Radio envelope (estimated, mm)", "Plate height PH0 (mm)"],
+        h_nut="Reinforced tripod nut",
+        nut=["%s mm skin on the butt face (was 1.2 mm) and walls of at least 3 mm around the hex pocket." % N["piel"],
+             "The nut snaps in: insert it through the side channel and it seats once it passes the retention lips (10.6 mm opening versus the 11.1 mm nut). The interference is theoretical.",
+             "A tripod screw of 6 mm or more engages about 4 mm of the nut (nominal 5.6 mm).",
+             "Handle cavity filled %s mm with a tapered transition, and an optional butt flange." % N["rampa"]],
+        h_print="Printing advice",
+        prn=["Supports under the plate and under the beam.",
+             "High infill (60–100 %) or extra walls in the beam and the tripod zone.",
+             "Run a load test before trusting the part (see the strength verification section)."],
+        h_prev="Earlier versions",
+        prev="Only v1 (input), v3 (base generator and Anytone baseline) and the generic Anytone remain (figures in `docs/img/guia/anytone/`). v2, v4 and v5 were removed; recover them from git history (the commit before the cleanup).",
+        n_img="Figures show the UV-K5 V3 variant; the RT-950 Pro shares the geometry except for the plate height.",
+    ),
+    "de": dict(
+        h_posd="Position D (v6.2)",
+        posd=["Mit dem Griff in der Hand sitzt das Funkgerät auf der dem Turm und dem Duplexer gegenüberliegenden Seite des Auslegers (−U-Seite) und ist um %s zum Bediener geneigt (oberes Ende zu −V)." % N["ang"],
+              "Ein %s-mm-Träger verbindet die beiden Rippen der Platte mit dem Turm und ist in diesen eingelassen; er berührt weder den Auslegertunnel noch den Duplexer." % N["viga"],
+              "Der Clip wird parallel zur Platte über deren oberen freien Rand eingeschoben und läuft zum Grund der Aussparung mit dem Haltefenster (nutzbarer Weg %s mm)." % N["rec"]],
+        h_var="Varianten je Funkgerät", var_h=["Funkgerät", "STL-Datei", "Hüllmaß des Funkgeräts (geschätzt, mm)", "Plattenhöhe PH0 (mm)"],
+        h_nut="Verstärkte Stativmutter",
+        nut=["%s mm Haut an der Endfläche (vorher 1.2 mm) und Wände von mindestens 3 mm um die Sechskanttasche." % N["piel"],
+             "Die Mutter rastet ein: Sie wird durch den seitlichen Kanal eingeführt und sitzt, sobald sie die Haltelippen passiert hat (Öffnung 10.6 mm gegenüber 11.1 mm Mutter). Die Überdeckung ist theoretisch.",
+             "Eine Stativschraube ab 6 mm greift etwa 4 mm der Mutter (nominal 5.6 mm).",
+             "Griffhohlraum auf %s mm gefüllt, mit konischem Übergang, und optionaler Flansch am Ende." % N["rampa"]],
+        h_print="Druckhinweise",
+        prn=["Stützen unter der Platte und unter dem Träger.",
+             "Hohe Füllung (60–100 %) oder zusätzliche Wände im Träger und im Stativbereich.",
+             "Vor dem Vertrauen in das Teil einen Belastungstest durchführen (siehe Abschnitt Festigkeitsprüfung)."],
+        h_prev="Frühere Versionen",
+        prev="Nur v1 (Eingabe), v3 (Basisgenerator und Anytone-Referenz) und das generische Anytone bleiben erhalten (Abbildungen in `docs/img/guia/anytone/`). v2, v4 und v5 wurden entfernt; sie lassen sich aus der Git-Historie wiederherstellen (Commit vor der Bereinigung).",
+        n_img="Die Abbildungen zeigen die Variante UV-K5 V3; das RT-950 Pro hat dieselbe Geometrie bis auf die Plattenhöhe.",
+    ),
+    "fr": dict(
+        h_posd="Position D (v6.2)",
+        posd=["Poignée en main, la radio se trouve du côté de la flèche opposé à la tour et au duplexeur (côté −U), inclinée de %s vers l'opérateur (extrémité haute vers −V)." % N["ang"],
+              "Une poutre de %s mm relie les deux goussets de la plaque à la tour et y est encastrée ; elle ne touche ni le tunnel de la flèche ni le duplexeur." % N["viga"],
+              "Le clip entre parallèlement à la plaque par son bord libre haut et avance vers le fond du logement, où se trouve la fenêtre de retenue (course utile %s mm)." % N["rec"]],
+        h_var="Variantes par radio", var_h=["Radio", "Fichier STL", "Encombrement de la radio (estimé, mm)", "Hauteur de plaque PH0 (mm)"],
+        h_nut="Écrou de trépied renforcé",
+        nut=["Peau de %s mm sur la face du talon (auparavant 1.2 mm) et parois d'au moins 3 mm autour du logement hexagonal." % N["piel"],
+             "L'écrou se clipse : on l'introduit par le canal latéral et il s'engage en passant les lèvres de retenue (ouverture 10.6 mm pour un écrou de 11.1 mm). L'interférence est théorique.",
+             "Une vis de trépied de 6 mm ou plus engage environ 4 mm de l'écrou (nominal 5.6 mm).",
+             "Cavité de la poignée remplie sur %s mm avec transition conique, et bride optionnelle au talon." % N["rampa"]],
+        h_print="Conseils d'impression",
+        prn=["Supports sous la plaque et sous la poutre.",
+             "Remplissage élevé (60–100 %) ou parois supplémentaires dans la poutre et la zone du trépied.",
+             "Faire un essai de charge avant de se fier à la pièce (voir la section de vérification de résistance)."],
+        h_prev="Versions antérieures",
+        prev="Seuls restent v1 (entrée), v3 (générateur de base et référence Anytone) et l'Anytone générique (figures dans `docs/img/guia/anytone/`). v2, v4 et v5 ont été supprimées ; elles se récupèrent depuis l'historique git (commit précédant le nettoyage).",
+        n_img="Les figures montrent la variante UV-K5 V3 ; la RT-950 Pro partage la même géométrie, sauf la hauteur de la plaque.",
+    ),
+    "it": dict(
+        h_posd="Posizione D (v6.2)",
+        posd=["Con l'impugnatura in mano, la radio si trova sul lato del braccio opposto alla torre e al duplexer (lato −U), inclinata di %s verso l'operatore (estremità superiore verso −V)." % N["ang"],
+              "Una trave da %s mm collega le due nervature della piastra alla torre e vi è incastrata; non tocca né il tunnel del braccio né il duplexer." % N["viga"],
+              "La clip entra parallela alla piastra dal suo bordo libero alto e avanza verso il fondo dell'alloggiamento, dove si trova la finestra di ritenzione (corsa utile %s mm)." % N["rec"]],
+        h_var="Varianti per radio", var_h=["Radio", "File STL", "Ingombro della radio (stimato, mm)", "Altezza piastra PH0 (mm)"],
+        h_nut="Dado da treppiede rinforzato",
+        nut=["Pelle di %s mm sulla faccia del fondo (prima 1.2 mm) e pareti di almeno 3 mm attorno alla sede esagonale." % N["piel"],
+             "Il dado si inserisce a scatto: lo si introduce dal canale laterale e si assesta superando i labbri di ritenzione (apertura 10.6 mm contro 11.1 mm del dado). L'interferenza è teorica.",
+             "Una vite da treppiede da 6 mm o più impegna circa 4 mm del dado (nominale 5.6 mm).",
+             "Cavità dell'impugnatura riempita per %s mm con transizione conica e flangia opzionale sul fondo." % N["rampa"]],
+        h_print="Consigli di stampa",
+        prn=["Supporti sotto la piastra e sotto la trave.",
+             "Riempimento alto (60–100 %) o pareti extra nella trave e nella zona del treppiede.",
+             "Eseguire una prova di carico prima di fidarsi del pezzo (vedere la sezione sulla verifica di resistenza)."],
+        h_prev="Versioni precedenti",
+        prev="Restano solo v1 (input), v3 (generatore di base e riferimento Anytone) e l'Anytone generico (figure in `docs/img/guia/anytone/`). v2, v4 e v5 sono state rimosse; si recuperano dalla cronologia git (commit precedente alla pulizia).",
+        n_img="Le figure mostrano la variante UV-K5 V3; la RT-950 Pro condivide la stessa geometria tranne l'altezza della piastra.",
+    ),
+}
+
+# Envolvente de cada radio (perfiles_radio.json, estimada) y altura PH0 nominal de la placa (docs/VARIANTES_V6.md)
+RADIOS_V6 = [("UV-K5 V3", "uvk5v3", "115 × 60 × 37.5", "72.5"), ("RT-950 Pro", "rt950pro", "162 × 66 × 48", "88.5")]
+
 
 def table(head, rows):
     out = ["| " + " | ".join(head) + " |", "|" + "---|" * len(head)]
@@ -310,16 +426,14 @@ def nav(lang):
 
 # (carpeta de figuras, STL, envolvente mm, volumen mm3); medidos de los STL verificados
 VARIANTES = [
-    ("v5", "stl/v5/*uvk5v3.stl, *rt950pro.stl", "195.2 × 95.6 × 79.0", "191951"),
-    ("v5_refuerzo", "stl/refuerzo/*_v5_*_refuerzo.stl", "195.2 × 95.6 × 79.0", "205173"),
     ("anytone", "stl/mango_spacequad_anytone_generico.stl + stl/anytone_calzos/*.stl", "195.2 × 93.7 × 79.0", "213099"),
 ]
 VNAME = {
-    "es": ("v5 (UV-K5 V3 / RT-950 Pro, idénticos)", "v5 + base reforzada (UV-K5 V3 / RT-950 Pro)", "Anytone genérico ajustable (base ya reforzada; calzos opcionales)"),
-    "en": ("v5 (UV-K5 V3 / RT-950 Pro, identical)", "v5 + reinforced base (UV-K5 V3 / RT-950 Pro)", "Adjustable generic Anytone (base already reinforced; optional shims)"),
-    "de": ("v5 (UV-K5 V3 / RT-950 Pro, identisch)", "v5 + verstärkte Basis (UV-K5 V3 / RT-950 Pro)", "Anytone generisch einstellbar (Basis bereits verstärkt; optionale Keile)"),
-    "fr": ("v5 (UV-K5 V3 / RT-950 Pro, identiques)", "v5 + base renforcée (UV-K5 V3 / RT-950 Pro)", "Anytone générique réglable (base déjà renforcée ; cales optionnelles)"),
-    "it": ("v5 (UV-K5 V3 / RT-950 Pro, identici)", "v5 + base rinforzata (UV-K5 V3 / RT-950 Pro)", "Anytone generico regolabile (base già rinforzata; spessori opzionali)"),
+    "es": ("Anytone genérico ajustable (base ya reforzada; calzos opcionales)",),
+    "en": ("Adjustable generic Anytone (base already reinforced; optional shims)",),
+    "de": ("Anytone generisch einstellbar (Basis bereits verstärkt; optionale Keile)",),
+    "fr": ("Anytone générique réglable (base déjà renforcée ; cales optionnelles)",),
+    "it": ("Anytone generico regolabile (base già rinforzata; spessori opzionali)",),
 }
 VHEAD = {
     "es": ("Variantes (geometría final)", ["Variante", "Archivo STL", "Envolvente (mm)", "Volumen (mm³)"]),
@@ -331,31 +445,43 @@ VHEAD = {
 
 
 def doc_mont(lang, t):
-    o = ["# " + t["title"], "", nav(lang), "", "> " + t["geo"], "", "## " + VHEAD[lang][0], "",
-         table(VHEAD[lang][1], [[VNAME[lang][i], "`%s`" % v[1], v[2], v[3]] for i, v in enumerate(VARIANTES)]), ""]
-    o += ["## " + t["h_fig"], ""]
-    for i, v in enumerate(VARIANTES):
-        o += ["### " + VNAME[lang][i], ""]
-        for f, c in zip(FIGS, t["figs"]):
-            o += ["![%s](../../img/guia/%s/%s/%s.png)" % (c, v[0], lang, f), "*%s*" % c, ""]
+    x = V6TXT[lang]
+    o = ["# " + t["title"], "", nav(lang), "", "> " + t["geo"], "", "## " + x["h_posd"], ""]
+    o += ["- " + s for s in x["posd"]]
+    o += ["", "## " + x["h_var"], "",
+          table(x["var_h"], [[n, "`%s`" % V6_STL[k], e, ph] for n, k, e, ph in RADIOS_V6]), "",
+          "## " + x["h_nut"], ""] + ["- " + s for s in x["nut"]]
+    o += ["", "## " + x["h_print"], ""] + ["- " + s for s in x["prn"]]
+    o += ["", "## " + t["h_fig"], "", "> " + x["n_img"], ""]
+    for f, c in zip(FIGS, t["figs"]):
+        o += ["![%s](%s%s/%s.png)" % (c, IMG, lang, f), "*%s*" % c, ""]
     o += ["## " + t["h_bom"], "", table(t["bom_h"], [list(r) for r in t["bom"]]), "", t["nobear"], "",
           "## " + t["h_ord"], ""] + ["%d. %s" % (i + 1, s) for i, s in enumerate(t["steps"])]
     o += ["", "## " + t["h_hol"], "", "> " + t["pend"], ""] + ["%d. %s" % (i + 1, s) for i, s in enumerate(t["hol"])]
     o += ["", "## " + t["h_car"], "", "> " + t["pend"], ""] + ["%d. %s" % (i + 1, s) for i, s in enumerate(t["car"])]
-    o += ["", "## " + t["h_lic"], "", t["lic"], ""]
+    o += ["", "## " + x["h_prev"], "", x["prev"], "",
+          table(VHEAD[lang][1], [[VNAME[lang][i], "`%s`" % v[1], v[2], v[3]] for i, v in enumerate(VARIANTES)]), ""]
+    o += ["## " + t["h_lic"], "", t["lic"], ""]
     return "\n".join(o)
 
 
 def doc_imp(lang, t):
     import json
-    ori = json.load(open(os.path.join(ROOT, "docs", "img", "guia", "orientaciones.json"), encoding="utf-8"))
-    rows = ori if isinstance(ori, list) else ori.get("orientaciones", ori)
-    metr = [("Y−", "95.6", "355", "7688"), ("X+", "195.2", "1284", "10144"), ("Z+", "79.0", "711", "11941")]
-    o = ["# " + t["h_mat"] + " — SpaceQuad v5", "", nav(lang), "", "> " + t["pend"], "", "## " + t["h_mat"], "",
+    ruta = os.path.join(ROOT, "docs", "img", "guia", "v6", lang, "orientaciones.json")
+    filas = {}
+    if os.path.isfile(ruta):   # métricas calculadas por render_guia.py sobre el STL v6
+        filas = {f["cama"]: f for f in json.load(open(ruta, encoding="utf-8"))}
+    metr = []
+    for k in ("Y-", "X+", "Z+"):
+        f = filas.get(k)
+        metr.append((k.replace("-", "−"), "%s" % f["altura_mm"] if f else "—", "%s" % f["contacto_mm2"] if f else "—",
+                     "%s" % f["voladizo_mm2"] if f else "—"))
+    o = ["# " + t["h_mat"] + " — SpaceQuad v6.2", "", nav(lang), "", "> " + t["pend"], "", "## " + t["h_mat"], "",
          table(t["mat_h"], [list(r) for r in t["mat"]]), "",
          table(t["ori_h"], [[m[0], m[1] + " mm", m[2] + " mm²", m[3] + " mm²", c] for m, c in zip(metr, t["ori_c"])]), "",
-         "![%s](../../img/guia/v5/%s/fig04_orientacion_impresion.png)" % (t["figs"][5], lang), "",
+         "![%s](%s%s/fig04_orientacion_impresion.png)" % (t["figs"][5], IMG, lang), "",
          "## " + t["h_prof"], "", table(t["prof_h"], [list(r) for r in t["prof"]]), "", t["prof_note"], "",
+         "## " + V6TXT[lang]["h_print"], ""] + ["- " + s for s in V6TXT[lang]["prn"]] + ["",
          "- " + SRC["b_petg"], ""]
     return "\n".join(o)
 

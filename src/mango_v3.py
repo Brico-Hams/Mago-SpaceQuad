@@ -10,7 +10,7 @@ Cambios respecto a v1:
     El clip entra paralelo a la placa desde el extremo +V; ventana de retencion opcional.
  3. Tuerca 1/4"-20 del tripode mas cerca de la cara del culo (de 3,0 a TRIPOD_SKIN mm): con las placas
     rapidas de 5-6 mm de tornillo el v1 apenas cogia rosca.
-La base GoPro de la v2 se retira (legacy/soporte_gopro).
+La base GoPro de la v2 se retiro del repositorio (recuperable del historial de git).
 """
 import argparse
 from pathlib import Path

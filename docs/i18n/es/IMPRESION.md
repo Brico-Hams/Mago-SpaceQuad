@@ -1,4 +1,4 @@
-# Material y orientación — SpaceQuad v5
+# Material y orientación — SpaceQuad v6.2
 
 **Español** · [English](../en/README.md) · [Deutsch](../de/README.md) · [Français](../fr/README.md) · [Italiano](../it/README.md)
 
@@ -14,11 +14,11 @@
 
 | Cara en cama | Altura | Contacto | Voladizo >45° | Comentario |
 |---|---|---|---|---|
-| Y− | 95.6 mm | 355 mm² | 7688 mm² | Recomendada: túnel vertical; capas en aros alrededor de la pluma; carga de tuerca en el plano de capa; usar brim |
-| X+ | 195.2 mm | 1284 mm² | 10144 mm² | Eje de tuerca vertical: tracción perpendicular a capas (débil) |
-| Z+ | 79.0 mm | 711 mm² | 11941 mm² | Alternativa |
+| Y− | 93.7 mm | 355 mm² | 7603 mm² | Recomendada: túnel vertical; capas en aros alrededor de la pluma; carga de tuerca en el plano de capa; usar brim |
+| X+ | 202.7 mm | 1735 mm² | 10736 mm² | Eje de tuerca vertical: tracción perpendicular a capas (débil) |
+| Z+ | 126.2 mm | 325 mm² | 12057 mm² | Alternativa |
 
-![Orientaciones de impresión comparadas](../../img/guia/v5/es/fig04_orientacion_impresion.png)
+![Orientaciones de impresión comparadas](../../img/guia/v6/es/fig04_orientacion_impresion.png)
 
 ## Perfiles iniciales
 
@@ -26,10 +26,17 @@
 |---|---|
 | Altura de capa | 0.20 mm |
 | Perímetros | 4 |
-| Relleno | gyroid 40 % |
+| Relleno | gyroid 40 % (60–100 % o paredes extra en la viga y la zona del trípode) |
 | Brim | 5 mm (opción A) |
+| Soportes | bajo la placa y la viga |
 | Ajuste dimensional | 0 hasta medir el cupón |
 
 Todos son valores iniciales **pendientes de prueba física**; sin parámetros universales: usar el rango de temperatura impreso en la bobina.
+
+## Consejos de impresión
+
+- Soportes bajo la placa y bajo la viga.
+- Relleno alto (60–100 %) o paredes extra en la viga y en la zona del trípode.
+- Hacer una prueba de carga antes de fiarse de la pieza (ver la sección de verificación de resistencia).
 
 - https://wiki.bambulab.com/en/filament/petg

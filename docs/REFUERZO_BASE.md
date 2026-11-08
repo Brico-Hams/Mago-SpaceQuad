@@ -1,10 +1,10 @@
 # Refuerzo de la base de trípode
 
-Archivos: `src/refuerzo_base.py` (fuente editable), `stl/mango_spacequad_v3_refuerzo.stl` (resultado) y `docs/refuerzo_base_checks.json` (comprobaciones).
-Es un **post-proceso del STL final**: no modifica `mango_v3.py` ni los generadores de variantes, así que se aplica igual a cualquier STL de la familia v3
-(clip girado 180°, UV-K5 V3, RT-950 Pro, Anytone…) siempre que conserve la empuñadura y la base de trípode de v3.
+El refuerzo ahora vive dentro de `src/mango_v6.py`, que reutiliza `src/refuerzo_base.py` (fuente editable); `docs/refuerzo_base_checks.json` guarda las comprobaciones.
+`refuerzo_base.py` es un **post-proceso del STL**: no modifica `mango_v3.py`, y se aplica a cualquier STL de la familia v3 que conserve la empuñadura y la base de trípode de v3.
+El STL `stl/mango_spacequad_v3_refuerzo.stl` se eliminó; se regenera con:
 
-    python src/refuerzo_base.py stl/mango_spacequad_v3.stl stl/mango_spacequad_v3_refuerzo.stl docs/refuerzo_base_checks.json
+    python src/refuerzo_base.py stl/mango_spacequad_v3.stl <salida.stl> docs/refuerzo_base_checks.json
 
 ## Origen medido del punto débil
 
@@ -46,4 +46,4 @@ trabajaría a tracción justo en el escalón y en la ranura de tuerca. La ranura
 
 ## Pendiente
 
-Sin ensayo de carga ni validación física. Para integrarlo con otras variantes basta ejecutar el script sobre cada STL generado; no hay conflicto de archivos con sus generadores.
+Sin ensayo de carga ni validación física. `mango_v6.py` ya aplica el refuerzo; para otros STL basta ejecutar el script sobre cada uno.
