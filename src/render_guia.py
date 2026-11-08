@@ -156,14 +156,14 @@ def fig_vistas(malla, mallas_pv, out, bb):
     cont = [v.px(pt(s, n)) for s, n in ((s_a, n_a), (s_b, n_a), (s_b, n_b), (s_a, n_b), (s_a, n_a))]
     ax.plot(*zip(*cont), color=AZUL, lw=1.8, ls="--")
     etiqueta(ax, (cont[2][0] + 10, cont[2][1] - 10), t("f1a_radio", l=num(CFG["radio_l"], 0), t=num(CFG["radio_t"])), color=AZUL)
-    # cartelas y viga
+    # cartelas, pedestal y paredes
     g = (pt(0.5 * PLATE_L, 0.2) + np.array([-mg.ROOT_H0, (mg.ROOT_V0 + mg.ROOT_V1) / 2, CFG["uc"]])) / 2
     etiqueta(ax, (v.px(g)[0] - 250, v.px(g)[1] + 5), t("f1a_gusset", t=f"{mg.SIDE_T:.0f}"), color=ROJO)
     if mv6.LADO_U == "-U":
-        viga = (-(mv6.VIGA_H0 + mv6.VIGA_H1) / 2, (mg.ROOT_V0 + mg.ROOT_V1) / 2, CFG["u0"])
+        viga = (-(mv6.PED_H0 + mg.TOWER_H) / 2, (mg.ROOT_V0 + mg.ROOT_V1) / 2, CFG["u0"])
         ax.plot(*v.px(viga), "o", color=VERDE, ms=7)
         etiqueta(ax, (v.px(viga)[0] - 270, v.px(viga)[1] + 25),
-                 t("f1a_beam", w=num(mg.ROOT_V1 - mg.ROOT_V0, 0), h=num(mv6.VIGA_H1 - mv6.VIGA_H0)), color=VERDE)
+                 t("f1a_beam", w=num(mg.ROOT_V1 - mg.ROOT_V0, 0), h=num(mg.TOWER_H - mv6.PED_H0)), color=VERDE)
     ejes_uso(ax, v, (110, 900))
     fig.savefig(out / "fig01a_vista_lateral.png")
     plt.close(fig)
@@ -191,7 +191,7 @@ def fig_vistas(malla, mallas_pv, out, bb):
          t("f1c_proj", v=num(abs(v_s0 - v_s1)), l=f"{PLATE_L:.0f}"), off=(-40, 0))
     if mv6.LADO_U == "-U":
         cota(ax, v, (-80, mg.ROOT_V1, u0), (-80, mg.ROOT_V1, mv6.TORRE_U0 + mv6.EMBED_U),
-             t("f1c_beam", w=num(mg.ROOT_V1 - mg.ROOT_V0, 0), h=num(mv6.VIGA_H1 - mv6.VIGA_H0), e=num(mv6.EMBED_U)),
+             t("f1c_beam", w=num(mg.ROOT_V1 - mg.ROOT_V0, 0), h=num(mg.TOWER_H - mv6.PED_H0), e=num(mv6.EMBED_U)),
              off=(0, -25), color=VERDE)
     etiqueta(ax, (30, 960), t("f1c_gap", g=f"{CFG['w_in']:.0f}", w=f"{WALL:.0f}"), color=AZUL)
     ejes_uso(ax, v, (1250, 900))

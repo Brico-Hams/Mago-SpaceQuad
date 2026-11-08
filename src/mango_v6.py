@@ -11,7 +11,8 @@ Cambios respecto a la v3/v5:
     confirmada por el usuario sobre la pieza real). La radio, con su placa y el hueco, va al lado LADO_U del eje del
     boom (U = 15,55): "-U" (defecto, lejos del duplexor) es el espejo en U del diseno "+U" anterior. El clip entra
     paralelo a la placa por el borde libre (superior) y la radio apoya en la cara exterior de la placa. La placa se
-    sujeta con dos cartelas y, en "-U", con una viga (puente) que sale de la cara superior de la torre y se empotra en ella.
+    sujeta con dos paredes y, en "-U", con un pedestal macizo (alma) fundido con el mango: suelo bajo el hueco, dos paredes
+    y la placa forman una funda cerrada, abierta por el borde libre y por el extremo opuesto (v6.3).
  2. Variantes reales por radio. La altura de la placa (PH0) se calcula con la envolvente de cada radio
     (largo x ancho x grueso de perfiles_radio.json) para que su punto mas bajo quede por encima de la torre,
     y el ancho del hueco del clip sale del clip estimado de cada modelo (o del override del JSON).
@@ -68,11 +69,13 @@ LADO_U = "-U"                  # "-U" (posicion D, nuevo) | "+U" (diseno anterio
 TILT_DEG = 20.0                # inclinacion del eje largo de la radio sobre la horizontal
 BRIDA = True                   # brida opcional del culo
 
-# viga de soporte (solo LADO_U = "-U"): sale de la torre y lleva la placa al otro lado del boom
+# pedestal macizo (solo LADO_U = "-U"): bloque unico con el mango que lleva la placa al otro lado del boom
 U_BOOM = 15.55                 # eje U del tunel del boom
 TORRE_U0 = 8.0                 # supuesto: la torre ocupa U ~8..78 hasta H = TOWER_H
-EMBED_U = 4.0                  # la viga entra esta distancia en U dentro de la torre (>= 2 mm)
-VIGA_H0, VIGA_H1 = 50.5, 58.0  # H de la viga: embebida bajo la cara superior de la torre (58,64), muy por encima del tunel y del duplexor
+EMBED_U = 6.0                  # el pedestal entra esta distancia en U dentro de la torre / bloque del tunel (>= 3 mm)
+PED_H0 = 8.75                  # H minimo del pedestal: 1,25 mm sobre la barra del boom (15 x 15 mm, H = +-7,5)
+PED_FLOOR_GAP = 0.01           # el suelo del pedestal queda este margen bajo el hueco del clip (evita caras coincidentes)
+PED_CHAFLAN = 3.0              # chaflan 45 grados del pedestal sobre la cara superior de la torre (>= 3 mm)
 
 # radio y clip
 H_LIBRE = 62.0                 # H minimo de la radio: cara libre de la torre (58,64) + 3,4 mm
@@ -178,17 +181,43 @@ def cartelas(cfg):
     return out
 
 
-def viga(cfg):
-    """Viga rigida de 7,5 x 14 mm: de la placa (-U) hasta EMBED_U dentro de la torre; None con LADO_U = '+U'."""
-    if LADO_U == "+U":
-        return None
-    return mg.use_prism([(mg.ROOT_V0, VIGA_H0), (mg.ROOT_V1, VIGA_H0), (mg.ROOT_V1, VIGA_H1), (mg.ROOT_V0, VIGA_H1)],
-                        cfg["u0"], TORRE_U0 + EMBED_U)
+def pedestal(cfg):
+    """Alma maciza bajo el hueco del clip, fundida con el mango (solo LADO_U = '-U').
+
+    Suelo paralelo a la placa a min_clear (+ PED_FLOOR_GAP) bajo ella; por debajo, el alma baja hasta PED_H0 y se limita
+    con un plano inclinado que sube hacia -U (empalme en chaflan con el cuerpo). Cierra con las dos paredes y la
+    placa una funda abierta por el borde libre y por el extremo opuesto. Entra EMBED_U en la torre y el bloque del boom.
+    """
+    n_f = -cfg["min_clear"] - PED_FLOOR_GAP
+    u_in = TORRE_U0 + EMBED_U
+    f0, f1 = punto(cfg, 0, n_f), punto(cfg, mg.PLATE_L, n_f)
+    perfil_vh = [f0, f1, (f1[0], PED_H0), (f0[0], PED_H0)]
+    alma = mg.use_prism(perfil_vh, cfg["u0"], u_in)
+    # plano inferior: de (U = u_in, H = PED_H0) a (U = u0, H = ROOT_H0), extendido 1 mm mas alla de u0
+    pend = (mg.ROOT_H0 - PED_H0) / (u_in - cfg["u0"])
+    u_ext = cfg["u0"] - 1.0
+    por_encima = sg.Polygon([(mg.FACE_X + PED_H0, u_in), (mg.FACE_X + PED_H0 + pend * (u_in - u_ext), u_ext),
+                             (mg.FACE_X + 400.0, u_ext), (mg.FACE_X + 400.0, u_in)])
+    v_lo, v_hi = min(f0[0], f1[0]), max(f0[0], f1[0])
+    alma = alma ^ mg.prism_y(por_encima, v_lo, v_hi)
+    # paredes: de la placa al suelo, a todo lo largo (4 mm de solape con el suelo)
+    cuerpo = [punto(cfg, 0, 0.2), punto(cfg, mg.PLATE_L, 0.2), punto(cfg, mg.PLATE_L, n_f - 1.0), punto(cfg, 0, n_f - 1.0)]
+    for u in (cfg["u0"], cfg["u0"] + cfg["plate_w"] - mg.SIDE_T):
+        alma = alma + mg.use_prism(cuerpo, u, u + mg.SIDE_T)
+    # chaflan sobre la cara superior de la torre, en el canto del pedestal (cara +U)
+    c, t = PED_CHAFLAN, mg.TOWER_H
+    cuna = sg.Polygon([(mg.FACE_X + t - 1.0, u_in - 1.0), (mg.FACE_X + t - 1.0, u_in + c), (mg.FACE_X + t, u_in + c),
+                       (mg.FACE_X + t + c, u_in), (mg.FACE_X + t + c, u_in - 1.0)])
+    y0, y1 = max(mg.TY0, v_lo), min(mg.TY1, v_hi)
+    if y1 > y0:
+        alma = alma + mg.prism_y(cuna, y0, y1)
+    return alma
 
 
 def soporte(cfg):
-    v = viga(cfg)
-    return cartelas(cfg) if v is None else cartelas(cfg) + v
+    if LADO_U == "+U":
+        return cartelas(cfg)
+    return cartelas(cfg) + pedestal(cfg)
 
 
 def placa(cfg):

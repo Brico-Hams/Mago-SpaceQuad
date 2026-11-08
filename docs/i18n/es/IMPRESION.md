@@ -14,9 +14,9 @@
 
 | Cara en cama | Altura | Contacto | Voladizo >45° | Comentario |
 |---|---|---|---|---|
-| Y− | 93.7 mm | 355 mm² | 7603 mm² | Recomendada: túnel vertical; capas en aros alrededor de la pluma; carga de tuerca en el plano de capa; usar brim |
-| X+ | 202.7 mm | 1735 mm² | 10736 mm² | Eje de tuerca vertical: tracción perpendicular a capas (débil) |
-| Z+ | 126.2 mm | 325 mm² | 12057 mm² | Alternativa |
+| Y− | 93.7 mm | 355 mm² | 9676 mm² | Recomendada: túnel vertical; capas en aros alrededor de la pluma; carga de tuerca en el plano de capa; usar brim |
+| X+ | 202.7 mm | 1735 mm² | 13051 mm² | Eje de tuerca vertical: tracción perpendicular a capas (débil) |
+| Z+ | 126.2 mm | 325 mm² | 12985 mm² | Alternativa |
 
 ![Orientaciones de impresión comparadas](../../img/guia/v6/es/fig04_orientacion_impresion.png)
 
